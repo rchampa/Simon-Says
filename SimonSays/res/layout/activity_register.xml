@@ -1,0 +1,129 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    >
+		
+		<LinearLayout
+          
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dip"
+          android:id="@+id/layout1" 
+          android:background="#FFFFFF"  >
+                      
+          <TextView 
+              android:text="@string/register_user_details"
+              style="@style/EstiloRegistroTV" />
+                
+          <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		    
+          <EditText 
+              android:id="@+id/id_registroET"
+              android:background="@drawable/edittext_form_top"
+              style="@style/EstiloRegistroET"    
+              android:hint="@string/register_hint_id"  />
+		  
+          <ImageView
+		        android:id="@+id/idIV"
+		        style="@style/EstiloImageViewParaEditText"
+		        android:layout_alignTop="@+id/id_registroET"
+		        android:layout_alignBottom="@+id/id_registroET"
+		        android:layout_alignLeft="@+id/id_registroET"
+		        android:src="@drawable/form_id"
+		        android:contentDescription="@string/register_register" />
+		
+		</RelativeLayout>
+          
+         <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+          
+          <EditText 
+                android:id="@+id/pass_registroET"
+              	style="@style/EstiloRegistroET.password"
+                android:background="@drawable/edittext_form_center"
+                android:hint="@string/register_hint_pass" />  
+           
+          <ImageView
+		        android:id="@+id/passIV"
+		        style="@style/EstiloImageViewParaEditText"
+		        android:layout_alignTop="@+id/pass_registroET"
+		        android:layout_alignBottom="@+id/pass_registroET"
+		        android:layout_alignLeft="@+id/pass_registroET"
+		        android:src="@drawable/form_clave"
+		        android:contentDescription="@string/register_register" />
+		
+		</RelativeLayout>
+          
+        <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+          
+          <EditText 
+                android:id="@+id/nombre_registroET"
+                style="@style/EstiloRegistroET"
+                android:background="@drawable/edittext_form_center"
+                android:hint="@string/register_hint_name"                
+           />
+          
+        <ImageView
+		        android:id="@+id/nombreIV"
+		        style="@style/EstiloImageViewParaEditText"
+		        android:layout_alignTop="@+id/nombre_registroET"
+		        android:layout_alignBottom="@+id/nombre_registroET"
+		        android:layout_alignLeft="@+id/nombre_registroET"
+		        android:src="@drawable/form_datos"
+		        android:contentDescription="@string/register_register" />
+		
+		</RelativeLayout>
+		
+        <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+        
+          <EditText 
+                android:id="@+id/apellido_registroET"
+                style="@style/EstiloRegistroET"
+                android:background="@drawable/edittext_form_bottom"
+                android:hint="@string/register_hint_surname"
+          />
+                
+        <ImageView
+		        android:id="@+id/apellidosIV"
+		        style="@style/EstiloImageViewParaEditText"
+		        android:layout_alignTop="@+id/apellido_registroET"
+		        android:layout_alignBottom="@+id/apellido_registroET"
+		        android:layout_alignLeft="@+id/apellido_registroET"
+		        android:src="@drawable/form_datos"
+		        android:contentDescription="@string/register_register" />
+		
+		</RelativeLayout>  
+		
+        
+     	<TextView 
+              android:text="@string/register_sexo"
+              style="@style/EstiloRegistroTV" />
+        <Spinner
+		    android:id="@+id/spinner_sex"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" />
+        
+        
+        
+        
+        <Button 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/register_register"
+                android:id="@+id/registrar_registroBT"
+                android:background="@drawable/button_rounded_corners"
+                android:textColor="@color/color_font_boton"
+                android:onClick="register_new_user"
+          />
+                   
+	</LinearLayout>
+</ScrollView>

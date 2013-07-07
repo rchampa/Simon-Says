@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="50dp"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/mainmenu_bt_resume_game"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/mainmenu_resume_game"
+        android:layout_marginBottom="7dp" />
+    
+    <Button
+        android:id="@+id/mainmenu_bt_new_game"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/mainmenu_new_game"
+        android:layout_marginBottom="7dp" />
+    
+    <Button
+        android:id="@+id/mainmenu_bt_friends"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/mainmenu_friends" />
+
+</LinearLayout>
