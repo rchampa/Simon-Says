@@ -1,6 +1,8 @@
 package es.rczone.simonsays;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -11,6 +13,8 @@ public class ActivitySplash extends Activity {
 	// used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     private boolean mIsBackButtonPressed;
     private static final int SPLASH_DURATION = 3000; // 3 seconds
+    private final String PREFS_NAME = "registration_details";
+    private final String REG_FIELD = "isRegistered";
  
  
     public void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,19 @@ public class ActivitySplash extends Activity {
                  
                 if (!mIsBackButtonPressed) {
                     // start the home screen if the back button wasn't pressed already 
-//                    Intent intent = new Intent(SplashActivity.this, MenuPrincipalActivity.class);
-//                    SplashActivity.this.startActivity(intent);
-                	/* TODO Check if the user was already registered
-                	 * YES -> Go to ActivityMainMenu
-                	 * NO  -> Go to ActivityRegister
-                	 */
+                	// Restore preferences
+                	SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                    boolean isRegistered = settings.getBoolean(REG_FIELD, false);
+                    
+                    if(isRegistered){
+                    	Intent intent = new Intent(ActivitySplash.this, ActivityMainMenu.class);
+                    	ActivitySplash.this.startActivity(intent);
+                    }
+                    else{
+                    	Intent intent = new Intent(ActivitySplash.this, ActivityRegister.class);
+                    	ActivitySplash.this.startActivity(intent);
+                    }
+                     
                 	
                }
                  

@@ -2,49 +2,33 @@
 <!--  res/drawable/edittext_rounded_corners.xml -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:state_pressed="true" android:state_focused="true">
+<item android:state_pressed="true">
     <shape>
-        <solid android:color="@color/color_tema"/>
+        <solid android:color="@color/color_background_editText"/>
         <stroke
             android:width="2.3dp"
-            android:color="#F2F2F2" />
+            android:color="@color/color_stroke_editext" />
     </shape>
 </item>
 
-<item android:state_pressed="true" android:state_focused="false">
+<item android:state_focused="true">
     <shape>
-        <solid android:color="@color/color_tema"/>
+        <solid android:color="@color/color_background_editText_onfocus"/>
         <stroke
             android:width="2.3dp"
-            android:color="@color/color_tema" />      
+            android:color="@color/color_stroke_editext" />                        
     </shape>
 </item>
 
-<item android:state_pressed="false" android:state_focused="true">
+<item>
     <shape>
-        <solid android:color="#FFFFFF"/>
-        <stroke
-            android:width="2.3dp"
-            android:color="#F2F2F2" />                        
-    </shape>
-</item>
-
-<item android:state_pressed="false" android:state_focused="false">
-    <shape>
+        <solid android:color="@color/color_background_editText"/>
         <gradient 
             android:startColor="#F2F2F2"
             android:centerColor="#FFFFFF"
             android:endColor="#FFFFFF"
             android:angle="270"
         />
-        <stroke
-            android:width="0.7dp"                
-            android:color="#BDBDBD" />          
-    </shape>
-</item>
-
-<item android:state_enabled="true">
-    <shape>
         <padding 
                 android:left="4dp"
                 android:top="4dp"

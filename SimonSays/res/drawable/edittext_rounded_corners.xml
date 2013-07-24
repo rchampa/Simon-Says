@@ -4,7 +4,7 @@
 
 <item android:state_pressed="true" android:state_focused="true">
     <shape>
-        <solid android:color="@color/color_tema"/>
+       	<solid android:color="@color/color_background_editText"/>
         <stroke
             android:width="2.3dp"
             android:color="@color/color_tema" />
@@ -26,7 +26,7 @@
 
 <item android:state_pressed="false" android:state_focused="true">
     <shape>
-        <solid android:color="#FFFFFF"/>
+        <solid android:color="@color/color_background_editText"/>
         <stroke
             android:width="2.3dp"
             android:color="@color/color_tema" />  
@@ -37,6 +37,7 @@
 
 <item android:state_pressed="false" android:state_focused="false">
     <shape>
+        <solid android:color="@color/color_background_editText"/>
         <gradient 
             android:startColor="#F2F2F2"
             android:centerColor="#FFFFFF"
@@ -53,6 +54,7 @@
 
 <item android:state_enabled="true">
     <shape>
+        <solid android:color="@color/color_background_editText"/>
         <padding 
                 android:left="4dp"
                 android:top="4dp"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Simon Says Multitplayer</string>
+    <string name="app_name">Memorize Multitplayer</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
@@ -45,11 +45,14 @@
     
     <string name="register_user_details">Introduce tus datos: </string>
     <string name="register_register">Registrar</string>
+    <string name="register_forget_password">Olvidé mi contraseña</string>
     <string name="register_sexo">Sexo</string>
-    <string name="register_hint_id">Introduce un nombre de cuenta</string>
-    <string name="register_hint_pass">Introduce una contraseña</string>
-    <string name="register_hint_name">Introduce tu nombre</string>
-    <string name="register_hint_surname">Introduce tus apellidos</string>
+    <string name="register_hint_id">Nombre de cuenta</string>
+    <string name="register_hint_pass">Contraseña</string>
+    <string name="register_hint_email">Correo electrónico</string>
+    <string name="register_hint_name">Nombre</string>
+    <string name="register_hint_surname">Apellidos</string>
+    
    
     
     <!-- ActivityMainMenu -->
