@@ -45,7 +45,7 @@
     
     <string name="register_user_details">Introduce tus datos: </string>
     <string name="register_register">Registrar</string>
-    <string name="register_forget_password">Olvidé mi contraseña</string>
+    <string name="register_already_registered">Ya estoy registrado!</string>
     <string name="register_sexo">Sexo</string>
     <string name="register_hint_id">Nombre de cuenta</string>
     <string name="register_hint_pass">Contraseña</string>
@@ -53,6 +53,12 @@
     <string name="register_hint_name">Nombre</string>
     <string name="register_hint_surname">Apellidos</string>
     
+    
+    <!-- ActivityLogin -->
+    <string name="login_hint_id">Nombre de cuenta</string>
+    <string name="login_hint_pass">Contraseña</string>
+    <string name="login_connect">Iniciar sesión</string>
+    <string name="login_forget_pass">Olvidé mi contraseña</string>
    
     
     <!-- ActivityMainMenu -->

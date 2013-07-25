@@ -10,12 +10,12 @@
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:padding="40dip"
-          android:id="@+id/layout1"
+          android:id="@+id/layoutlogin"
           android:layout_gravity="center"
           android:gravity="center"    >
           
 		   <ImageView
-	        android:id="@+id/imageView1"
+	        android:id="@+id/imageViewlogin"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:src="@drawable/splash"
@@ -28,17 +28,17 @@
 		    android:layout_height="wrap_content" >
 		    
           <EditText 
-              android:id="@+id/register_et_name"
+              android:id="@+id/login_et_name"
               android:background="@drawable/edittext_form_top"
               style="@style/EstiloRegistroET"    
-              android:hint="@string/register_hint_id"  />
+              android:hint="@string/login_hint_id"  />
 		  
           <ImageView
 		        android:id="@+id/idIV"
 		        style="@style/EstiloImageViewParaEditText"
-		        android:layout_alignTop="@+id/register_et_name"
-		        android:layout_alignBottom="@+id/register_et_name"
-		        android:layout_alignLeft="@+id/register_et_name"
+		        android:layout_alignTop="@+id/login_et_name"
+		        android:layout_alignBottom="@+id/login_et_name"
+		        android:layout_alignLeft="@+id/login_et_name"
 		        android:src="@drawable/form_id"
 		        android:contentDescription="@string/register_register" />
 		
@@ -49,65 +49,39 @@
 		    android:layout_height="wrap_content" >
           
           <EditText 
-                android:id="@+id/register_et_pass"
+                android:id="@+id/login_et_password"
               	style="@style/EstiloRegistroET.password"
-                android:background="@drawable/edittext_form_center"
-                android:hint="@string/register_hint_pass" />  
+                android:background="@drawable/edittext_form_bottom"
+                android:hint="@string/login_hint_pass" />  
            
           <ImageView
 		        android:id="@+id/passIV"
 		        style="@style/EstiloImageViewParaEditText"
-		        android:layout_alignTop="@+id/register_et_pass"
-		        android:layout_alignBottom="@+id/register_et_pass"
-		        android:layout_alignLeft="@+id/register_et_pass"
+		        android:layout_alignTop="@+id/login_et_password"
+		        android:layout_alignBottom="@+id/login_et_password"
+		        android:layout_alignLeft="@+id/login_et_password"
 		        android:src="@drawable/form_clave"
 		        android:contentDescription="@string/register_register" />
 		
 		</RelativeLayout>
-         
-		
-        <RelativeLayout
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content" >
-        
-          <EditText 
-                android:id="@+id/register_et_email"
-                style="@style/EstiloRegistroET.email"
-                android:background="@drawable/edittext_form_bottom"
-                android:hint="@string/register_hint_email"
-          />
-                
-        <ImageView
-		        android:id="@+id/apellidosIV"
-		        style="@style/EstiloImageViewParaEditText"
-		        android:layout_alignTop="@+id/register_et_email"
-		        android:layout_alignBottom="@+id/register_et_email"
-		        android:layout_alignLeft="@+id/register_et_email"
-		        android:src="@drawable/form_datos"
-		        android:contentDescription="@string/register_hint_email" />
-		
-		</RelativeLayout>
-        
-        
-        
-        
+      
         <Button 
-            	android:id="@+id/button_register"
+            	android:id="@+id/login_button_login"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="@string/register_register"
+                android:text="@string/login_connect"
                 android:background="@drawable/button_rounded_corners"
                 style="@style/EstiloMenuButton"
                 android:onClick="onClick"
           />
         
         <Button 
-                android:id="@+id/button_login"
+                android:id="@+id/login_button_forget"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/register_already_registered"
+                android:text="@string/login_forget_pass"
                 android:background="@drawable/button_rounded_corners"
                 style="@style/EstiloMenuButton"
                	android:onClick="onClick"

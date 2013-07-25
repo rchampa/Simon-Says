@@ -20,19 +20,22 @@
         style="@style/EstiloMenuButton"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/mainmenu_resume_game"
-        android:layout_marginBottom="7dp" />
+        android:layout_marginBottom="7dp"
+        android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_new_game"
         style="@style/EstiloMenuButton"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/mainmenu_new_game"
-        android:layout_marginBottom="7dp" />
+        android:layout_marginBottom="7dp"
+        android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_friends"
         style="@style/EstiloMenuButton"
         android:background="@drawable/button_rounded_corners"
-        android:text="@string/mainmenu_friends" />
+        android:text="@string/mainmenu_friends"
+        android:onClick="onClick" />
 
 </LinearLayout>

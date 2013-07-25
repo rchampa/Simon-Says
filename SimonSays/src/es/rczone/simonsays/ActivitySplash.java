@@ -1,6 +1,7 @@
 package es.rczone.simonsays;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,13 +9,13 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+
+
 public class ActivitySplash extends Activity {
 
 	// used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     private boolean mIsBackButtonPressed;
     private static final int SPLASH_DURATION = 3000; // 3 seconds
-    private final String PREFS_NAME = "registration_details";
-    private final String REG_FIELD = "isRegistered";
  
  
     public void onCreate(Bundle savedInstanceState) {
@@ -35,28 +36,52 @@ public class ActivitySplash extends Activity {
  
             @Override
             public void run() {
- 
-                // make sure we close the splash screen so the user won't come back when it presses back key
-                finish();
-                 
+               
+               
                 if (!mIsBackButtonPressed) {
-                    // start the home screen if the back button wasn't pressed already 
-                	// Restore preferences
-                	SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                    boolean isRegistered = settings.getBoolean(REG_FIELD, false);
-                    
-                    if(isRegistered){
-                    	Intent intent = new Intent(ActivitySplash.this, ActivityMainMenu.class);
-                    	ActivitySplash.this.startActivity(intent);
-                    }
-                    else{
-                    	Intent intent = new Intent(ActivitySplash.this, ActivityRegister.class);
-                    	ActivitySplash.this.startActivity(intent);
-                    }
-                     
                 	
-               }
-                 
+                	SharedPreferences prefs = ActivitySplash.this.getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                	
+                	String name = prefs.getString(GCMIntentService.NAME, "");
+//                	String pass = prefs.getString(GCMIntentService.PASS, "");
+//                	String email = prefs.getString(GCMIntentService.EMAIL, "");
+                	
+                	if(name.equals("")){
+                		Intent intent = new Intent(ActivitySplash.this, ActivityRegister.class);
+	                	ActivitySplash.this.startActivity(intent); 
+                	}
+                	else{
+                		if(prefs.getBoolean(GCMIntentService.VALID_GCM_ID, true)){
+	                		Intent intent = new Intent(ActivitySplash.this, ActivityMainMenu.class);
+		                	ActivitySplash.this.startActivity(intent);
+                		}
+                		else{//GCM_ID invalid
+                			Intent intent = new Intent(ActivitySplash.this, ActivitySync.class);
+		                	ActivitySplash.this.startActivity(intent);
+                		}
+                	}
+                	
+                	
+//                	// Make sure the device has the proper dependencies.
+//                    GCMRegistrar.checkDevice(ActivitySplash.this);
+//                    // Make sure the manifest was properly set - comment out this line
+//                    // while developing the app, then uncomment it when it's ready.
+//                    GCMRegistrar.checkManifest(ActivitySplash.this);
+//	                // Get GCM registration id
+//	        		String regId = GCMRegistrar.getRegistrationId(ActivitySplash.this);
+//	                
+//	                if (regId.equals("")) {//not registered yet
+//	                	Intent intent = new Intent(ActivitySplash.this, ActivityRegister.class);
+//	                	ActivitySplash.this.startActivity(intent);
+//	                }
+//	                else{
+//	                	Intent intent = new Intent(ActivitySplash.this, ActivityMainMenu.class);
+//	                	ActivitySplash.this.startActivity(intent);
+//	                }
+                }
+                
+                // 	make sure we close the splash screen so the user won't come back when it presses back key
+                finish();
             }
  
         }, SPLASH_DURATION); // time in milliseconds (1 second = 1000 milliseconds) until the run() method will be called
@@ -67,6 +92,7 @@ public class ActivitySplash extends Activity {
    public void onBackPressed() {
  
         // set the flag to true so the next activity won't start up
+    	// anbd avoid interruput the splash activity
         mIsBackButtonPressed = true;
         super.onBackPressed();
  
