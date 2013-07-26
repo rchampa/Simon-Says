@@ -1,0 +1,51 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    
+		    >
+		
+		<LinearLayout
+          
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="40dip"
+          android:id="@+id/layout_add_friends"
+          android:layout_gravity="center"
+          android:gravity="center"    >
+          
+		   
+                
+          <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		    
+          <EditText 
+              android:id="@+id/addfriends_et_name"
+              android:background="@drawable/edittext_rounded_corners"
+              style="@style/EstiloRegistroET"    
+              android:hint="@string/addfriends_hint_name"  />
+		  
+          <ImageView
+		        android:id="@+id/idIV"
+		        style="@style/EstiloImageViewParaEditText"
+		        android:layout_alignTop="@+id/addfriends_et_name"
+		        android:layout_alignBottom="@+id/addfriends_et_name"
+		        android:layout_alignLeft="@+id/addfriends_et_name"
+		        android:src="@drawable/form_id"
+		        android:contentDescription="@string/register_register" />
+		
+		</RelativeLayout>
+          
+        <Button 
+            	android:id="@+id/addfriends_button_add"
+                android:layout_marginTop="25dp"
+                android:text="@string/addfriends_add"
+                android:background="@drawable/button_rounded_corners"
+                style="@style/EstiloMenuButton"
+                android:onClick="onClick"
+          />
+        
+                   
+	</LinearLayout>
+</ScrollView>

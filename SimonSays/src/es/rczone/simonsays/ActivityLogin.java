@@ -22,10 +22,10 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.tools.AsyncConnect;
-import es.rczone.simonsays.tools.Conexion;
+import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 
-public class ActivityLogin extends Activity implements Conexion{
+public class ActivityLogin extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
 
@@ -74,9 +74,7 @@ public class ActivityLogin extends Activity implements Conexion{
 
 
 	@Override
-	public boolean duringConnection(String... params) {
-
-		int logstatus = -1;
+	public boolean inBackground(String... params) {
 
 		/*
 		 * Creamos un ArrayList del tipo nombre valor para agregar los datos
@@ -162,5 +160,12 @@ public class ActivityLogin extends Activity implements Conexion{
 	@Override
 	public void afterErrorConnection() {
 		Toast.makeText(getApplicationContext(),"Error en al iniciar sesión.",Toast.LENGTH_LONG).show();
+	}
+
+
+	@Override
+	public void invalidInputData() {
+		// TODO Auto-generated method stub
+		
 	} 
 }

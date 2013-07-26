@@ -24,11 +24,11 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.tools.AsyncConnect;
-import es.rczone.simonsays.tools.Conexion;
+import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 import es.rczone.simonsays.tools.WakeLocker;
 
-public class ActivityRegister extends Activity implements Conexion{
+public class ActivityRegister extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
 
@@ -115,7 +115,7 @@ public class ActivityRegister extends Activity implements Conexion{
 
 
 	@Override
-	public boolean duringConnection(String... params) {
+	public boolean inBackground(String... params) {
 		int logstatus = -1;
 
 		/*
@@ -225,6 +225,12 @@ public class ActivityRegister extends Activity implements Conexion{
 	public void afterErrorConnection() {
 		Toast.makeText(getApplicationContext(),"Error al conectar con el servidor.",Toast.LENGTH_LONG).show();
 		
+	}
+
+
+	@Override
+	public void invalidInputData() {
+		//Toast.makeText(getApplicationContext(),"Los datos introducidos.",Toast.LENGTH_LONG).show();
 	}
 
 }

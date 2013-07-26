@@ -1,0 +1,32 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:background="@drawable/background"
+		    >
+		
+		<LinearLayout
+          
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          
+          android:id="@+id/layout1"
+          android:layout_gravity="center"
+          android:gravity="center" >
+          
+		    
+		  	<fragment class="es.rczone.simonsays.FragmentFriendsList"
+	        android:id="@+id/frg_friend_list"
+	        android:layout_weight="7"
+	        android:layout_width="match_parent"
+	        android:layout_height="0px" />
+	 
+	    	<fragment class="es.rczone.simonsays.FragmentAddFriend"
+	        android:id="@+id/frg_add_friend"
+	        android:layout_weight="3"
+	        android:layout_width="match_parent"
+	        android:layout_height="0px" />
+          
+		    
+		</LinearLayout>
+</ScrollView>

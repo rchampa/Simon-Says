@@ -19,13 +19,14 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 
 	public static final String CONNECTION_ESTABLISHED = "ok";
 	public static final String CONNECTION_ERROR = "error";
+	public static final String INVALID_INPUT_DATA = "invalid";
 	private ProgressDialog progressDialog;
 	private Context context;
-	private Conexion conexion;
+	private ConnectionListener conexion;
 	
 	public AsyncConnect(Context context){
 		this.context = context;
-		conexion = (Conexion)context;
+		conexion = (ConnectionListener)context;
 	}
 
 	protected void onPreExecute() {
@@ -39,8 +40,11 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 
 	protected String doInBackground(String... params) {
 		
+		if(!conexion.validateDataBeforeConnection(params))
+			return INVALID_INPUT_DATA;
+		
 		// enviamos y recibimos y analizamos los datos en segundo plano.
-		if (conexion.duringConnection(params)) {
+		if (conexion.inBackground(params)) {
 			return CONNECTION_ESTABLISHED; // conexión valida
 		} else {
 			return CONNECTION_ERROR; // conexión invalida
@@ -57,8 +61,11 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 		progressDialog.dismiss();// ocultamos progess dialog.
 		Log.e("onPostExecute=", "" + result);
 
+			
 		if (result.equals(CONNECTION_ESTABLISHED))
 			conexion.afterGoodConnection();
+		else if (result.equals(INVALID_INPUT_DATA))
+			;
 		else
 			conexion.afterErrorConnection();
 	}

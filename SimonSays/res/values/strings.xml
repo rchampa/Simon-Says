@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Memorize Multitplayer</string>
+    <string name="app_name">Memorize Multiplayer</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
@@ -55,10 +55,16 @@
     
     
     <!-- ActivityLogin -->
-    <string name="login_hint_id">Nombre de cuenta</string>
+    <string name="login_hint_id">Nombre de usuario</string>
     <string name="login_hint_pass">Contraseña</string>
     <string name="login_connect">Iniciar sesión</string>
     <string name="login_forget_pass">Olvidé mi contraseña</string>
+    
+    
+    <!-- AddFriends -->
+    <string name="addfriends_hint_name">Nombre de amigo</string>
+    <string name="addfriends_add">Añadir amigo</string>
+    
    
     
     <!-- ActivityMainMenu -->

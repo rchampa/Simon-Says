@@ -41,72 +41,87 @@ public final class R {
         public static final int form_datos=0x7f020007;
         public static final int form_id=0x7f020008;
         public static final int ic_launcher=0x7f020009;
-        public static final int splash=0x7f02000a;
-        public static final int switch_off=0x7f02000b;
-        public static final int switch_on=0x7f02000c;
-        public static final int toggle_button=0x7f02000d;
-        public static final int toggle_button_bgc=0x7f02000e;
+        public static final int icon_hombre=0x7f02000a;
+        public static final int splash=0x7f02000b;
+        public static final int switch_off=0x7f02000c;
+        public static final int switch_on=0x7f02000d;
+        public static final int toggle_button=0x7f02000e;
+        public static final int toggle_button_bgc=0x7f02000f;
     }
     public static final class id {
-        public static final int EditText01=0x7f09001a;
-        public static final int EditText02=0x7f09001c;
-        public static final int action_settings=0x7f09001e;
-        public static final int apellidosIV=0x7f090012;
-        public static final int button1=0x7f09001d;
-        public static final int button_login=0x7f090014;
-        public static final int button_register=0x7f090013;
-        public static final int editText1=0x7f090018;
-        public static final int gameslist_lv_games=0x7f090001;
-        public static final int idIV=0x7f090005;
-        public static final int imageView1=0x7f09000a;
-        public static final int imageViewlogin=0x7f090003;
-        public static final int itemlistgame_iv_opponent_picture=0x7f090015;
-        public static final int itemlistgame_tv_date_last_move=0x7f090017;
-        public static final int itemlistgame_tv_opponent_name=0x7f090016;
-        public static final int layout1=0x7f09000e;
-        public static final int layoutlogin=0x7f090002;
-        public static final int login_button_forget=0x7f090009;
-        public static final int login_button_login=0x7f090008;
-        public static final int login_et_name=0x7f090004;
-        public static final int login_et_password=0x7f090006;
-        public static final int mainmenu_bt_friends=0x7f09000d;
-        public static final int mainmenu_bt_new_game=0x7f09000c;
-        public static final int mainmenu_bt_resume_game=0x7f09000b;
-        public static final int passIV=0x7f090007;
-        public static final int register_et_email=0x7f090011;
-        public static final int register_et_name=0x7f09000f;
-        public static final int register_et_pass=0x7f090010;
-        public static final int textView1=0x7f090000;
-        public static final int textView2=0x7f090019;
-        public static final int textView3=0x7f09001b;
+        public static final int EditText01=0x7f090022;
+        public static final int EditText02=0x7f090024;
+        public static final int action_settings=0x7f090026;
+        public static final int addfriends_button_add=0x7f090019;
+        public static final int addfriends_et_name=0x7f090018;
+        public static final int apellidosIV=0x7f090014;
+        public static final int button1=0x7f090025;
+        public static final int button_login=0x7f090016;
+        public static final int button_register=0x7f090015;
+        public static final int editText1=0x7f090020;
+        public static final int frag_list_friends=0x7f09001a;
+        public static final int frg_add_friend=0x7f090002;
+        public static final int frg_friend_list=0x7f090001;
+        public static final int gameslist_lv_games=0x7f090004;
+        public static final int idIV=0x7f090008;
+        public static final int imageView1=0x7f09000d;
+        public static final int imageViewlogin=0x7f090006;
+        public static final int itemlistfriend_iv_opponent_picture=0x7f09001b;
+        public static final int itemlistfriend_tv_opponent_name=0x7f09001c;
+        public static final int itemlistgame_iv_opponent_picture=0x7f09001d;
+        public static final int itemlistgame_tv_date_last_move=0x7f09001f;
+        public static final int itemlistgame_tv_opponent_name=0x7f09001e;
+        public static final int layout1=0x7f090000;
+        public static final int layout_add_friends=0x7f090017;
+        public static final int layoutlogin=0x7f090005;
+        public static final int login_button_forget=0x7f09000c;
+        public static final int login_button_login=0x7f09000b;
+        public static final int login_et_name=0x7f090007;
+        public static final int login_et_password=0x7f090009;
+        public static final int mainmenu_bt_friends=0x7f090010;
+        public static final int mainmenu_bt_new_game=0x7f09000f;
+        public static final int mainmenu_bt_resume_game=0x7f09000e;
+        public static final int passIV=0x7f09000a;
+        public static final int register_et_email=0x7f090013;
+        public static final int register_et_name=0x7f090011;
+        public static final int register_et_pass=0x7f090012;
+        public static final int textView1=0x7f090003;
+        public static final int textView2=0x7f090021;
+        public static final int textView3=0x7f090023;
     }
     public static final class layout {
-        public static final int activity_contacts_list=0x7f030000;
+        public static final int activity_friends=0x7f030000;
         public static final int activity_games_list=0x7f030001;
         public static final int activity_login=0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int activity_main_menu=0x7f030004;
-        public static final int activity_new_contact=0x7f030005;
-        public static final int activity_new_game=0x7f030006;
-        public static final int activity_options_configuration=0x7f030007;
-        public static final int activity_register=0x7f030008;
-        public static final int activity_splash=0x7f030009;
-        public static final int activity_sync=0x7f03000a;
-        public static final int item_list_game=0x7f03000b;
-        public static final int lala=0x7f03000c;
+        public static final int activity_new_game=0x7f030005;
+        public static final int activity_options_configuration=0x7f030006;
+        public static final int activity_register=0x7f030007;
+        public static final int activity_splash=0x7f030008;
+        public static final int activity_sync=0x7f030009;
+        public static final int fragment_add_friend=0x7f03000a;
+        public static final int fragment_friends_list=0x7f03000b;
+        public static final int item_list_friend=0x7f03000c;
+        public static final int item_list_game=0x7f03000d;
+        public static final int lala=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f080000;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
+        public static final int addfriends_add=0x7f06002e;
+        /**  AddFriends 
+         */
+        public static final int addfriends_hint_name=0x7f06002d;
         public static final int already_registered=0x7f060006;
         public static final int app_name=0x7f060000;
         public static final int btnEnviar=0x7f06001b;
         public static final int error_config=0x7f060005;
         /**  ActivityGamesList 
          */
-        public static final int gameslist_pick_opponent=0x7f060030;
+        public static final int gameslist_pick_opponent=0x7f060032;
         public static final int gcm_deleted=0x7f06000c;
         public static final int gcm_error=0x7f06000a;
         public static final int gcm_message=0x7f060009;
@@ -116,7 +131,7 @@ public final class R {
         public static final int hello_world=0x7f060002;
         /**  ItemListGame 
          */
-        public static final int itemlistgame_picture=0x7f060031;
+        public static final int itemlistgame_picture=0x7f060033;
         public static final int label_already_reg=0x7f060016;
         public static final int label_connect=0x7f06001a;
         public static final int label_email=0x7f060018;
@@ -128,11 +143,11 @@ public final class R {
          */
         public static final int login_hint_id=0x7f060029;
         public static final int login_hint_pass=0x7f06002a;
-        public static final int mainmenu_friends=0x7f06002f;
+        public static final int mainmenu_friends=0x7f060031;
         /**  ActivityMainMenu 
          */
-        public static final int mainmenu_new_game=0x7f06002d;
-        public static final int mainmenu_resume_game=0x7f06002e;
+        public static final int mainmenu_new_game=0x7f06002f;
+        public static final int mainmenu_resume_game=0x7f060030;
         public static final int menu_settings=0x7f060003;
         public static final int name_new_contact=0x7f06001c;
         public static final int new_contact=0x7f06001d;

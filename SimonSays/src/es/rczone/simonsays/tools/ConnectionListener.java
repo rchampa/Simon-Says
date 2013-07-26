@@ -1,9 +1,10 @@
 package es.rczone.simonsays.tools;
 
-public interface Conexion {
+public interface ConnectionListener {
 
-	boolean duringConnection(String... params);
+	boolean inBackground(String... params);
 	boolean validateDataBeforeConnection(String... params);
 	void afterGoodConnection();
+	void invalidInputData();
 	void afterErrorConnection();
 }
