@@ -61,14 +61,6 @@
                 android:layout_alignTop="@+id/roscoBlueView1"
                 android:src="@drawable/rosco_red" />
 
-            <es.rczone.simonsays.customviews.SendView
-                android:id="@+id/sendView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/send_button" />
-
         </RelativeLayout>
         
     </FrameLayout>

@@ -10,12 +10,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-public class CustomImageView extends ImageView{
+public class SendView extends ImageView{
 
 	protected final Bitmap bitmap;
 	protected Drawable onFocusDrawable;
 	
-	public CustomImageView(Context context, AttributeSet attrs) {
+	public SendView(Context context, AttributeSet attrs) {
 		super(context, attrs);		 		
 		bitmap = ((BitmapDrawable)this.getDrawable()).getBitmap(); 
 	}
@@ -33,13 +33,13 @@ public class CustomImageView extends ImageView{
 				if (iX >= 0 & iY >= 0 & iX < bitmap.getWidth() & iY < bitmap.getHeight()) {
 					if (bitmap.getPixel((int) iX, (int) iY) != 0) {
 						Log.i("Custom","wiiiii");
-						setImageResource(R.drawable.rosco_yellow_shining);
+						//setImageResource(R.drawable.rosco_blue_shining);
 					}
 				}
 				return true;
 			
 			case MotionEvent.ACTION_UP:
-				setImageResource(R.drawable.rosco_yellow);
+				//setImageResource(R.drawable.rosco_blue);
 				return true;
 		}
 		
