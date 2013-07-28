@@ -7,7 +7,7 @@
        	<solid android:color="@color/color_background_editText"/>
         <stroke
             android:width="2.3dp"
-            android:color="@color/color_tema" />
+            android:color="@color/color_stroke_editext" />
          <corners
             android:radius="@dimen/form_corner_radius" />
     </shape>
@@ -19,7 +19,7 @@
         <solid android:color="@color/color_background_editText"/>
         <stroke
             android:width="2.3dp"
-            android:color="@color/color_tema" />  
+            android:color="@color/color_stroke_editext" />  
         <corners
             android:radius="@dimen/form_corner_radius" />                          
     </shape>

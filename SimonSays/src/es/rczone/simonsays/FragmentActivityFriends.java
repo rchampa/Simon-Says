@@ -10,7 +10,7 @@ public class FragmentActivityFriends extends FragmentActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+        setContentView(R.layout.fragmentactivity_friends);
  
         FragmentFriendsList frgListado =(FragmentFriendsList)getSupportFragmentManager().findFragmentById(R.id.frag_list_friends);
         

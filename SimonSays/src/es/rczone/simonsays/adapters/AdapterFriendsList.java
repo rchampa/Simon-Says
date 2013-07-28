@@ -67,7 +67,7 @@ public class AdapterFriendsList extends BaseAdapter{
         
         if (friendItemList != null) {
         	
-            viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_hombre);;
+            viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_hombre);
             viewHolder.tv_opponent_name.setText(friendItemList.getUserName());
 
         } 

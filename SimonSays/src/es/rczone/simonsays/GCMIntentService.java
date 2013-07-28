@@ -49,7 +49,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     private boolean firstTime(Context context, final String id){
     	GCMRegistrar.setRegisteredOnServer(context, true);
     	
-    	SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
+    	final SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
     	
     	final String name = prefs.getString(GCMIntentService.NAME, "");
 
@@ -58,54 +58,56 @@ public class GCMIntentService extends GCMBaseIntentService {
     	}
     	else{
     		
-    		Thread t = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
+    		String gcm_id = prefs.getString(GCMIntentService.GCM_ID, "");
+    		
+    		if(!id.equals(gcm_id)){
+    		
+	    		Thread t = new Thread(new Runnable() {
 					
-					HttpPostConnector post = new HttpPostConnector();
-					
-					SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
-			        SharedPreferences.Editor editor = prefs.edit();
-			        editor.putBoolean(GCMIntentService.VALID_GCM_ID, false);
-			        editor.commit();
-					
-					ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
-
-					postParametersToSend.add(new BasicNameValuePair("name", name));
-					postParametersToSend.add(new BasicNameValuePair("gcm_id", id));
-
-					// realizamos una peticion y como respuesta obtenes un array JSON
-					JSONArray jdata = post.getserverdata(postParametersToSend, HttpPostConnector.UPDATE_ID);
-
-
-					if (jdata != null && jdata.length() > 0) {
+					@Override
+					public void run() {
 						
-						try{
-							JSONObject json_data = jdata.getJSONObject(0);
-							String codeFromServer = json_data.getString("code");
-							String messageFromServer = json_data.getString("message");
+						HttpPostConnector post = new HttpPostConnector();
+						SharedPreferences.Editor editor = prefs.edit();
+				        editor.putBoolean(GCMIntentService.VALID_GCM_ID, false);
+				        editor.commit();
+						
+						ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
+	
+						postParametersToSend.add(new BasicNameValuePair("name", name));
+						postParametersToSend.add(new BasicNameValuePair("gcm_id", id));
+	
+						// realizamos una peticion y como respuesta obtenes un array JSON
+						JSONArray jdata = post.getserverdata(postParametersToSend, HttpPostConnector.UPDATE_ID);
+	
+	
+						if (jdata != null && jdata.length() > 0) {
 							
-							if(codeFromServer.equals("600")){
-								editor.putString(GCM_ID, id);
-								editor.putBoolean(GCMIntentService.VALID_GCM_ID, true);
-						        editor.commit();
+							try{
+								JSONObject json_data = jdata.getJSONObject(0);
+								String codeFromServer = json_data.getString("code");
+								String messageFromServer = json_data.getString("message");
+								
+								if(codeFromServer.equals("600")){
+									editor.putString(GCM_ID, id);
+									editor.putBoolean(GCMIntentService.VALID_GCM_ID, true);
+							        editor.commit();
+								}
+								else{
+									editor.putBoolean(GCMIntentService.VALID_GCM_ID, false);
+									editor.commit();
+								}
+							} catch (JSONException e) {
+								
 							}
-							else{
-								editor.putBoolean(GCMIntentService.VALID_GCM_ID, false);
-								editor.commit();
-							}
-						} catch (JSONException e) {
 							
 						}
-						
+	
 					}
-
-				}
-			});
-    		
-    		t.start();
-    		
+				});
+	    		
+	    		t.start();
+    		}
     		return false;
     	}
     }

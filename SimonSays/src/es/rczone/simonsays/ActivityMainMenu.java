@@ -27,7 +27,7 @@ public class ActivityMainMenu extends Activity {
             	
             	break;
             case R.id.mainmenu_bt_resume_game:
-            	intent = new Intent(this, ActivityLogin.class);
+            	intent = new Intent(this, ActivityBoard.class);
             	startActivity(intent);
             	break;
             
