@@ -14,6 +14,7 @@ public class Friends extends FragmentActivity implements ControllerListener<Frie
 	
 	private FragmentFriendsList frgListado;
 	private FragmentAddFriend frgAddFriend;
+	private FriendsController controller;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class Friends extends FragmentActivity implements ControllerListener<Frie
 
 	@Override
 	public void onControllerCreated(FriendsController controller) {
+		this.controller = controller;
 		frgAddFriend.setController(controller);
 		
 	}

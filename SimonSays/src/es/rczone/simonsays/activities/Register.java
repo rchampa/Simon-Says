@@ -25,8 +25,6 @@ import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
-import es.rczone.simonsays.R.id;
-import es.rczone.simonsays.R.layout;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
@@ -39,7 +37,6 @@ public class Register extends Activity implements ConnectionListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_register);
 		
@@ -120,13 +117,7 @@ public class Register extends Activity implements ConnectionListener{
 
 	@Override
 	public boolean inBackground(String... params) {
-		int logstatus = -1;
-
-		/*
-		 * Creamos un ArrayList del tipo nombre valor para agregar los datos
-		 * recibidos por los parametros anteriores y enviarlo mediante POST a
-		 * nuestro sistema para relizar la validacion
-		 */
+		
 		ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
 
 		postParametersToSend.add(new BasicNameValuePair("name", params[0]));
@@ -144,7 +135,7 @@ public class Register extends Activity implements ConnectionListener{
 			try {
 				JSONObject json_data = jdata.getJSONObject(0);
 				String codeFromServer = json_data.getString("code");
-				String messageFromServer = json_data.getString("message");
+				//String messageFromServer = json_data.getString("message");
 				
 				if("000".equals(codeFromServer)){
 					//Toast.makeText(this, "Registro completado con éxito.", Toast.LENGTH_SHORT).show();

@@ -19,8 +19,17 @@ final class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		
-		final String counter = "CREATE TABLE " + FriendDAO.TABLE + "(" + FriendDAO.NAME + " varchar(20) primary key )"; 
-		database.execSQL(counter);
+		final String friends = "CREATE TABLE " + FriendDAO.TABLE + "(" + FriendDAO.NAME + " varchar(20) primary key )"; 
+		database.execSQL(friends);
+		
+		final String games = "CREATE TABLE " + GameDAO.TABLE + "(" +
+				GameDAO.ID + " integer primary key, " +
+				GameDAO.OP_NAME + " varchar(20), " +
+				GameDAO.IS_FINISH + " int, " +
+				GameDAO.TURN + " int, " +
+				GameDAO.NUM_MOVES + " int)";
+		
+		database.execSQL(games);
 
 	}
 

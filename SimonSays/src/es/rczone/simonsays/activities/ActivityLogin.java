@@ -23,8 +23,6 @@ import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
-import es.rczone.simonsays.R.id;
-import es.rczone.simonsays.R.layout;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;

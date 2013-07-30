@@ -5,5 +5,10 @@
     android:orientation="vertical"
     android:background="@drawable/background" >
     
+    <fragment class="es.rczone.simonsays.activities.fragments.FragmentFriendsList"
+	        android:id="@+id/frg_friend_list"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" />
+    
 
 </LinearLayout>

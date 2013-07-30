@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.adapters.FriendsListAdapter;
@@ -24,6 +26,7 @@ public class FragmentFriendsList extends Fragment implements Handler.Callback {
 	private FriendsController controller;
 	private FriendsListAdapter adapter;
 	private ControllerListener<FriendsController> listener;
+	private ItemClickedListener<Friend> itemClickedListener;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,13 +46,26 @@ public class FragmentFriendsList extends Fragment implements Handler.Callback {
 		lstListado = (ListView) getView().findViewById(R.id.list_friends);
 		lstListado.setAdapter(adapter);
 		
+		lstListado.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+				
+				itemClickedListener.onItemClicked(friends.get(position));
+			}
+		});
+		
 		controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
 		
-		listener.onControllerCreated(controller);
+		if(listener!=null)
+			listener.onControllerCreated(controller);
 	}
 	
 	public void setListener(ControllerListener<FriendsController> listener){
 		this.listener = listener;
+	}
+	public void setListener(ItemClickedListener<Friend> itemClickedListener){
+		this.itemClickedListener = itemClickedListener;
 	}
 	
 	@Override
