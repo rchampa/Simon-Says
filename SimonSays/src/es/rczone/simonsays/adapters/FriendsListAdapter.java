@@ -12,14 +12,14 @@ import android.widget.TextView;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.model.Friend;
 
-public class AdapterFriendsList extends BaseAdapter{
+public class FriendsListAdapter extends BaseAdapter{
 	
 	private final Activity activity;
     private final List<Friend> list;
     private LayoutInflater inflater = null;
     private Friend friendItemList;
     
-    public AdapterFriendsList(Activity activity, List<Friend> list) {
+    public FriendsListAdapter(Activity activity, List<Friend> list) {
           super(); 
           this.activity = activity;
           this.list = list;

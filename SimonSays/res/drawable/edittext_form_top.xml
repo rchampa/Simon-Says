@@ -33,6 +33,7 @@
 <item android:state_enabled="true">
     <shape>
         <solid android:color="@color/color_background_editText"/>
+        
         <gradient 
             android:startColor="#F2F2F2"
             android:centerColor="#FFFFFF"

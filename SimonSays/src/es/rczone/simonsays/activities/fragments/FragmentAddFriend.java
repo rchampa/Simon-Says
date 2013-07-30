@@ -1,4 +1,4 @@
-package es.rczone.simonsays;
+package es.rczone.simonsays.activities.fragments;
 
 import java.util.ArrayList;
 
@@ -15,19 +15,41 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+import es.rczone.simonsays.GCMIntentService;
+import es.rczone.simonsays.R;
+import es.rczone.simonsays.controllers.FriendsController;
+import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 
 public class FragmentAddFriend extends Fragment implements ConnectionListener{
 
 	private HttpPostConnector post;
+	private FriendsController controller;
+	private String nameNewFriend;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		return inflater.inflate(R.layout.fragment_add_friend, container,false);
+		
+		final View view = inflater.inflate(R.layout.fragment_add_friend, container, false);
+		
+		final View button = view.findViewById(R.id.addfriends_button_add);
+	    button.setOnClickListener(
+	        new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	nameNewFriend = ((EditText)view.findViewById(R.id.addfriends_et_name)).getText().toString();
+	            	new AsyncConnect(FragmentAddFriend.this).execute(nameNewFriend);
+	            }
+	        }
+	    );
+		return view;
 	}
 
 	@Override
@@ -37,6 +59,9 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 	}
 	
 	
+	public void setController(FriendsController controller){
+		this.controller = controller;
+	}
 
 	@Override
 	public boolean inBackground(String... params) {
@@ -60,7 +85,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 			try {
 				JSONObject json_data = jdata.getJSONObject(0);
 				String codeFromServer = json_data.getString("code");
-				String messageFromServer = json_data.getString("message");
+				//String messageFromServer = json_data.getString("message");
 				
 				if(codeFromServer.equals("100")){
 					
@@ -98,6 +123,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		Toast.makeText(this.getActivity(), "Nuevo amigo añadido", Toast.LENGTH_SHORT).show();
+		controller.handleMessage(FriendsController.MESSAGE_ADD_FRIEND, new Friend(nameNewFriend));
 		
 	}
 

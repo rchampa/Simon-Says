@@ -3,6 +3,7 @@ package es.rczone.simonsays.tools;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 
@@ -26,6 +27,11 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 	
 	public AsyncConnect(Context context){
 		this.context = context;
+		conexion = (ConnectionListener)context;
+	}
+	
+	public AsyncConnect(Fragment context){
+		this.context = context.getActivity();
 		conexion = (ConnectionListener)context;
 	}
 

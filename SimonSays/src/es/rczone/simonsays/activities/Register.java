@@ -1,4 +1,4 @@
-package es.rczone.simonsays;
+package es.rczone.simonsays.activities;
 
 import java.util.ArrayList;
 
@@ -23,12 +23,16 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
+import es.rczone.simonsays.GCMIntentService;
+import es.rczone.simonsays.R;
+import es.rczone.simonsays.R.id;
+import es.rczone.simonsays.R.layout;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 import es.rczone.simonsays.tools.WakeLocker;
 
-public class ActivityRegister extends Activity implements ConnectionListener{
+public class Register extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
 
@@ -73,7 +77,7 @@ public class ActivityRegister extends Activity implements ConnectionListener{
             
         	String id = intent.getExtras().getString(GCMIntentService.ID);
             if(id==null || "".equals(id.trim())){
-            	id = GCMRegistrar.getRegistrationId(ActivityRegister.this);
+            	id = GCMRegistrar.getRegistrationId(Register.this);
             	if("".equals(id))
             		return;
             }
@@ -92,7 +96,7 @@ public class ActivityRegister extends Activity implements ConnectionListener{
              * */
              
             // register in game server
-            new AsyncConnect(ActivityRegister.this).execute(nombre, password, id, email);
+            new AsyncConnect(Register.this).execute(nombre, password, id, email);
                         
           
             // Releasing wake lock
@@ -215,7 +219,7 @@ public class ActivityRegister extends Activity implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		
-		Intent intent = new Intent(ActivityRegister.this, ActivityMainMenu.class);
+		Intent intent = new Intent(Register.this, MainMenu.class);
 		this.startActivity(intent);
 		
 	}

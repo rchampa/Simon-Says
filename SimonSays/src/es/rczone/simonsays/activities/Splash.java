@@ -1,5 +1,8 @@
-package es.rczone.simonsays;
+package es.rczone.simonsays.activities;
 
+import es.rczone.simonsays.GCMIntentService;
+import es.rczone.simonsays.R;
+import es.rczone.simonsays.R.layout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +14,7 @@ import android.view.WindowManager;
 
 
 
-public class ActivitySplash extends Activity {
+public class Splash extends Activity {
 
 	// used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     private boolean mIsBackButtonPressed;
@@ -40,24 +43,24 @@ public class ActivitySplash extends Activity {
                
                 if (!mIsBackButtonPressed) {
                 	
-                	SharedPreferences prefs = ActivitySplash.this.getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                	SharedPreferences prefs = Splash.this.getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
                 	
                 	String name = prefs.getString(GCMIntentService.NAME, "");
 //                	String pass = prefs.getString(GCMIntentService.PASS, "");
 //                	String email = prefs.getString(GCMIntentService.EMAIL, "");
                 	
                 	if(name.equals("")){
-                		Intent intent = new Intent(ActivitySplash.this, ActivityRegister.class);
-	                	ActivitySplash.this.startActivity(intent); 
+                		Intent intent = new Intent(Splash.this, Register.class);
+	                	Splash.this.startActivity(intent); 
                 	}
                 	else{
                 		if(prefs.getBoolean(GCMIntentService.VALID_GCM_ID, true)){
-	                		Intent intent = new Intent(ActivitySplash.this, ActivityMainMenu.class);
-		                	ActivitySplash.this.startActivity(intent);
+	                		Intent intent = new Intent(Splash.this, MainMenu.class);
+		                	Splash.this.startActivity(intent);
                 		}
                 		else{//GCM_ID invalid
-                			Intent intent = new Intent(ActivitySplash.this, ActivitySync.class);
-		                	ActivitySplash.this.startActivity(intent);
+                			Intent intent = new Intent(Splash.this, Sync.class);
+		                	Splash.this.startActivity(intent);
                 		}
                 	}
                 	

@@ -10,6 +10,12 @@
             android:color="@color/color_stroke_editext" />
          <corners
             android:radius="@dimen/form_corner_radius" />
+         <gradient 
+            android:startColor="#F2F2F2"
+            android:centerColor="#FFFFFF"
+            android:endColor="#FFFFFF"
+            android:angle="270"
+        />
     </shape>
 </item>
 
@@ -21,7 +27,13 @@
             android:width="2.3dp"
             android:color="@color/color_stroke_editext" />  
         <corners
-            android:radius="@dimen/form_corner_radius" />                          
+            android:radius="@dimen/form_corner_radius" />
+        <gradient 
+            android:startColor="#F2F2F2"
+            android:centerColor="#FFFFFF"
+            android:endColor="#FFFFFF"
+            android:angle="270"
+        />                          
     </shape>
 </item>
 
@@ -29,6 +41,9 @@
 <item android:state_enabled="true">
     <shape>
         <solid android:color="@color/color_background_editText"/>
+        <stroke
+            android:width="2.3dp"
+            android:color="@color/color_stroke_editext" />
         <gradient 
             android:startColor="#F2F2F2"
             android:centerColor="#FFFFFF"

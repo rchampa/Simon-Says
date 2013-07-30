@@ -1,11 +1,13 @@
-package es.rczone.simonsays;
+package es.rczone.simonsays.activities;
+import es.rczone.simonsays.R;
+import es.rczone.simonsays.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
 
-public class ActivityBoard  extends Activity {
+public class Board  extends Activity {
 	
 	
 	@Override

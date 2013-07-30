@@ -21,6 +21,7 @@ import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.R;
+import es.rczone.simonsays.activities.MainMenu;
 import es.rczone.simonsays.tools.HttpPostConnector;
  
 
@@ -186,7 +187,7 @@ public class GCMIntentService extends GCMBaseIntentService {
          
         String title = context.getString(R.string.app_name);
          
-        Intent notificationIntent = new Intent(context, ActivityMainMenu.class);
+        Intent notificationIntent = new Intent(context, MainMenu.class);
         // set intent so it does not start a new activity
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);

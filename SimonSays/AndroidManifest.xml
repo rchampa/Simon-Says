@@ -34,12 +34,13 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".MemorizeApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="es.rczone.simonsays.ActivitySplash"
+            android:name="es.rczone.simonsays.activities.Splash"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
@@ -52,7 +53,7 @@
         </activity>
         
         <activity
-            android:name="es.rczone.simonsays.ActivityRegister"
+            android:name="es.rczone.simonsays.activities.Register"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
@@ -65,7 +66,7 @@
         </activity>
         
         <activity
-            android:name="es.rczone.simonsays.ActivityLogin"
+    		android:name="es.rczone.simonsays.activities.ActivityLogin"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
@@ -78,7 +79,7 @@
         </activity>
         
         <activity
-            android:name="es.rczone.simonsays.ActivityMainMenu"
+            android:name="es.rczone.simonsays.activities.MainMenu"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
@@ -86,7 +87,7 @@
         </activity>
         
         <activity
-            android:name="es.rczone.simonsays.FragmentActivityFriends"
+            android:name="es.rczone.simonsays.activities.Friends"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
@@ -94,7 +95,7 @@
         </activity>
         
         <activity
-            android:name="es.rczone.simonsays.ActivityBoard"
+    		android:name="es.rczone.simonsays.activities.Board"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"

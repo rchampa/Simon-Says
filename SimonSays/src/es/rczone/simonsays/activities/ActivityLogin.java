@@ -1,4 +1,4 @@
-package es.rczone.simonsays;
+package es.rczone.simonsays.activities;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
+import es.rczone.simonsays.GCMIntentService;
+import es.rczone.simonsays.R;
+import es.rczone.simonsays.R.id;
+import es.rczone.simonsays.R.layout;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
@@ -151,7 +155,7 @@ public class ActivityLogin extends Activity implements ConnectionListener{
 		
     	Toast.makeText(getApplicationContext(),"Sesión iniciada.",Toast.LENGTH_LONG).show();
 
-		Intent intent = new Intent(this, ActivityMainMenu.class);
+		Intent intent = new Intent(this, MainMenu.class);
 		this.startActivity(intent);
 		
 	}

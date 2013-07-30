@@ -16,7 +16,7 @@
 	        />
 
     <ListView
-        android:id="@+id/frag_list_friends"
+        android:id="@+id/list_friends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

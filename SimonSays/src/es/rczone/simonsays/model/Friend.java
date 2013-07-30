@@ -1,7 +1,7 @@
 package es.rczone.simonsays.model;
 
-public class Friend {
-
+public class Friend extends SimpleObservable<Friend> {
+	
 	private String userName;
 	
 	public Friend(String userName){
@@ -14,14 +14,14 @@ public class Friend {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+		notifyObservers(this);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
