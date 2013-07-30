@@ -25,6 +25,8 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 	private Context context;
 	private ConnectionListener conexion;
 	
+	private String message;
+	
 	public AsyncConnect(Context context){
 		this.context = context;
 		conexion = (ConnectionListener)context;
@@ -65,15 +67,24 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 	protected void onPostExecute(String result) {
 
 		progressDialog.dismiss();// ocultamos progess dialog.
+		
 		Log.e("onPostExecute=", "" + result);
 
 			
 		if (result.equals(CONNECTION_ESTABLISHED))
 			conexion.afterGoodConnection();
 		else if (result.equals(INVALID_INPUT_DATA))
-			;
+			conexion.invalidInputData();
 		else
 			conexion.afterErrorConnection();
+	}
+	
+	public void attachMessage(String message){
+		this.message = message;
+	}
+	
+	public String getMessage(){
+		return this.message;
 	}
 
 }

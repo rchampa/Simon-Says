@@ -8,6 +8,8 @@ public class Game extends SimpleObservable<Friend> {
 	private Board board;
 	private boolean isMyTurn;
 	private GameStates state;
+	private String moveCached;
+	private boolean isAlreadyOpponenMovetDisplayed;
 	
 	
 	public Game(int id, Friend opponent, Difficulty difficulty, boolean isMyTurn){
@@ -39,6 +41,10 @@ public class Game extends SimpleObservable<Friend> {
 		return state;
 	}
 	
+	public void setState(GameStates state){
+		this.state = state;
+	}
+	
 	public boolean isFinished(){
 		return state==GameStates.FINISHED;
 	}
@@ -62,6 +68,16 @@ public class Game extends SimpleObservable<Friend> {
 	
 	public void removeLastMove(){
 		board.removeLastMove();
+	}
+
+	public void showMove(){
+		
+		isAlreadyOpponenMovetDisplayed = true;
+	}
+
+	public void setMoveOnCache(String move) {
+		this.moveCached = move; 	
+		isAlreadyOpponenMovetDisplayed = false;
 	}
 
 	

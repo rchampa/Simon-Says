@@ -41,37 +41,39 @@ public final class R {
         public static final int form_clave=0x7f020007;
         public static final int form_datos=0x7f020008;
         public static final int form_id=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int icon_game=0x7f02000b;
-        public static final int icon_hombre=0x7f02000c;
-        public static final int rosco=0x7f02000d;
-        public static final int rosco_blue=0x7f02000e;
-        public static final int rosco_blue_shining=0x7f02000f;
-        public static final int rosco_green=0x7f020010;
-        public static final int rosco_green_shining=0x7f020011;
-        public static final int rosco_red=0x7f020012;
-        public static final int rosco_red_shining=0x7f020013;
-        public static final int rosco_yellow=0x7f020014;
-        public static final int rosco_yellow_shining=0x7f020015;
-        public static final int send_button=0x7f020016;
-        public static final int splash=0x7f020017;
-        public static final int switch_off=0x7f020018;
-        public static final int switch_on=0x7f020019;
-        public static final int toggle_button=0x7f02001a;
-        public static final int toggle_button_bgc=0x7f02001b;
+        public static final int games_ready=0x7f02000a;
+        public static final int games_waiting=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int icon_game=0x7f02000d;
+        public static final int icon_hombre=0x7f02000e;
+        public static final int rosco=0x7f02000f;
+        public static final int rosco_blue=0x7f020010;
+        public static final int rosco_blue_shining=0x7f020011;
+        public static final int rosco_green=0x7f020012;
+        public static final int rosco_green_shining=0x7f020013;
+        public static final int rosco_red=0x7f020014;
+        public static final int rosco_red_shining=0x7f020015;
+        public static final int rosco_yellow=0x7f020016;
+        public static final int rosco_yellow_shining=0x7f020017;
+        public static final int send_button=0x7f020018;
+        public static final int splash=0x7f020019;
+        public static final int switch_off=0x7f02001a;
+        public static final int switch_on=0x7f02001b;
+        public static final int toggle_button=0x7f02001c;
+        public static final int toggle_button_bgc=0x7f02001d;
     }
     public static final class id {
-        public static final int EditText01=0x7f09002a;
-        public static final int EditText02=0x7f09002c;
+        public static final int EditText01=0x7f090029;
+        public static final int EditText02=0x7f09002b;
         public static final int RelativeLayout1=0x7f090000;
-        public static final int action_settings=0x7f09002e;
+        public static final int action_settings=0x7f09002d;
         public static final int addfriends_button_add=0x7f090021;
         public static final int addfriends_et_name=0x7f090020;
         public static final int apellidosIV=0x7f090016;
-        public static final int button1=0x7f09002d;
+        public static final int button1=0x7f09002c;
         public static final int button_login=0x7f090018;
         public static final int button_register=0x7f090017;
-        public static final int editText1=0x7f090029;
+        public static final int editText1=0x7f090028;
         public static final int frg_add_friend=0x7f09001b;
         public static final int frg_friend_list=0x7f09001a;
         public static final int frg_game_ready_list=0x7f09001c;
@@ -79,16 +81,15 @@ public final class R {
         public static final int idIV=0x7f09000b;
         public static final int imageView1=0x7f090001;
         public static final int imageViewlogin=0x7f090009;
-        public static final int itemlistfriend_iv_opponent_picture=0x7f090024;
-        public static final int itemlistfriend_tv_opponent_name=0x7f090025;
-        public static final int itemlistgame_iv_opponent_picture=0x7f090026;
-        public static final int itemlistgame_tv_date_last_move=0x7f090028;
-        public static final int itemlistgame_tv_opponent_name=0x7f090027;
+        public static final int itemlistfriend_iv_opponent_picture=0x7f090023;
+        public static final int itemlistfriend_tv_opponent_name=0x7f090024;
+        public static final int itemlistgame_iv_opponent_picture=0x7f090025;
+        public static final int itemlistgame_tv_date_last_move=0x7f090027;
+        public static final int itemlistgame_tv_opponent_name=0x7f090026;
         public static final int layout1=0x7f090012;
         public static final int layout_add_friends=0x7f09001f;
         public static final int layoutlogin=0x7f090008;
         public static final int list_friends=0x7f090022;
-        public static final int list_games=0x7f090023;
         public static final int login_button_forget=0x7f09000e;
         public static final int login_button_login=0x7f090007;
         public static final int login_et_name=0x7f09000a;
@@ -107,7 +108,7 @@ public final class R {
         public static final int sendView1=0x7f090006;
         public static final int textView1=0x7f090019;
         public static final int textView2=0x7f09001d;
-        public static final int textView3=0x7f09002b;
+        public static final int textView3=0x7f09002a;
     }
     public static final class layout {
         public static final int activity_board=0x7f030000;
@@ -123,10 +124,9 @@ public final class R {
         public static final int fragment_activity_new_game=0x7f03000a;
         public static final int fragment_add_friend=0x7f03000b;
         public static final int fragment_friends_list=0x7f03000c;
-        public static final int fragment_games_list=0x7f03000d;
-        public static final int item_list_friend=0x7f03000e;
-        public static final int item_list_game=0x7f03000f;
-        public static final int lala=0x7f030010;
+        public static final int item_list_friend=0x7f03000d;
+        public static final int item_list_game=0x7f03000e;
+        public static final int lala=0x7f03000f;
     }
     public static final class menu {
         public static final int main=0x7f080000;

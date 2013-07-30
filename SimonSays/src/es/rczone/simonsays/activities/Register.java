@@ -45,7 +45,34 @@ public class Register extends Activity implements ConnectionListener{
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(GCMIntentService.DISPLAY_MESSAGE_ACTION));
 	}
 
+	@Override
+	protected void onResume(){
+		registerReceiver(mHandleMessageReceiver, new IntentFilter(GCMIntentService.DISPLAY_MESSAGE_ACTION));
+		super.onResume();
+	}
 
+	@Override
+	protected void onPause(){
+		try {
+            unregisterReceiver(mHandleMessageReceiver);
+            GCMRegistrar.onDestroy(this);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onPause();
+	}
+	
+	@Override
+    protected void onDestroy() {
+        try {
+            unregisterReceiver(mHandleMessageReceiver);
+            GCMRegistrar.onDestroy(this);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onDestroy();
+    }
+	
 	public void onClick(View v) {
 		
 		
@@ -178,28 +205,24 @@ public class Register extends Activity implements ConnectionListener{
 	//FIXME Check the limits(in mysql data types) of chars of each field, 30 is wrong
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
+		
 		String name = params[0];
-		String password = params[1];
-		String gcm_id = params[2]; 
-		String email = params[3];
+		String password = params[1]; 
+		String email = params[2];
 		
 		if(name==null || name.trim().equals("") || name.length()>30){
-			Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		
 		if(password==null || password.trim().equals("") || password.length()>30){
-			Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		
-		if(gcm_id==null || gcm_id.trim().equals("") || gcm_id.length()>30){
-			Toast.makeText(this, "El nombre introducido no es válido", Toast.LENGTH_SHORT).show();
-			return false;
-		}
 		
 		if(email==null || email.trim().equals("") || email.length()>30){
-			Toast.makeText(this, "El apellido introducido no es válido", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "El apellido introducido no es válido", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 					

@@ -112,7 +112,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 		String name = params[0];
 				
 		if(name==null || name.trim().equals("") || name.length()>30){
-			Toast.makeText(this.getActivity(), "El nombre introducido no es válido", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this.getActivity(), "El nombre introducido no es válido", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		

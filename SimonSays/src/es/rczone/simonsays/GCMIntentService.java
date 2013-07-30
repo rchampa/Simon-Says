@@ -22,6 +22,11 @@ import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.MainMenu;
+import es.rczone.simonsays.daos.GameDAO;
+import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.GameFactory;
+import es.rczone.simonsays.model.GameStates;
 import es.rczone.simonsays.tools.HttpPostConnector;
  
 
@@ -122,7 +127,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         if(firstTime(context,registrationId)){
         	Intent intent = new Intent(DISPLAY_MESSAGE_ACTION);
             intent.putExtra(ID, registrationId);
-            context.sendBroadcast(intent);//This will be received in ActivityRegister
+            context.sendBroadcast(intent);//This will be received in Register Activity
         }
         
     }
@@ -142,11 +147,27 @@ public class GCMIntentService extends GCMBaseIntentService {
      * */
     @Override
     protected void onMessage(Context context, Intent intent) {
-        Log.i(TAG, "Received message");
-        String message = intent.getExtras().getString("price");
+        Log.i(TAG, "Received message from server");
+
+        String messageFromServer = intent.getExtras().getString("message");
+        String notificationMessage="";
+        
+        try {
+			
+			JSONObject json_data = new JSONObject(messageFromServer);
+			notificationMessage = processMessage(json_data);
+			
+			
+			
+			
+		} catch (JSONException e) {
+			notificationMessage = "Invalid connection.";
+		}
+        
+        
       
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, notificationMessage);
     }
  
     /**
@@ -203,5 +224,100 @@ public class GCMIntentService extends GCMBaseIntentService {
  
     }
     
+    
+    
+    /**
+     * 	From response request game
+     * 	==== ======== ======= ==== 
+     * 	300		Accepted game.
+     * 	301		Refused game.
+     * 	302		The game is already in progress.
+     * 	303		The game does not exists.
+     * 
+     * 	Make a move
+	 *	==== = ====
+	 *	400		New move added.
+	 *	401		The game is not ready.
+	 *	402		The game does not exists.
+	 *	403		Invalid player, the player do not belong to the game.
+	 *	404		Error 404
+     * 
+     * Request a new game
+	======= = === ====
+	200		New game added, waiting for player to accept the request...
+	201		There is already a game in progress.
+	202		They are not friends.
+	203		$user is not registered.
+	204		They have another game in progress.
+	205		They have another request. They should accept or refuse that request.	
+     * 
+     * @param json_data
+     * @return
+     */
+    
+    private String processMessage(JSONObject json_data){
+    	
+    	try {
+			
+    		String codeFromServer = json_data.getString("code");
+    		
+    		if("-1".equals(codeFromServer)){
+    			return "Connection failed.";
+    		}
+    		else if("200".equals(codeFromServer)){
+    			int game_id = json_data.getInt("game_id");
+    			GameFactory factory = new GameFactory();
+    			String nameOpponent = json_data.getString("player2_name");
+    			
+    			Game game = factory.createNewGameFromRequest(game_id, new Friend(nameOpponent));
+    			new GameDAO().insert(game);
+    			
+    			return nameOpponent+" sent you a request for a game.";
+    			
+    		}
+    		else if("300".equals(codeFromServer)){
+    			
+    			int game_id = json_data.getInt("game_id");
+    			GameDAO dao = new GameDAO();
+    			Game game = dao.get(game_id);
+    			game.setState(GameStates.IN_PROGRESS);
+    			dao.update(game);
+    			
+    			return "Your friend "+game.opponentName()+" is ready to play.";
+    		}
+			else if("301".equals(codeFromServer)){
+				
+				int game_id = json_data.getInt("game_id");
+    			GameDAO dao = new GameDAO();
+    			Game game = dao.get(game_id);
+    			game.setState(GameStates.REFUSED);
+    			dao.update(game);
+    			
+    			return "Your friend "+game.opponentName()+" refuse to play with you.";
+			    			
+			}
+			else if("400".equals(codeFromServer)){
+				
+				int game_id = json_data.getInt("game_id");
+				String move = json_data.getString("move");
+    			GameDAO dao = new GameDAO();
+    			Game game = dao.get(game_id);
+    			game.setMoveOnCache(move);
+				
+				return "Your friend "+game.opponentName()+" made a move.";//FIXME
+			}
+			else{//FIXME should be all cases
+				return "Your request is invalid.";
+			}
+			
+			
+			
+		} 
+    	catch (JSONException e) {
+    		return "Error processiing the message";
+		}
+    	
+    	
+    }
  
 }

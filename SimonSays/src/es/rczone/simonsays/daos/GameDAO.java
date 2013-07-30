@@ -84,7 +84,8 @@ public class GameDAO {
 		
 		ArrayList<Game> list = new ArrayList<Game>();
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
-		Cursor cursor = db.query(TABLE, null, STATE+"=?", new String[] {Integer.toString(GameStates.WAITING_FOR_RESPONSE.ordinal())}, null, null, null);
+		Cursor cursor = db.query(TABLE, null, STATE+"=? or " + STATE+"=?", new String[] {Integer.toString(GameStates.WAITING_FOR_RESPONSE.ordinal()),
+																						Integer.toString(GameStates.WAITING_FOR_MOVE.ordinal())}, null, null, null);
 
 		if(cursor.moveToFirst()){
 			Game valueObject;
