@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
-import es.rczone.simonsays.controllers.FriendsController;
+import es.rczone.simonsays.activities.fragments.listeners.AddFriendListener;
 import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
@@ -30,9 +30,8 @@ import es.rczone.simonsays.tools.HttpPostConnector;
 public class FragmentAddFriend extends Fragment implements ConnectionListener{
 
 	private HttpPostConnector post;
-	private FriendsController controller;
 	private String nameNewFriend;
-	
+	private AddFriendListener listener;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,10 +57,10 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 		post = new HttpPostConnector();
 	}
 	
-	
-	public void setController(FriendsController controller){
-		this.controller = controller;
+	public void setListener(AddFriendListener listener){
+		this.listener = listener;
 	}
+	
 
 	@Override
 	public boolean inBackground(String... params) {
@@ -107,6 +106,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 		}
 	}
 
+	//FIXME used copy-paste in this method
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
 		String name = params[0];
@@ -123,8 +123,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		Toast.makeText(this.getActivity(), "Nuevo amigo añadido", Toast.LENGTH_SHORT).show();
-		controller.handleMessage(FriendsController.MESSAGE_ADD_FRIEND, new Friend(nameNewFriend));
-		
+		listener.onFriendshipAdded(new Friend(nameNewFriend));
 	}
 
 	@Override

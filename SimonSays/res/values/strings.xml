@@ -41,40 +41,42 @@
     <string name="server_contact_added">From Server: successfully added contact!</string>
     
     
-    <!-- ActivityRegister -->
+    <!-- activity_register -->
     
-    <string name="register_user_details">Introduce tus datos: </string>
-    <string name="register_register">Registrar</string>
-    <string name="register_already_registered">Ya estoy registrado!</string>
-    <string name="register_sexo">Sexo</string>
-    <string name="register_hint_id">Nombre de cuenta</string>
-    <string name="register_hint_pass">Contraseña</string>
-    <string name="register_hint_email">Correo electrónico</string>
-    <string name="register_hint_name">Nombre</string>
-    <string name="register_hint_surname">Apellidos</string>
+    <string name="register_user_details">Fill your details: </string>
+    <string name="register_register">Register</string>
+    <string name="register_already_registered">I am already registered!</string>
+    <string name="register_sexo">Genre</string>
+    <string name="register_hint_id">Username</string>
+    <string name="register_hint_pass">Password</string>
+    <string name="register_hint_email">e-mail</string>
+    <string name="register_hint_name">Name</string>
+    <string name="register_hint_surname">Surname</string>
     
     
-    <!-- ActivityLogin -->
-    <string name="login_hint_id">Nombre de usuario</string>
-    <string name="login_hint_pass">Contraseña</string>
-    <string name="login_connect">Iniciar sesión</string>
-    <string name="login_forget_pass">Olvidé mi contraseña</string>
+    <!-- activity_login -->
+    <string name="login_hint_id">Username</string>
+    <string name="login_hint_pass">Password</string>
+    <string name="login_connect">Login</string>
+    <string name="login_forget_pass">Forget my password</string>
     
     
     <!-- AddFriends -->
-    <string name="addfriends_hint_name">Nombre de amigo</string>
-    <string name="addfriends_add">Añadir amigo</string>
+    <string name="addfriends_hint_name">Friend\'s name</string>
+    <string name="addfriends_add">Add a friend</string>
     
    
     
-    <!-- ActivityMainMenu -->
-    <string name="mainmenu_new_game">Start a new game</string>
+    <!-- activity_mainMenu -->
+    <string name="mainmenu_new_game">Start new game</string>
+    <string name="mainmenu_games">Games</string>
     <string name="mainmenu_resume_game">Resume game</string>
     <string name="mainmenu_friends">Friends</string>
     
     
-    <!-- ActivityGamesList -->
-    <string name="gameslist_pick_opponent">Pick a game with a long press</string>
+    <!-- fragment_activity_games -->
+    <string name="frgact_games_rdy_games">Games are ready to play.</string>
+    <string name="frgact_games_wait_games">Games are waiting for other player.</string>
     
     <!-- ItemListGame -->
     <string name="itemlistgame_picture">Opponent\'s picture</string>

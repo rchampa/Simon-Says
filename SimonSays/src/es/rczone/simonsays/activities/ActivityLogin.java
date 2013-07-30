@@ -127,7 +127,7 @@ public class ActivityLogin extends Activity implements ConnectionListener{
 	
 	}
 
-
+	//FIXME used copy-paste in this method
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
 		String name = params[0];

@@ -60,7 +60,7 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 
 	/*
 	 * Una vez terminado doInBackground segun lo que halla ocurrido pasamos
-	 * a la sig. activity o mostramos error
+	 * a un estado de datos de entrada inválidos, conexión establecida o error de conexión
 	 */
 	protected void onPostExecute(String result) {
 

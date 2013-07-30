@@ -15,19 +15,20 @@
         android:contentDescription="@string/app_name"
         android:layout_marginBottom="10dp" 
         />
-    <Button
-        android:id="@+id/mainmenu_bt_resume_game"
-        style="@style/EstiloMenuButton"
-        android:background="@drawable/button_rounded_corners"
-        android:text="@string/mainmenu_resume_game"
-        android:layout_marginBottom="7dp"
-        android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_new_game"
         style="@style/EstiloMenuButton"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/mainmenu_new_game"
+        android:layout_marginBottom="7dp"
+        android:onClick="onClick" />
+    
+    <Button
+        android:id="@+id/mainmenu_bt_games"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/mainmenu_games"
         android:layout_marginBottom="7dp"
         android:onClick="onClick" />
     

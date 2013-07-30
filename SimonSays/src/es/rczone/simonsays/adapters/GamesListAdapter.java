@@ -10,17 +10,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import es.rczone.simonsays.R;
-import es.rczone.simonsays.game.GameItemList;
+import es.rczone.simonsays.model.Game;
 
 
-public class AdapterGamesList extends BaseAdapter{
+public class GamesListAdapter extends BaseAdapter{
 	
+	@SuppressWarnings("unused")
 	private final Activity activity;
-    private final List<GameItemList> lista;
+    private final List<Game> lista;
     private LayoutInflater inflater = null;
-    private GameItemList gameItemList;
+    private Game game;
     
-    public AdapterGamesList(Activity activity, List<GameItemList> lista) {
+    public GamesListAdapter(Activity activity, List<Game> lista) {
           super(); 
           this.activity = activity;
           this.lista = lista;
@@ -49,14 +50,13 @@ public class AdapterGamesList extends BaseAdapter{
             viewHolder = (GameItemViewHolder) v.getTag();
         }
  
-        gameItemList = lista.get(position);
+        game = lista.get(position);
         
-        if (gameItemList != null) {
-        	
-//            viewHolder.iv_opponent_photo.setText(gameItemList.get...);
-//            viewHolder.tv_opponent_name.setText(gameItemList.getOpponentName());
-//            viewHolder.tv_date_last_move.setText(gameItemList.getDateLastMove());
-            
+        //FIXME date should be showned soon
+        if (game != null) {
+            viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_game);
+            viewHolder.tv_opponent_name.setText(game.opponentName());
+            viewHolder.tv_date_last_move.setText("");
         } 
         
         return v;
@@ -70,7 +70,7 @@ public class AdapterGamesList extends BaseAdapter{
     }
 
     @Override
-    public GameItemList getItem(int arg0) {
+    public Game getItem(int arg0) {
           return lista.get(arg0);
     }
 

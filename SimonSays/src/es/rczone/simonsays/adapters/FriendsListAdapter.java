@@ -14,6 +14,7 @@ import es.rczone.simonsays.model.Friend;
 
 public class FriendsListAdapter extends BaseAdapter{
 	
+	@SuppressWarnings("unused")
 	private final Activity activity;
     private final List<Friend> list;
     private LayoutInflater inflater = null;

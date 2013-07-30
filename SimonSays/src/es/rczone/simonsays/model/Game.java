@@ -3,28 +3,27 @@ package es.rczone.simonsays.model;
 public class Game extends SimpleObservable<Friend> {
 	
 	private int id;
-	private boolean finished;
 	private Friend opponent;
 	private ScoreBoard scoreBoard;
 	private Board board;
 	private boolean isMyTurn;
+	private GameStates state;
 	
 	
 	public Game(int id, Friend opponent, Difficulty difficulty, boolean isMyTurn){
 		this.id = id;
-		this.finished = false;
 		this.opponent = opponent;
 		this.board = new Board(difficulty);
 		this.scoreBoard = new ScoreBoard();
 		this.isMyTurn = isMyTurn;
+		state = GameStates.WAITING_FOR_RESPONSE;
 	}
 	
 	
-	public Game(int id, boolean finished, Friend opponent,
-			ScoreBoard scoreBoard, Board board, boolean isMyTurn) {
+	public Game(int id, GameStates state, Friend opponent, ScoreBoard scoreBoard, Board board, boolean isMyTurn) {
 		super();
 		this.id = id;
-		this.finished = finished;
+		this.state = state;
 		this.opponent = opponent;
 		this.scoreBoard = scoreBoard;
 		this.board = board;
@@ -36,8 +35,12 @@ public class Game extends SimpleObservable<Friend> {
 		return id;
 	}
 	
+	public GameStates getState(){
+		return state;
+	}
+	
 	public boolean isFinished(){
-		return finished;
+		return state==GameStates.FINISHED;
 	}
 	
 	public boolean isMyTurn(){
