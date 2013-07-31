@@ -55,7 +55,7 @@ public class GamesListAdapter extends BaseAdapter{
         //FIXME date should be showned soon
         if (game != null) {
             viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_game);
-            viewHolder.tv_opponent_name.setText(game.opponentName());
+            viewHolder.tv_opponent_name.setText(game.getOpponentName());
             viewHolder.tv_date_last_move.setText("");
         } 
         

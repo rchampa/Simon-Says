@@ -281,7 +281,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			game.setState(GameStates.IN_PROGRESS);
     			dao.update(game);
     			
-    			return "Your friend "+game.opponentName()+" is ready to play.";
+    			return "Your friend "+game.getOpponentName()+" is ready to play.";
     		}
 			else if("301".equals(codeFromServer)){
 				
@@ -291,7 +291,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			game.setState(GameStates.REFUSED);
     			dao.update(game);
     			
-    			return "Your friend "+game.opponentName()+" refuse to play with you.";
+    			return "Your friend "+game.getOpponentName()+" refuse to play with you.";
 			    			
 			}
 			else if("400".equals(codeFromServer)){
@@ -302,7 +302,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			Game game = dao.get(game_id);
     			game.setMoveOnCache(move);
 				
-				return "Your friend "+game.opponentName()+" made a move.";//FIXME
+				return "Your friend "+game.getOpponentName()+" made a move.";//FIXME
 			}
 			else{//FIXME should be all cases
 				return "Your request is invalid.";

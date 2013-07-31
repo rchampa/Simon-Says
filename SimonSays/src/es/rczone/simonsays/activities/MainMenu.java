@@ -37,13 +37,13 @@ public class MainMenu extends Activity {
             	startActivity(intent);
             	break;
             	
-            //XXX testing
-            case R.id.test:
-            	intent = new Intent(this, Board.class);
-            	intent.putExtra(Board.CODE, Board.OPP_TURN);
-            	intent.putExtra(Board.MOVE, "3-1-0-2");
-            	startActivity(intent);
-            	break;
+//            //XXX testing
+//            case R.id.test:
+//            	intent = new Intent(this, Board.class);
+//            	intent.putExtra(Board.CODE, Board.OPP_TURN);
+//            	intent.putExtra(Board.MOVE, "3-1-0-2");
+//            	startActivity(intent);
+//            	break;
  
         }                 
     } 

@@ -3,11 +3,15 @@ package es.rczone.simonsays.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
+import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.FragmentGamesList;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
@@ -49,7 +53,37 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 
 	@Override
 	public void onItemClicked(Game item) {
-		// TODO Auto-generated method stub
+
+		switch(item.getState()){
+		
+		case PENDING:
+			break;
+		
+		case IN_PROGRESS:
+			String move = item.getCachedMove();
+			SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
+        	String name = prefs.getString(GCMIntentService.NAME, "");
+        	String oppname = item.getOpponentName();
+			Intent intent = new Intent(this, Board.class);
+        	intent.putExtra(Board.CODE, Board.OPP_TURN);
+        	intent.putExtra(Board.MOVE, move);
+        	intent.putExtra(Board.USER_NAME, name);
+        	intent.putExtra(Board.OP_NAME, oppname);
+        	intent.putExtra(Board.GAME_ID, item.getID());
+        	startActivity(intent);
+			break;
+		case REFUSED:
+			break;
+		case WAITING_FOR_MOVE:
+			break;
+		case WAITING_FOR_RESPONSE:
+			break;
+		case FINISHED:
+			break;
+		default:
+			break;
+		
+		}
 		
 	}
 

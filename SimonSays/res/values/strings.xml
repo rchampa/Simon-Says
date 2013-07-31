@@ -88,6 +88,8 @@
     <string name="board_opp_score">Opponent score: </string>
     <string name="board_show_oppmove">Show opponent\'s move</string>
     <string name="board_reset_move">Reset my move</string>
+    <string name="board_name">  </string>
+    
     
     
 

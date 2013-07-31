@@ -14,20 +14,43 @@
     android:layout_marginBottom="10dp"
      >
     <TextView
-        android:id="@+id/board_tv_opname"
+        android:id="@+id/board_tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/board_name"
+         />
+    
+    <TextView
+        android:id="@+id/board_tv_score_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/board_user_score"
          />
     
+    </LinearLayout>
+    
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="10dp"
+     >
     <TextView
-        android:id="@+id/board_tv_score"
+        android:id="@+id/board_tv_opname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/board_name"
+         />
+    
+    <TextView
+        android:id="@+id/board_tv_score_op"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/board_opp_score"
          />
     
     </LinearLayout>
+    
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >

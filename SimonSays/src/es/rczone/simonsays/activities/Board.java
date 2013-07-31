@@ -1,9 +1,17 @@
 package es.rczone.simonsays.activities;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.android.gcm.GCMRegistrar;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -11,18 +19,28 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
+import android.widget.Toast;
+import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.customviews.CustomView;
 import es.rczone.simonsays.customviews.CustomViewListener;
 import es.rczone.simonsays.model.Colors;
+import es.rczone.simonsays.tools.ConnectionListener;
+import es.rczone.simonsays.tools.HttpPostConnector;
 
 
-public class Board extends Activity implements CustomViewListener{
+public class Board extends Activity implements CustomViewListener, ConnectionListener {
 	
 	public static int MY_TURN = 0;
 	public static int OPP_TURN = 1;
 	public static String CODE = "code";
 	public static String MOVE = "move";
+	public static String USER_NAME = "username";
+	public static String OP_NAME = "opname";
+	public static String GAME_ID = "gameID";
+	
+
 	
 	enum Mode{MY_TURN, OPP_TURN};
 	private String TAG = Board.class.getSimpleName();
@@ -32,9 +50,19 @@ public class Board extends Activity implements CustomViewListener{
 	private CustomView roscoGreen;
 	private CustomView roscoRed;
 	private CustomView send;
+	private TextView etName;
+	private TextView etOppName;
+	private TextView etScoreUser;
+	private TextView etScoreOpp;
+	
+	
 	private StringBuilder move;
 	private String oppmove; 
 	private Mode mode;
+	private int gameID;
+	private String username;
+	
+	private HttpPostConnector post;
 
 
 	
@@ -44,11 +72,19 @@ public class Board extends Activity implements CustomViewListener{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_board);
 		
+		post = new HttpPostConnector();
+		
 		roscoBlue = (CustomView)findViewById(R.id.roscoBlueView1);
 		roscoYellow = (CustomView)findViewById(R.id.roscoYellowView1);
 		roscoGreen = (CustomView)findViewById(R.id.roscoGreenView1);
 		roscoRed = (CustomView)findViewById(R.id.roscoRedView1);
 		send = (CustomView)findViewById(R.id.sendView1);
+		
+		etName = (TextView) findViewById(R.id.board_tv_username);
+		etOppName = (TextView) findViewById(R.id.board_tv_opname);
+		
+		etScoreUser = (TextView) findViewById(R.id.board_tv_score_user);
+		etScoreOpp = (TextView) findViewById(R.id.board_tv_score_op);
 		
 		roscoBlue.setListener(this);
 		roscoYellow.setListener(this);
@@ -64,8 +100,15 @@ public class Board extends Activity implements CustomViewListener{
 		if (extras != null) {
 			int code = extras.getInt(CODE, -1);
 			if(code==OPP_TURN){
-				//mode = Mode.OPP_TURN;
 				oppmove = extras.getString(MOVE);
+				username = extras.getString(USER_NAME);
+				
+				etName.setText(username);
+				etOppName.setText(extras.getShort(OP_NAME));
+								
+				gameID = extras.getInt(GAME_ID);
+				
+				
 			}
 		}
 		
@@ -261,9 +304,73 @@ public class Board extends Activity implements CustomViewListener{
 	}
 	
 	/**
-	 * Clear the buffer.
+	 * Clears buffer.
 	 */
 	private void resetMove(){
 		move.setLength(0);
+	}
+
+	@Override
+	public boolean inBackground(String... params) {
+		ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
+
+		postParametersToSend.add(new BasicNameValuePair("game_id", params[0]));
+		postParametersToSend.add(new BasicNameValuePair("player_name", params[1]));
+		postParametersToSend.add(new BasicNameValuePair("move", params[2]));
+
+		// realizamos una peticion y como respuesta obtenes un array JSON
+		JSONArray jdata = post.getserverdata(postParametersToSend, HttpPostConnector.URL_MAKE_A_MOVE);
+
+
+		// si lo que obtuvimos no es null, es decir, hay respuesta válida
+		if (jdata != null && jdata.length() > 0) {
+
+			try {
+				JSONObject json_data = jdata.getJSONObject(0);
+				String codeFromServer = json_data.getString("code");
+				//String messageFromServer = json_data.getString("message");
+				
+				if(codeFromServer.equals("400")){
+					return true;
+				}
+				else{
+					return false;
+				}
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return true;
+		} else { // json obtenido invalido verificar parte WEB.
+			Log.e("JSON  ", "ERROR");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean validateDataBeforeConnection(String... params) {
+		//FIXME
+		return true;
+	}
+
+	@Override
+	public void afterGoodConnection() {
+		Toast.makeText(this, "The move has been sent", Toast.LENGTH_SHORT).show();
+		finish();
+		
+	}
+
+	@Override
+	public void invalidInputData() {
+		Toast.makeText(this, "The move has not been sent", Toast.LENGTH_SHORT).show();
+		
+	}
+
+	@Override
+	public void afterErrorConnection() {
+		Toast.makeText(this, "Problem connections. The move has not been sent.", Toast.LENGTH_SHORT).show();
+		
 	}
 }

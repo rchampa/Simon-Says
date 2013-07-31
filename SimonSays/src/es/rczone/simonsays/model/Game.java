@@ -58,7 +58,7 @@ public class Game extends SimpleObservable<Friend> {
 		return 4;
 	}
 	
-	public String opponentName(){
+	public String getOpponentName(){
 		return opponent.getUserName();
 	}
 	
@@ -80,5 +80,8 @@ public class Game extends SimpleObservable<Friend> {
 		isAlreadyOpponenMovetDisplayed = false;
 	}
 
+	public String getCachedMove(){
+		return this.moveCached;
+	}
 	
 }

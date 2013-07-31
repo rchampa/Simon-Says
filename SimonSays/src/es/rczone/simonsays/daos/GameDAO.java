@@ -137,7 +137,7 @@ public class GameDAO {
 		ContentValues values = new ContentValues();
 		
 		values.put(ID, game.getID());
-		values.put(OP_NAME, game.opponentName());
+		values.put(OP_NAME, game.getOpponentName());
 		values.put(STATE, game.getState().ordinal());
 		values.put(NUM_MOVES, game.getNumMoves());
 		values.put(TURN, game.isMyTurn());
@@ -152,7 +152,7 @@ public class GameDAO {
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(ID, game.getID());
-		values.put(OP_NAME, game.opponentName());
+		values.put(OP_NAME, game.getOpponentName());
 		values.put(STATE, game.getState().ordinal());
 		values.put(NUM_MOVES, game.getNumMoves());
 		values.put(TURN, game.isMyTurn());

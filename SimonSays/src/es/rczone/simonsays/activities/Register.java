@@ -206,25 +206,25 @@ public class Register extends Activity implements ConnectionListener{
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
 		
-		String name = params[0];
-		String password = params[1]; 
-		String email = params[2];
-		
-		if(name==null || name.trim().equals("") || name.length()>30){
-			//Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		
-		if(password==null || password.trim().equals("") || password.length()>30){
-			//Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		
-		
-		if(email==null || email.trim().equals("") || email.length()>30){
-			//Toast.makeText(this, "El apellido introducido no es válido", Toast.LENGTH_SHORT).show();
-			return false;
-		}
+//		String name = params[0];
+//		String password = params[1]; 
+//		String email = params[2];
+//		
+//		if(name==null || name.trim().equals("") || name.length()>30){
+//			//Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//		
+//		if(password==null || password.trim().equals("") || password.length()>30){
+//			//Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//		
+//		
+//		if(email==null || email.trim().equals("") || email.length()>30){
+//			//Toast.makeText(this, "El apellido introducido no es válido", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
 					
 		return true;
 	}

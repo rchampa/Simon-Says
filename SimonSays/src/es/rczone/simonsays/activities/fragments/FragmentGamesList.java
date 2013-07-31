@@ -27,7 +27,7 @@ public class FragmentGamesList  extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		return inflater.inflate(R.layout.fragment_friends_list, container,false);
+		return inflater.inflate(R.layout.fragment_game_list, container,false);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class FragmentGamesList  extends Fragment {
 		games = new ArrayList<Game>();
 		
 		adapter = new GamesListAdapter(this.getActivity(), games);
-		lstListado = (ListView) getView().findViewById(R.id.list_friends);
+		lstListado = (ListView) getView().findViewById(R.id.list_games);
 		lstListado.setAdapter(adapter);
 		
 		lstListado.setOnItemClickListener(new OnItemClickListener() {

@@ -10,7 +10,7 @@ final class DatabaseHelper extends SQLiteOpenHelper {
 	@SuppressWarnings("unused")
 	private static final String TAG = DatabaseHelper.class.getSimpleName();
 	private static final String DATABASE_NAME = "Memorize";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 4;
 	
 	public DatabaseHelper() {
 		super(MemorizeApp.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,7 +23,7 @@ final class DatabaseHelper extends SQLiteOpenHelper {
 		database.execSQL(friends);
 		
 		final String games = "CREATE TABLE " + GameDAO.TABLE + "(" +
-				GameDAO.ID + " integer primary key, " +
+				GameDAO.ID + " int primary key, " +
 				GameDAO.OP_NAME + " varchar(20) not null, " +
 				GameDAO.STATE + " int not null, " +
 				GameDAO.TURN + " int not null, " +
@@ -31,7 +31,7 @@ final class DatabaseHelper extends SQLiteOpenHelper {
 		database.execSQL(games);
 		
 		final String moves = "CREATE TABLE " + MoveDAO.TABLE + "(" +
-				MoveDAO.ID + " integer primary key AUTO_INCREMENT, " +
+				MoveDAO.ID + " integer primary key, " +
 				MoveDAO.GAME_ID + " int not null, " +
 				MoveDAO.MOVE + " varchar(20) not null, " +
 				MoveDAO.CREATED_AT + " timestamp not null  default CURRENT_TIMESTAMP)";

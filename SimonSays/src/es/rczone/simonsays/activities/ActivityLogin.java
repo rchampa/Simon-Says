@@ -98,7 +98,7 @@ public class ActivityLogin extends Activity implements ConnectionListener{
 			try {
 				JSONObject json_data = jdata.getJSONObject(0);
 				String codeFromServer = json_data.getString("code");
-				String messageFromServer = json_data.getString("message");
+				//String messageFromServer = json_data.getString("message");
 				
 				if(codeFromServer.equals("500")){
 					SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
