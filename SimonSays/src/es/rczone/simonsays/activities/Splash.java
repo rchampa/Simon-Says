@@ -1,8 +1,5 @@
 package es.rczone.simonsays.activities;
 
-import es.rczone.simonsays.GCMIntentService;
-import es.rczone.simonsays.R;
-import es.rczone.simonsays.R.layout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+import es.rczone.simonsays.GCMIntentService;
+import es.rczone.simonsays.R;
 
 
 

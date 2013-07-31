@@ -54,7 +54,7 @@ public class GameDAO {
 	public ArrayList<Game> getAllReadyGames() {
 		
 		ArrayList<Game> list = new ArrayList<Game>();
-		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, STATE+"=?", new String[] {Integer.toString(GameStates.IN_PROGRESS.ordinal())}, null, null, null);
 		if(cursor.moveToFirst()){
 			Game valueObject;
@@ -83,7 +83,7 @@ public class GameDAO {
 	public ArrayList<Game> getAllWaitingGames() {
 		
 		ArrayList<Game> list = new ArrayList<Game>();
-		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, STATE+"=? or " + STATE+"=?", new String[] {Integer.toString(GameStates.WAITING_FOR_RESPONSE.ordinal()),
 																						Integer.toString(GameStates.WAITING_FOR_MOVE.ordinal())}, null, null, null);
 
@@ -112,7 +112,7 @@ public class GameDAO {
 	}
 	
 	public Game get(int id) {
-		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, ID+"=?", new String[] {Integer.toString(id)}, null, null, null);
 		Game valueObject = null;
 		if (cursor.moveToFirst()) {
@@ -147,12 +147,15 @@ public class GameDAO {
 		return num;
 	}
 	
-	
-	//FIXME
+
 	public int update(Game game) {
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
 		ContentValues values = new ContentValues();
-		//values.put(ID, );
+		values.put(ID, game.getID());
+		values.put(OP_NAME, game.opponentName());
+		values.put(STATE, game.getState().ordinal());
+		values.put(NUM_MOVES, game.getNumMoves());
+		values.put(TURN, game.isMyTurn());
 		int num = db.update(TABLE, values, ID + "=?", new String[]{Integer.toString(game.getID())});
 		
 		db.close();

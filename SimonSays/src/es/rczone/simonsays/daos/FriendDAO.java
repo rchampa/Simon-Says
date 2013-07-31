@@ -18,7 +18,7 @@ public class FriendDAO {
 	public ArrayList<Friend> getAllFriends() {
 		
 		ArrayList<Friend> list = new ArrayList<Friend>();
-		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, null, null, null, null, null);
 
 		if(cursor.moveToFirst()){
@@ -35,7 +35,7 @@ public class FriendDAO {
 	}
 	
 	public Friend get(String name) {
-		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
 		Cursor cursor = db.query(TABLE, null, NAME+"=?", new String[] {name}, null, null, null);
 		Friend valueObject = null;
 		if (cursor.moveToFirst()) {

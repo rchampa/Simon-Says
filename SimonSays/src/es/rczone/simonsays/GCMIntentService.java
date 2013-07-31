@@ -15,12 +15,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
-import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.MainMenu;
 import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.model.Friend;
@@ -92,7 +90,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 							try{
 								JSONObject json_data = jdata.getJSONObject(0);
 								String codeFromServer = json_data.getString("code");
-								String messageFromServer = json_data.getString("message");
+								//String messageFromServer = json_data.getString("message");
 								
 								if(codeFromServer.equals("600")){
 									editor.putString(GCM_ID, id);
@@ -197,7 +195,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         return super.onRecoverableError(context, errorId);
     }
  
-    /**
+    /**FIXME find a solution to deprecation for low versions 
      * Issues a notification to inform the user that server has sent a message.
      */
     private static void generateNotification(Context context, String message) {
@@ -244,12 +242,12 @@ public class GCMIntentService extends GCMBaseIntentService {
      * 
      * Request a new game
 	======= = === ====
-	200		New game added, waiting for player to accept the request...
-	201		There is already a game in progress.
-	202		They are not friends.
-	203		$user is not registered.
-	204		They have another game in progress.
-	205		They have another request. They should accept or refuse that request.	
+	 *	200		New game added, waiting for player to accept the request...
+	 *	201		There is already a game in progress.
+	 *	202		They are not friends.
+	 *	203		$user is not registered.
+	 *	204		They have another game in progress.
+	 *	205		They have another request. They should accept or refuse that request.	
      * 
      * @param json_data
      * @return

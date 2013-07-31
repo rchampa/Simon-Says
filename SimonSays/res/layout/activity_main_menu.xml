@@ -38,5 +38,12 @@
         android:background="@drawable/button_rounded_corners"
         android:text="@string/mainmenu_friends"
         android:onClick="onClick" />
+    
+    <Button
+        android:id="@+id/test"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="test board"
+        android:onClick="onClick" />
 
 </LinearLayout>
