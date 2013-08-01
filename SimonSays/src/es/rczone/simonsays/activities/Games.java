@@ -27,6 +27,7 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 	private GamesController controller;
 	private List<Game> games_rdy_list;
 	private List<Game> games_waiting_list;
+	private boolean listsUpdated;
 	
 	
 	@Override
@@ -47,9 +48,26 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 		
 		controller.addOutboxHandler(new Handler(this));
 		
-		controller.handleMessage(GamesController.MESSAGE_GET_READY_LIST);
-		controller.handleMessage(GamesController.MESSAGE_GET_WAITING_LIST);
+		listsUpdated = false;
          
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		if(games_rdy_list!=null && games_waiting_list!=null && !listsUpdated){
+			controller.handleMessage(GamesController.MESSAGE_GET_READY_LIST);
+			controller.handleMessage(GamesController.MESSAGE_GET_WAITING_LIST);
+			listsUpdated = true;
+		}
+		
+	}
+	
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		listsUpdated=false;
 	}
 	
 

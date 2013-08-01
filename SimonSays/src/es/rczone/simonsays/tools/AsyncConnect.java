@@ -40,7 +40,7 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 	protected void onPreExecute() {
 		
 		progressDialog = new ProgressDialog(context);
-		progressDialog.setMessage("Conectando con el servidor....");
+		progressDialog.setMessage("Connecting....");
 		progressDialog.setIndeterminate(false);
 		progressDialog.setCancelable(false);
 		progressDialog.show();
