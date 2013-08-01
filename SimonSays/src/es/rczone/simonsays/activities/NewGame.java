@@ -88,6 +88,8 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
     	
     	new AsyncConnect(this).execute(name, friend.getUserName());
 		
+		//XXX testing...
+		//new GameDAO().deleteAll();
 	}
 
 	@Override
@@ -114,9 +116,9 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 				JSONObject json_data = jdata.getJSONObject(0);
 				String codeFromServer = json_data.getString("code");
 				//String messageFromServer = json_data.getString("message");
-				int id = json_data.getInt("GAME_ID");
 				
 				if("200".equals(codeFromServer)){
+					int id = json_data.getInt("game_id");
 					Friend opponent = new FriendDAO().get(params[1]);
 					newGame = new GameFactory().createNewGame(id, opponent);
 					return true;
@@ -167,13 +169,13 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 
 	@Override
 	public void invalidInputData() {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "Invalid input data.", Toast.LENGTH_SHORT).show();
 		
 	}
 
 	@Override
 	public void afterErrorConnection() {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "There was an error during connection.", Toast.LENGTH_SHORT).show();
 		
 	}
 

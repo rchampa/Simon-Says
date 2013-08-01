@@ -21,10 +21,13 @@ import com.google.android.gcm.GCMRegistrar;
 
 import es.rczone.simonsays.activities.MainMenu;
 import es.rczone.simonsays.daos.GameDAO;
+import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.model.Game;
 import es.rczone.simonsays.model.GameFactory;
 import es.rczone.simonsays.model.GameStates;
+import es.rczone.simonsays.model.Move;
+import es.rczone.simonsays.model.MovesFactory;
 import es.rczone.simonsays.tools.HttpPostConnector;
  
 
@@ -278,6 +281,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			int game_id = json_data.getInt("game_id");
     			GameDAO dao = new GameDAO();
     			Game game = dao.get(game_id);
+    			game.setMyTurn(true);
     			game.setState(GameStates.IN_PROGRESS);
     			dao.update(game);
     			
@@ -298,9 +302,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 				
 				int game_id = json_data.getInt("game_id");
 				String move = json_data.getString("move");
+				Move m = new MovesFactory().createMove(game_id, move);
+				new MoveDAO().insert(m);
     			GameDAO dao = new GameDAO();
     			Game game = dao.get(game_id);
     			game.setMoveOnCache(move);
+    			game.setState(GameStates.IN_PROGRESS);
+    			game.setMyTurn(false);//Check, this makes turn for opp
+    			dao.update(game);
+    			
 				
 				return "Your friend "+game.getOpponentName()+" made a move.";//FIXME
 			}

@@ -16,7 +16,9 @@ import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.FragmentGamesList;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
 import es.rczone.simonsays.controllers.GamesController;
+import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.GameStates;
 
 public class Games extends FragmentActivity implements Handler.Callback, ListListener<Game>{
 
@@ -60,12 +62,13 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 			break;
 		
 		case IN_PROGRESS:
+			boolean isMyTurn = item.isMyTurn();
 			String move = item.getCachedMove();
 			SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
         	String name = prefs.getString(GCMIntentService.NAME, "");
         	String oppname = item.getOpponentName();
 			Intent intent = new Intent(this, Board.class);
-        	intent.putExtra(Board.CODE, Board.OPP_TURN);
+        	intent.putExtra(Board.CODE, isMyTurn ? Board.MY_TURN : Board.OPP_TURN);
         	intent.putExtra(Board.MOVE, move);
         	intent.putExtra(Board.USER_NAME, name);
         	intent.putExtra(Board.OP_NAME, oppname);
@@ -89,7 +92,9 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 
 	@Override
 	public void onItemLongClicked(Game item) {
-		// TODO Auto-generated method stub
+		// xxx
+		item.setState(GameStates.WAITING_FOR_MOVE);
+		new GameDAO().update(item);
 		
 	}
 

@@ -84,7 +84,7 @@ public class Register extends Activity implements ConnectionListener{
             	GCMRegistrar.register(this, GCMIntentService.SENDER_ID);
             	break;
             case R.id.button_login:
-            	Intent intent = new Intent(this, ActivityLogin.class);
+            	Intent intent = new Intent(this, Login.class);
             	startActivity(intent);
             	break;
  

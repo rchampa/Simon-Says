@@ -7,11 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gcm.GCMRegistrar;
-
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -21,11 +17,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
-import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.customviews.CustomView;
 import es.rczone.simonsays.customviews.CustomViewListener;
+import es.rczone.simonsays.daos.GameDAO;
+import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Colors;
+import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.GameStates;
+import es.rczone.simonsays.model.Move;
+import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 
@@ -35,6 +36,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	public static int MY_TURN = 0;
 	public static int OPP_TURN = 1;
 	public static String CODE = "code";
+	public static String TURN = "turn";
 	public static String MOVE = "move";
 	public static String USER_NAME = "username";
 	public static String OP_NAME = "opname";
@@ -98,17 +100,17 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
+			
+			username = extras.getString(USER_NAME);
+			etName.setText(username);
+			etOppName.setText(extras.getString(OP_NAME));				
+			gameID = extras.getInt(GAME_ID);
+			
 			int code = extras.getInt(CODE, -1);
 			if(code==OPP_TURN){
-				oppmove = extras.getString(MOVE);
-				username = extras.getString(USER_NAME);
 				
-				etName.setText(username);
-				etOppName.setText(extras.getShort(OP_NAME));
-								
-				gameID = extras.getInt(GAME_ID);
-				
-				
+				Move m = new MoveDAO().getMoveOfGame(gameID);
+				oppmove = m.getMove();
 			}
 		}
 		
@@ -116,6 +118,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	
 	@Override
 	protected void onDestroy(){
+		super.onDestroy();
 		setEnableFalseClick(false);
 	}
 
@@ -152,6 +155,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 				
 			case R.id.sendView1:
 				Log.d(TAG, "send");
+				new AsyncConnect(this).execute(""+gameID,username,move.toString());
 				break;
 		}
 		
@@ -331,6 +335,9 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 				//String messageFromServer = json_data.getString("message");
 				
 				if(codeFromServer.equals("400")){
+					Game g = new GameDAO().get(gameID);
+					g.setState(GameStates.WAITING_FOR_MOVE);
+					new GameDAO().update(g);
 					return true;
 				}
 				else{

@@ -37,6 +37,10 @@ public class Game extends SimpleObservable<Friend> {
 		return id;
 	}
 	
+	public void setMyTurn(boolean turn){
+		this.isMyTurn = turn;
+	}
+	
 	public GameStates getState(){
 		return state;
 	}

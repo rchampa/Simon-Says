@@ -18,6 +18,11 @@ public class Move {
 		this.move_created_at = move_created_at;
 	}
 	
+	public Move(int game_id, String move) {
+		this.game_id = game_id;
+		this.move = move;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -36,7 +36,7 @@ public class HttpPostConnector {
 	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/simon_dice/add_friend.php";
 	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/simon_dice/request_new_game.php";
 	public static String URL_RESPONSE_REQUEST = "http://" + IP_Server + "/simon_dice/response_request_game.php";
-	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/update_location.php";
+	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/make_a_move.php";
 	
 
 	private InputStream is = null;

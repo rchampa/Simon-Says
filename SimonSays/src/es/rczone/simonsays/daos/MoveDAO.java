@@ -67,7 +67,6 @@ public class MoveDAO {
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
 		ContentValues values = new ContentValues();
 		
-		values.put(ID, move.getId());
 		values.put(GAME_ID, move.getGame_id());
 		values.put(MOVE, move.getMove());
 		//date is assigned by default Current_timestamp
@@ -75,6 +74,46 @@ public class MoveDAO {
 		long num = db.insert(TABLE, null, values);
 		db.close();
 		return num;
+	}
+	
+	public Move getMoveOfGame(int gameID){
+		
+		ArrayList<Move> list = new ArrayList<Move>();
+		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
+		Cursor cursor = db.query(TABLE, null, GAME_ID+"=?",  new String[] {Integer.toString(gameID)}, null, null, null);
+
+		if(cursor.moveToFirst()){
+			Move valueObject;
+			
+			do{
+				int id = cursor.getInt(cursor.getColumnIndex(ID));
+				int game_id = cursor.getInt(cursor.getColumnIndex(GAME_ID));
+				String move = cursor.getString(cursor.getColumnIndex(MOVE));
+				String created_at = cursor.getString(cursor.getColumnIndex(CREATED_AT));
+				Date date_created_at = Timestamp.valueOf(created_at);
+				
+				valueObject = new Move(id, game_id, move, date_created_at);
+				
+				list.add(valueObject);
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		int max=-1;
+		int t = -1;
+		Move moveOfGame=null;
+		for(Move m : list){
+			t = m.getId();
+			if(t>max){
+				moveOfGame = m;
+				max = t;
+			}
+		}
+		
+		return moveOfGame;
+		
 	}
 	
 	

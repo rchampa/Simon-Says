@@ -27,14 +27,13 @@ import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
 
-public class ActivityLogin extends Activity implements ConnectionListener{
+public class Login extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 		
