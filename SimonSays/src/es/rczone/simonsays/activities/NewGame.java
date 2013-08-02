@@ -27,6 +27,7 @@ import es.rczone.simonsays.controllers.FriendsController;
 import es.rczone.simonsays.daos.FriendDAO;
 import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.model.Game;
 import es.rczone.simonsays.model.GameFactory;
 import es.rczone.simonsays.tools.AsyncConnect;
@@ -83,10 +84,14 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 	@Override
 	public void onItemClicked(Friend friend) {
 		
-		SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
-    	String name = prefs.getString(GCMIntentService.NAME, "");
-    	
-    	new AsyncConnect(this).execute(name, friend.getUserName());
+		if(friend.getState()==FriendStates.ACCEPTED){
+		
+			SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
+	    	String name = prefs.getString(GCMIntentService.NAME, "");
+	    	
+	    	new AsyncConnect(this).execute(name, friend.getUserName());
+		}
+		
 		
 		//XXX testing...
 		//new GameDAO().deleteAll();

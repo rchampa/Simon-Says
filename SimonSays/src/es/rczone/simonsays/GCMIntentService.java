@@ -8,18 +8,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
-import es.rczone.simonsays.activities.MainMenu;
+import es.rczone.simonsays.activities.Games;
+import es.rczone.simonsays.daos.FriendDAO;
 import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Friend;
@@ -28,6 +31,7 @@ import es.rczone.simonsays.model.GameFactory;
 import es.rczone.simonsays.model.GameStates;
 import es.rczone.simonsays.model.Move;
 import es.rczone.simonsays.model.MovesFactory;
+import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.tools.HttpPostConnector;
  
 
@@ -168,8 +172,8 @@ public class GCMIntentService extends GCMBaseIntentService {
         
       
         // notifies user
-        generateNotification(context, notificationMessage);
-    }
+        generateNotification(context, "Memorize", notificationMessage);
+    } 
  
     /**
      * Method called on receiving a deleted message
@@ -179,7 +183,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Received deleted messages notification");
         String message = getString(R.string.gcm_deleted, total);
         // notifies user
-        generateNotification(context, message);
+        generateNotification(context, "Memorize",message);
     }
  
     /**
@@ -198,30 +202,28 @@ public class GCMIntentService extends GCMBaseIntentService {
         return super.onRecoverableError(context, errorId);
     }
  
-    /**FIXME find a solution to deprecation for low versions 
-     * Issues a notification to inform the user that server has sent a message.
-     */
-    private static void generateNotification(Context context, String message) {
-        int icon = R.drawable.ic_launcher;
-        long when = System.currentTimeMillis();
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(icon, message, when);
-         
-        String title = context.getString(R.string.app_name);
-         
-        Intent notificationIntent = new Intent(context, MainMenu.class);
-        // set intent so it does not start a new activity
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, title, message, intent);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-         
-        // Play default notification sound
-        notification.defaults |= Notification.DEFAULT_SOUND;
-         
-        // Vibrate if vibrate is enabled
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(0, notification);      
+    
+    private static void generateNotification(Context context, String title, String message) {
+    	NotificationCompat.Builder builder =  new NotificationCompat.Builder(context)  
+    	        .setSmallIcon(R.drawable.ic_launcher)  
+    	        .setContentTitle(title)  
+    	        .setContentText(message);  
+
+
+    	Intent notificationIntent = new Intent(context, Games.class);  
+
+    	PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);  
+
+    	builder.setContentIntent(contentIntent);  
+    	builder.setAutoCancel(true);
+    	builder.setLights(Color.GREEN, 500, 500);
+    	builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+//    	long[] pattern = {500,500,500,500,500,500,500,500,500};
+//    	builder.setVibrate(pattern);
+    	//builder.setStyle(new NotificationCompat.InboxStyle());
+    	// Add as notification  
+    	NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
+    	manager.notify(1, builder.build());       
  
     }
     
@@ -243,14 +245,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 	 *	403		Invalid player, the player do not belong to the game.
 	 *	404		Error 404
      * 
-     * Request a new game
-	======= = === ====
+     * 	Request a new game
+     * 	======= = === ====
 	 *	200		New game added, waiting for player to accept the request...
 	 *	201		There is already a game in progress.
 	 *	202		They are not friends.
 	 *	203		$user is not registered.
 	 *	204		They have another game in progress.
 	 *	205		They have another request. They should accept or refuse that request.	
+	 *
+	 *	Response a friendship request
+	 *	======== = ========== =======
+	 *	700		Friendship completed.
+	 *	701		Friendship rejected.
      * 
      * @param json_data
      * @return
@@ -265,12 +272,21 @@ public class GCMIntentService extends GCMBaseIntentService {
     		if("-1".equals(codeFromServer)){
     			return "Connection failed.";
     		}
+    		else if("100".equals(codeFromServer)){
+    			String friendName = json_data.getString("user_name");
+    			Friend f = new Friend(friendName, FriendStates.ASKED_YOU);
+    			new FriendDAO().insert(f);
+    			
+    			return friendName+" sent you a friendship request.";
+    			
+    		}
+    		
     		else if("200".equals(codeFromServer)){
     			int game_id = json_data.getInt("game_id");
     			GameFactory factory = new GameFactory();
     			String nameOpponent = json_data.getString("player2_name");
-    			
-    			Game game = factory.createNewGameFromRequest(game_id, new Friend(nameOpponent));
+    			Friend f = new FriendDAO().get(nameOpponent);
+    			Game game = factory.createNewGameFromRequest(game_id, f);
     			new GameDAO().insert(game);
     			
     			return nameOpponent+" sent you a request for a game.";
@@ -304,15 +320,40 @@ public class GCMIntentService extends GCMBaseIntentService {
 				String move = json_data.getString("move");
 				Move m = new MovesFactory().createMove(game_id, move);
 				new MoveDAO().insert(m);
+				
+				int num_moves = json_data.getInt("level");
+				int guess = json_data.getInt("guess");
+				
     			GameDAO dao = new GameDAO();
     			Game game = dao.get(game_id);
-    			game.setMoveOnCache(move);
     			game.setState(GameStates.IN_PROGRESS);
     			game.setMyTurn(false);//Check, this makes turn for opp
+    			game.setNumMoves(num_moves);
+    			if(guess==1) game.upOppScore();
     			dao.update(game);
     			
 				
-				return "Your friend "+game.getOpponentName()+" made a move.";//FIXME
+				return "Your friend "+game.getOpponentName()+" made a move.";
+			}
+			else if("700".equals(codeFromServer)){
+				String friendName = json_data.getString("friendName");
+				FriendDAO dao = new FriendDAO(); 
+				Friend f = dao.get(friendName);
+				f.setState(FriendStates.ACCEPTED);
+				dao.update(f);
+				
+				return "Your friend "+friendName+" accepted your friendship request.";
+				
+			}
+			else if("701".equals(codeFromServer)){
+				String friendName = json_data.getString("friend");
+				FriendDAO dao = new FriendDAO(); 
+				Friend f = dao.get(friendName);
+				f.setState(FriendStates.REJECTED);
+				dao.update(f);
+				
+				return "Your friend "+friendName+" rejected your friendship request.";
+				
 			}
 			else{//FIXME should be all cases
 				return "Your request is invalid.";

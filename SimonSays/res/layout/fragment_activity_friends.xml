@@ -1,10 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:background="@drawable/background" >
-		
+
 		<LinearLayout
-          
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:background="@drawable/background"
           android:orientation="vertical"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
@@ -16,16 +13,24 @@
 		    
 		  	<fragment class="es.rczone.simonsays.activities.fragments.FragmentFriendsList"
 	        android:id="@+id/frg_friend_list"
-	        android:layout_weight="7"
+	        android:layout_weight="8"
 	        android:layout_width="match_parent"
 	        android:layout_height="0px" />
 	 
 	    	<fragment class="es.rczone.simonsays.activities.fragments.FragmentAddFriend"
 	        android:id="@+id/frg_add_friend"
-	        android:layout_weight="3"
+	        android:layout_weight="2"
 	        android:layout_width="match_parent"
 	        android:layout_height="0px" />
           
 		    
 		</LinearLayout>
-</ScrollView>
+
+
+
+<!-- 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:background="@drawable/background" >
+ -->

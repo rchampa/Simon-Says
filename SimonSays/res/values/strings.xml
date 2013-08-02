@@ -84,12 +84,13 @@
     <!--activity_board -->
     <string name="board_send_move">Send your move</string>
     <string name="board_opname">Opponent\'s name</string>
-    <string name="board_user_score">User score: </string>
-    <string name="board_opp_score">Opponent score: </string>
+    <string name="board_score">score: </string>
     <string name="board_show_oppmove">Show opponent\'s move</string>
     <string name="board_reset_move">Reset my move</string>
     <string name="board_name">  </string>
-    
+    <string name="board_checkMove">Check move</string>
+    <string name="board_threshold">Opponent threshold: </string>
+    <string name="board_newThreshold">User threshold: </string>
     
     
 

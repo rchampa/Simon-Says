@@ -51,11 +51,12 @@ public class FriendsListAdapter extends BaseAdapter{
     	
         if (v == null) {
               
-            v = inflater.inflate(R.layout.item_list_game, null);
+            v = inflater.inflate(R.layout.item_list_friend, null);
  
             viewHolder = new FriendItemViewHolder();
-            viewHolder.iv_opponent_photo = (ImageView) v.findViewById(R.id.itemlistgame_iv_opponent_picture);
-            viewHolder.tv_opponent_name = (TextView) v.findViewById(R.id.itemlistgame_tv_opponent_name);
+            viewHolder.iv_opponent_photo = (ImageView) v.findViewById(R.id.itemlistfriend_iv_opponent_picture);
+            viewHolder.tv_opponent_name = (TextView) v.findViewById(R.id.itemlistfriend_tv_opponent_name);
+            viewHolder.tv_opponent_state= (TextView) v.findViewById(R.id.itemlistfriend_tv_opponent_state);
 
             v.setTag(viewHolder);
             
@@ -70,6 +71,24 @@ public class FriendsListAdapter extends BaseAdapter{
         	
             viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_hombre);
             viewHolder.tv_opponent_name.setText(friendItemList.getUserName());
+            switch(friendItemList.getState()){
+			case ACCEPTED:
+				viewHolder.tv_opponent_state.setText("Accepted");
+				break;
+			case REJECTED:
+				viewHolder.tv_opponent_state.setText("Rejected");
+				break;
+			case WAITING_FOR_RESPONSE:
+				viewHolder.tv_opponent_state.setText("Waiting for response");
+				break;
+			case ASKED_YOU:
+				viewHolder.tv_opponent_state.setText("He asked you for friend");
+				break;
+			default:
+				break;
+            
+            }
+            	
 
         } 
 
@@ -79,6 +98,7 @@ public class FriendsListAdapter extends BaseAdapter{
 	static class FriendItemViewHolder {
         ImageView iv_opponent_photo;
         TextView tv_opponent_name;
+        TextView tv_opponent_state;
     }
 
 }

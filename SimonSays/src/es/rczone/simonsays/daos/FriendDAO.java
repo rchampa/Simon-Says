@@ -6,12 +6,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.model.Friend.FriendStates;
 
 
 public class FriendDAO {
 	
 	protected static final String TABLE = "friends";
 	protected static final String NAME = "name";
+	protected static final String STATE = "state";
 	
 	
 	
@@ -24,7 +26,11 @@ public class FriendDAO {
 		if(cursor.moveToFirst()){
 			
 			do{
-				Friend valueObject = new Friend(cursor.getString(cursor.getColumnIndex(NAME)));
+				String name = cursor.getString(cursor.getColumnIndex(NAME));
+				int state = cursor.getInt(cursor.getColumnIndex(STATE));
+				
+				Friend valueObject = new Friend(name, FriendStates.values()[state]);
+				
 				list.add(valueObject);
 			}while(cursor.moveToNext());
 		}
@@ -39,7 +45,8 @@ public class FriendDAO {
 		Cursor cursor = db.query(TABLE, null, NAME+"=?", new String[] {name}, null, null, null);
 		Friend valueObject = null;
 		if (cursor.moveToFirst()) {
-			valueObject = new Friend(cursor.getString(cursor.getColumnIndex(NAME)));
+			int state = cursor.getInt(cursor.getColumnIndex(STATE));
+			valueObject = new Friend(name, FriendStates.values()[state]);
 		}
 		
 		cursor.close();
@@ -51,6 +58,7 @@ public class FriendDAO {
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(NAME, friend.getUserName());
+		values.put(STATE, friend.getState().ordinal());
 		long num = db.insert(TABLE, null, values);
 		db.close();
 		return num;
@@ -60,6 +68,7 @@ public class FriendDAO {
 		SQLiteDatabase db = new DatabaseHelper().getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(NAME, friend.getUserName());
+		values.put(STATE, friend.getState().ordinal());
 		int num = db.update(TABLE, values, NAME + "=?", new String[]{friend.getUserName()});
 		
 		db.close();

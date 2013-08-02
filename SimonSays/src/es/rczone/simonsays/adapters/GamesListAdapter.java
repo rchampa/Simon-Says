@@ -20,6 +20,8 @@ public class GamesListAdapter extends BaseAdapter{
     private final List<Game> lista;
     private LayoutInflater inflater = null;
     private Game game;
+    private final String USER_SCORE = "Me: ";
+    private final String OPP_SCORE = "Opp: ";
     
     public GamesListAdapter(Activity activity, List<Game> lista) {
           super(); 
@@ -40,6 +42,8 @@ public class GamesListAdapter extends BaseAdapter{
             viewHolder = new GameItemViewHolder();
             viewHolder.iv_opponent_photo = (ImageView) v.findViewById(R.id.itemlistgame_iv_opponent_picture);
             viewHolder.tv_opponent_name = (TextView) v.findViewById(R.id.itemlistgame_tv_opponent_name);
+            viewHolder.tv_opponent_userScore = (TextView) v.findViewById(R.id.itemlistgame_tv_userScore);
+            viewHolder.tv_opponent_oppScore = (TextView) v.findViewById(R.id.itemlistgame_tv_oppScore);
             viewHolder.tv_date_last_move = (TextView) v.findViewById(R.id.itemlistgame_tv_date_last_move);
          
  
@@ -56,6 +60,8 @@ public class GamesListAdapter extends BaseAdapter{
         if (game != null) {
             viewHolder.iv_opponent_photo.setImageResource(R.drawable.icon_game);
             viewHolder.tv_opponent_name.setText(game.getOpponentName());
+            viewHolder.tv_opponent_userScore.setText(USER_SCORE+game.getUserScore());
+            viewHolder.tv_opponent_oppScore.setText(OPP_SCORE+game.getOppScore());
             viewHolder.tv_date_last_move.setText("");
         } 
         
@@ -82,6 +88,8 @@ public class GamesListAdapter extends BaseAdapter{
     static class GameItemViewHolder {
         ImageView iv_opponent_photo;
         TextView tv_opponent_name;
+        TextView tv_opponent_userScore;
+        TextView tv_opponent_oppScore;
         TextView tv_date_last_move;
     }
 

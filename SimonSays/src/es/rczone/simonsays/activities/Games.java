@@ -80,16 +80,7 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 			break;
 		
 		case IN_PROGRESS:
-			boolean isMyTurn = item.isMyTurn();
-			String move = item.getCachedMove();
-			SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
-        	String name = prefs.getString(GCMIntentService.NAME, "");
-        	String oppname = item.getOpponentName();
 			Intent intent = new Intent(this, Board.class);
-        	intent.putExtra(Board.CODE, isMyTurn ? Board.MY_TURN : Board.OPP_TURN);
-        	intent.putExtra(Board.MOVE, move);
-        	intent.putExtra(Board.USER_NAME, name);
-        	intent.putExtra(Board.OP_NAME, oppname);
         	intent.putExtra(Board.GAME_ID, item.getID());
         	startActivity(intent);
 			break;

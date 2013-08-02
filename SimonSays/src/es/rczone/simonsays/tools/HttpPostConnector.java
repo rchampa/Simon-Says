@@ -30,13 +30,13 @@ public class HttpPostConnector {
 		
 	/* Conections */
 	
-	public static String URL_REGISTRATION = "http://" + IP_Server + "/simon_dice/adduser.php";
-	public static String URL_LOGIN = "http://" + IP_Server + "/simon_dice/login.php";
-	public static String UPDATE_ID = "http://" + IP_Server + "/simon_dice/update_id.php";
-	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/simon_dice/add_friend.php";
-	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/simon_dice/request_new_game.php";
-	public static String URL_RESPONSE_REQUEST = "http://" + IP_Server + "/simon_dice/response_request_game.php";
-	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/make_a_move.php";
+	public static String URL_REGISTRATION = "http://" + IP_Server + "/simon_dice/scripts/adduser.php";
+	public static String URL_LOGIN = "http://" + IP_Server + "/simon_dice/scripts/login.php";
+	public static String UPDATE_ID = "http://" + IP_Server + "/simon_dice/scripts/update_id.php";
+	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/simon_dice/scripts/add_friend.php";
+	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/simon_dice/scripts/request_new_game.php";
+	public static String URL_RESPONSE_REQUEST = "http://" + IP_Server + "/simon_dice/scripts/response_request_game.php";
+	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/scripts/make_a_move.php";
 	
 
 	private InputStream is = null;

@@ -4,32 +4,37 @@ public class Game extends SimpleObservable<Friend> {
 	
 	private int id;
 	private Friend opponent;
-	private ScoreBoard scoreBoard;
-	private Board board;
+	//private ScoreBoard scoreBoard;
+	//private Board board;
 	private boolean isMyTurn;
 	private GameStates state;
-	private String moveCached;
-	private boolean isAlreadyOpponenMovetDisplayed;
+	private int numMoves;
+	private int userScore;
+	private int oppScore;
 	
 	
-	public Game(int id, Friend opponent, Difficulty difficulty, boolean isMyTurn){
+	public Game(int id, Friend opponent, int numMoves, boolean isMyTurn){
 		this.id = id;
 		this.opponent = opponent;
-		this.board = new Board(difficulty);
-		this.scoreBoard = new ScoreBoard();
+		this.numMoves = numMoves;
+		//this.scoreBoard = new ScoreBoard();
 		this.isMyTurn = isMyTurn;
 		state = GameStates.WAITING_FOR_RESPONSE;
+		this.userScore = 0;
+		this.oppScore = 0;
 	}
 	
 	
-	public Game(int id, GameStates state, Friend opponent, ScoreBoard scoreBoard, Board board, boolean isMyTurn) {
+	public Game(int id, GameStates state, Friend opponent, int userScore, int oppScore, int numMoves, boolean isMyTurn) {
 		super();
 		this.id = id;
 		this.state = state;
 		this.opponent = opponent;
-		this.scoreBoard = scoreBoard;
-		this.board = board;
+		//this.scoreBoard = scoreBoard;
+		this.numMoves = numMoves;
 		this.isMyTurn = isMyTurn;
+		this.userScore = userScore;
+		this.oppScore = oppScore;
 	}
 
 
@@ -57,35 +62,39 @@ public class Game extends SimpleObservable<Friend> {
 		return isMyTurn;
 	}
 	
-	//FIXME
-	public int getNumMoves(){
-		return 4;
-	}
-	
 	public String getOpponentName(){
 		return opponent.getUserName();
 	}
 	
-	public void move(Colors color){
-		board.addMove(color);
+	public int getUserScore() {
+		return userScore;
+	}
+
+
+	public void setUserScore(int userScore) {
+		this.userScore = userScore;
+	}
+
+
+	public int getOppScore() {
+		return oppScore;
+	}
+
+
+	public void setOppScore(int oppScore) {
+		this.oppScore = oppScore;
+	}
+
+	public void upOppScore() {
+		this.oppScore++;
 	}
 	
-	public void removeLastMove(){
-		board.removeLastMove();
-	}
-
-	public void showMove(){
-		
-		isAlreadyOpponenMovetDisplayed = true;
-	}
-
-	public void setMoveOnCache(String move) {
-		this.moveCached = move; 	
-		isAlreadyOpponenMovetDisplayed = false;
-	}
-
-	public String getCachedMove(){
-		return this.moveCached;
+	
+	public void setNumMoves(int numMoves){
+		this.numMoves = numMoves;
 	}
 	
+	public int getNumMoves(){
+		return this.numMoves;
+	}
 }

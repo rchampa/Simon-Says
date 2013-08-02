@@ -1,10 +1,15 @@
 package es.rczone.simonsays.model;
 
+
+/**
+ * @deprecated
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-	
+	/*
 	private List<List<Colors>> userHistorial;
 	private List<List<Colors>> opponentHistorial;
 	private List<Colors> movesUser;
@@ -39,5 +44,5 @@ public class Board {
 	
 	public void setMovesOfOpponent(List<Colors> moves){
 		movesOpponent = moves;		
-	}
+	}*/
 }

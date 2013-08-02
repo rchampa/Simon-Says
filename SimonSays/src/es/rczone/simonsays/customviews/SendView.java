@@ -38,7 +38,7 @@ public class SendView extends ImageView implements CustomView{
 				if ( (iX >= 0 & iY >= 0 & iX < bitmap.getWidth() & iY < bitmap.getHeight()) || isFalseClick) {
 					if (bitmap.getPixel((int) iX, (int) iY) != 0 || isFalseClick) {
 						if(!isShining){
-							setImageResource(R.drawable.send_button);
+							setImageResource(R.drawable.send_button_pushed);
 							isShining = true;
 						}
 						

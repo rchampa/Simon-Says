@@ -2,10 +2,14 @@ package es.rczone.simonsays.model;
 
 public class Friend extends SimpleObservable<Friend> {
 	
+	public enum FriendStates{WAITING_FOR_RESPONSE,ACCEPTED, REJECTED, ASKED_YOU};
 	private String userName;
+	private FriendStates state;
 	
-	public Friend(String userName){
+	
+	public Friend(String userName, FriendStates state){
 		this.userName = userName;
+		this.state = state;
 	}
 
 	public String getUserName() {
@@ -15,6 +19,14 @@ public class Friend extends SimpleObservable<Friend> {
 	public void setUserName(String userName) {
 		this.userName = userName;
 		notifyObservers(this);
+	}
+
+	public FriendStates getState() {
+		return state;
+	}
+
+	public void setState(FriendStates state) {
+		this.state = state;
 	}
 
 	@Override

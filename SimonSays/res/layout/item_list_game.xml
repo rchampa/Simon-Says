@@ -16,6 +16,16 @@
 	    android:textIsSelectable="false"
 		style="@style/EstiloItemLista" 
 		android:layout_weight="2" />
+	
+	<TextView android:id="@+id/itemlistgame_tv_userScore" 
+	    android:textIsSelectable="false"
+		style="@style/EstiloItemLista" 
+		android:layout_weight="2" />
+	
+	<TextView android:id="@+id/itemlistgame_tv_oppScore" 
+	    android:textIsSelectable="false"
+		style="@style/EstiloItemLista" 
+		android:layout_weight="2" />
 
 	<TextView android:id="@+id/itemlistgame_tv_date_last_move" 
 	    android:textIsSelectable="false"

@@ -7,15 +7,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 
-/*
- * CLASE ASYNCTASK
- * 
- * usaremos esta para poder mostrar el dialogo de progreso mientras enviamos
- * y obtenemos los datos podria hacerse lo mismo sin usar esto pero si el
- * tiempo de respuesta es demasiado lo que podria ocurrir si la conexion es
- * lenta o el servidor tarda en responder la aplicacion sera inestable.
- * ademas observariamos el mensaje de que la app no responde.
- */
 public class AsyncConnect extends AsyncTask<String, String, String> {
 
 	public static final String CONNECTION_ESTABLISHED = "ok";

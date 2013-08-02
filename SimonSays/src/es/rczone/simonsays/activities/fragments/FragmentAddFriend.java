@@ -23,6 +23,7 @@ import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.listeners.AddFriendListener;
 import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
@@ -123,7 +124,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		Toast.makeText(this.getActivity(), "Nuevo amigo añadido", Toast.LENGTH_SHORT).show();
-		listener.onFriendshipAdded(new Friend(nameNewFriend));
+		listener.onFriendshipAdded(new Friend(nameNewFriend, FriendStates.WAITING_FOR_RESPONSE));
 	}
 
 	@Override
