@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.model.Game;
-import es.rczone.simonsays.model.GameStates;
+import es.rczone.simonsays.model.Game.GameStates;
 
 public class GameDAO {
 
@@ -58,7 +58,10 @@ public class GameDAO {
 		
 		ArrayList<Game> list = new ArrayList<Game>();
 		SQLiteDatabase db = new DatabaseHelper().getReadableDatabase();
-		Cursor cursor = db.query(TABLE, null, STATE+"=? or "+STATE+"=?", new String[] {Integer.toString(GameStates.PENDING.ordinal()),Integer.toString(GameStates.IN_PROGRESS.ordinal())}, null, null, null);
+		String p = ""+GameStates.PENDING.ordinal();
+		String i = ""+GameStates.IN_PROGRESS.ordinal();
+		String f = ""+GameStates.FIRST_MOVE.ordinal();
+		Cursor cursor = db.query(TABLE, null, STATE+"=? or "+STATE+"=? or "+STATE+"=?", new String[] {p,i,f}, null, null, null);
 		if(cursor.moveToFirst()){
 			Game valueObject;
 			

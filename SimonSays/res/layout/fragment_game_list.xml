@@ -5,7 +5,7 @@
     android:orientation="vertical"
     
     android:gravity="center"
-     android:padding="20dip" >
+     android:padding="10dip" >
 
     <ListView
         android:id="@+id/list_games"

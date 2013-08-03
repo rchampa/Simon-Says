@@ -37,6 +37,10 @@ public class MainMenu extends Activity {
             	startActivity(intent);
             	break;
             	
+            case R.id.mainmenu_bt_form:
+            	
+            	break;
+            	
 //            //XXX testing
 //            case R.id.test:
 //            	intent = new Intent(this, Board.class);

@@ -33,6 +33,7 @@ import es.rczone.simonsays.tools.WakeLocker;
 public class Register extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
+	private AsyncConnect connection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,8 @@ public class Register extends Activity implements ConnectionListener{
              * */
              
             // register in game server
-            new AsyncConnect(Register.this).execute(nombre, password, id, email);
+            connection = new AsyncConnect(Register.this);
+            connection.execute(nombre, password, id, email);
                         
           
             // Releasing wake lock
@@ -174,9 +176,12 @@ public class Register extends Activity implements ConnectionListener{
 			        editor.putString(GCMIntentService.EMAIL, params[3]);
 			        editor.putBoolean(GCMIntentService.VALID_GCM_ID, true);
 			        editor.commit();
+			        connection.attachMessage(json_data.getString("message"));
+			        return true;
 				}
 				else if("001".equals(codeFromServer)){
-					//Toast.makeText(this, "El nombre de usuario ya está registrado", Toast.LENGTH_SHORT).show();
+					connection.attachMessage(json_data.getString("message"));
+					return false;
 				}
 				else if("-1".equals(codeFromServer)){
 					//Toast.makeText(this, "El servidor esta teniendo problemas. No se ha completado el registro.", Toast.LENGTH_SHORT).show();
@@ -187,14 +192,15 @@ public class Register extends Activity implements ConnectionListener{
 			
 
 			} catch (JSONException e) {
-				//Toast.makeText(this, "Error desconocido.", Toast.LENGTH_SHORT).show();
+				connection.attachMessage("There was a problem with internet connection");
+				return false;
 			}
 			
 			
 			return true;
 		} else { // json obtenido invalido verificar parte WEB.
 			Log.e("JSON  ", "ERROR");
-			//Toast.makeText(this, "La conexión ha fallado. No se ha completado el registro.", Toast.LENGTH_SHORT).show();
+			connection.attachMessage("There was a problem with internet connection");
 			return false;
 		}
 
@@ -202,29 +208,28 @@ public class Register extends Activity implements ConnectionListener{
 	}
 
 
-	//FIXME Check the limits(in mysql data types) of chars of each field, 30 is wrong
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
 		
-//		String name = params[0];
-//		String password = params[1]; 
-//		String email = params[2];
-//		
-//		if(name==null || name.trim().equals("") || name.length()>30){
-//			//Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		
-//		if(password==null || password.trim().equals("") || password.length()>30){
-//			//Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		
-//		
-//		if(email==null || email.trim().equals("") || email.length()>30){
-//			//Toast.makeText(this, "El apellido introducido no es válido", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
+		String name = params[0];
+		String password = params[1]; 
+		String email = params[3];
+		
+		if(name==null || name.trim().equals("") || name.length()>25){
+			connection.attachMessage("The username is invalid.");
+			return false;
+		}
+		
+		if(password==null || password.trim().equals("") || password.length()>25){
+			connection.attachMessage("The password is invalid.");
+			return false;
+		}
+		
+		
+		if(email==null || email.trim().equals("") || email.length()>25){
+			connection.attachMessage("The email is invalid.");
+			return false;
+		}
 					
 		return true;
 	}
@@ -241,14 +246,13 @@ public class Register extends Activity implements ConnectionListener{
 
 	@Override
 	public void afterErrorConnection() {
-		Toast.makeText(getApplicationContext(),"Error al conectar con el servidor.",Toast.LENGTH_LONG).show();
-		
+		Toast.makeText(this,connection.getMessage(),Toast.LENGTH_LONG).show();
 	}
 
 
 	@Override
 	public void invalidInputData() {
-		//Toast.makeText(getApplicationContext(),"Los datos introducidos.",Toast.LENGTH_LONG).show();
+		Toast.makeText(this,connection.getMessage(),Toast.LENGTH_LONG).show();
 	}
 
 }

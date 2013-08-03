@@ -5,7 +5,7 @@
     android:orientation="vertical"
     
     android:gravity="center"
-     android:padding="20dip" >
+     android:padding="10dip" >
     
     <ImageView
 	       	android:layout_weight="2"

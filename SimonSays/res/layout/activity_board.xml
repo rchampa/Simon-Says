@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:background="@drawable/background"
+		    android:gravity="center"
+		    android:layout_gravity="center"
+		    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/background"
-    android:gravity="center"
+    android:gravity="center"   
+    android:layout_gravity="center"
      >
 
      <TextView
@@ -75,15 +83,6 @@
 		    
 		</LinearLayout>
 		</LinearLayout>
-	    <Button 
-	            	android:id="@+id/board_button_checkMove"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/board_checkMove"
-	                android:background="@drawable/button_rounded_corners"
-	                style="@style/EstiloMenuButton"
-	                android:onClick="onClick"
-	          />
     </LinearLayout>
     
     <FrameLayout
@@ -147,35 +146,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/send_button" />
+                android:src="@drawable/touch_button" />
 
         </RelativeLayout>
         
     </FrameLayout>
     
-    <Button 
-            	android:id="@+id/board_button_show_opmove"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:text="@string/board_show_oppmove"
-                android:background="@drawable/button_rounded_corners"
-                style="@style/EstiloMenuButton"
-                android:onClick="onClick"
-          />
-    <Button 
-            	android:id="@+id/board_button_reset_move"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:text="@string/board_reset_move"
-                android:background="@drawable/button_rounded_corners"
-                style="@style/EstiloMenuButton"
-                android:onClick="onClick"
-          />
 
 </LinearLayout>
+</ScrollView>

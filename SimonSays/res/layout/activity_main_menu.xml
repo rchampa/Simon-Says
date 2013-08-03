@@ -37,6 +37,14 @@
         style="@style/EstiloMenuButton"
         android:background="@drawable/button_rounded_corners"
         android:text="@string/mainmenu_friends"
+        android:onClick="onClick"
+        android:layout_marginBottom="7dp" />
+    
+    <Button
+        android:id="@+id/mainmenu_bt_form"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/button_rounded_corners"
+        android:text="@string/mainmenu_form"
         android:onClick="onClick" />
     
    

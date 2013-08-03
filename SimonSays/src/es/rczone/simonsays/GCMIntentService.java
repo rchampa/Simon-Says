@@ -21,17 +21,17 @@ import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
-import es.rczone.simonsays.activities.Games;
+import es.rczone.simonsays.activities.MainMenu;
 import es.rczone.simonsays.daos.FriendDAO;
 import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Friend;
+import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.Game.GameStates;
 import es.rczone.simonsays.model.GameFactory;
-import es.rczone.simonsays.model.GameStates;
 import es.rczone.simonsays.model.Move;
 import es.rczone.simonsays.model.MovesFactory;
-import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.tools.HttpPostConnector;
  
 
@@ -144,7 +144,6 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
         GCMRegistrar.setRegisteredOnServer(context, false);
-        
     }
  
     /**
@@ -210,7 +209,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     	        .setContentText(message);  
 
 
-    	Intent notificationIntent = new Intent(context, Games.class);  
+    	Intent notificationIntent = new Intent(context, MainMenu.class);  
 
     	PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);  
 
@@ -230,6 +229,24 @@ public class GCMIntentService extends GCMBaseIntentService {
     
     
     /**
+     * 
+
+     * Add a friend
+     * === = ======
+     * 	100		Friendship request sent.
+     * 	101		They are already friends.
+	 *	102		$user is not registered.
+     * 
+     *  Request a new game
+     * 	======= = === ====
+	 *	200		New game added, waiting for player to accept the request...
+	 *	201		There is already a game in progress.
+	 *	202		They are not friends.
+	 *	203		$user is not registered.
+	 *	204		They have another game in progress.
+	 *	205		They have another request. They should accept or refuse that request.	
+	 *
+	 *
      * 	From response request game
      * 	==== ======== ======= ==== 
      * 	300		Accepted game.
@@ -244,16 +261,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	 *	402		The game does not exists.
 	 *	403		Invalid player, the player do not belong to the game.
 	 *	404		Error 404
-     * 
-     * 	Request a new game
-     * 	======= = === ====
-	 *	200		New game added, waiting for player to accept the request...
-	 *	201		There is already a game in progress.
-	 *	202		They are not friends.
-	 *	203		$user is not registered.
-	 *	204		They have another game in progress.
-	 *	205		They have another request. They should accept or refuse that request.	
-	 *
+     *
 	 *	Response a friendship request
 	 *	======== = ========== =======
 	 *	700		Friendship completed.
@@ -284,7 +292,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     		else if("200".equals(codeFromServer)){
     			int game_id = json_data.getInt("game_id");
     			GameFactory factory = new GameFactory();
-    			String nameOpponent = json_data.getString("player2_name");
+    			String nameOpponent = json_data.getString("opponent_name");
     			Friend f = new FriendDAO().get(nameOpponent);
     			Game game = factory.createNewGameFromRequest(game_id, f);
     			new GameDAO().insert(game);
@@ -298,7 +306,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			GameDAO dao = new GameDAO();
     			Game game = dao.get(game_id);
     			game.setMyTurn(true);
-    			game.setState(GameStates.IN_PROGRESS);
+    			game.setState(GameStates.FIRST_MOVE);
     			dao.update(game);
     			
     			return "Your friend "+game.getOpponentName()+" is ready to play.";
@@ -346,7 +354,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				
 			}
 			else if("701".equals(codeFromServer)){
-				String friendName = json_data.getString("friend");
+				String friendName = json_data.getString("friendName");
 				FriendDAO dao = new FriendDAO(); 
 				Friend f = dao.get(friendName);
 				f.setState(FriendStates.REJECTED);

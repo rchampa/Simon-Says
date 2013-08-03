@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
@@ -48,6 +49,16 @@ public class FragmentFriendsList extends Fragment {
 				
 				listener.onItemClicked(friends.get(position));
 			}
+		});
+		
+		lstListado.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long id) {
+				listener.onItemLongClicked(friends.get(position));
+				return true;
+			}
+			
 		});
 		
 		

@@ -11,17 +11,20 @@ import es.rczone.simonsays.R;
 
 public class SendView extends ImageView implements CustomView{
 
+	public enum States{EYE, HAND, RESET, TIC, SEND};
 	protected final Bitmap bitmap;
 	protected Drawable onFocusDrawable;
 	private CustomViewListener listener;
 	private boolean isFalseClick;
 	private boolean isShining;
+	private States state;
 	
 	public SendView(Context context, AttributeSet attrs) {
 		super(context, attrs);		 		
 		bitmap = ((BitmapDrawable)this.getDrawable()).getBitmap(); 
 		isFalseClick = false;
 		isShining = false;
+		state = States.HAND;
 	}
 
 	@Override
@@ -38,7 +41,28 @@ public class SendView extends ImageView implements CustomView{
 				if ( (iX >= 0 & iY >= 0 & iX < bitmap.getWidth() & iY < bitmap.getHeight()) || isFalseClick) {
 					if (bitmap.getPixel((int) iX, (int) iY) != 0 || isFalseClick) {
 						if(!isShining){
-							setImageResource(R.drawable.send_button_pushed);
+							
+							switch(state){
+							case EYE:
+								setImageResource(R.drawable.eye_button_pushed);
+								break;
+							case TIC:
+								setImageResource(R.drawable.tic_button_pushed);
+								break;
+							case RESET:
+								setImageResource(R.drawable.reset_button_pushed);
+								break;
+							case SEND:
+								setImageResource(R.drawable.send_button_pushed);
+								break;
+							case HAND:
+								setImageResource(R.drawable.touch_button_pushed);
+								break;
+							default:
+								break;
+							
+							}
+							
 							isShining = true;
 						}
 						
@@ -47,7 +71,26 @@ public class SendView extends ImageView implements CustomView{
 				return true;
 			
 			case MotionEvent.ACTION_UP:
-				setImageResource(R.drawable.send_button);
+				switch(state){
+				case EYE:
+					setImageResource(R.drawable.eye_button);
+					break;
+				case TIC:
+					setImageResource(R.drawable.tic_button);
+					break;
+				case RESET:
+					setImageResource(R.drawable.reset_button);
+					break;
+				case SEND:
+					setImageResource(R.drawable.send_button);
+					break;
+				case HAND:
+					setImageResource(R.drawable.touch_button);
+					break;
+				default:
+					break;
+				
+				}
 				isShining = false;
 				listener.onClicked(this);
 				return true;
@@ -56,6 +99,7 @@ public class SendView extends ImageView implements CustomView{
 		return false;
 
 	}
+	
 	
 	@Override
 	public void setListener(CustomViewListener listener){
@@ -68,6 +112,45 @@ public class SendView extends ImageView implements CustomView{
 	@Override
 	public void enableFalseClick(boolean b) {
 		isFalseClick = b;
+	}
+	
+	public void setStateHand(){
+		if(state!=States.HAND){
+			setImageResource(R.drawable.touch_button);
+			state = States.HAND;
+		}
+	}
+	
+	public void setStateReset(){
+		if(state!=States.RESET){
+			setImageResource(R.drawable.reset_button);
+			state = States.RESET;
+		}
+	}
+	
+	public void setStateSend(){
+		if(state!=States.SEND){
+			setImageResource(R.drawable.send_button);
+			state = States.SEND;
+		}
+	}
+	
+	public void setStateEye(){
 		
+		if(state!=States.EYE){
+			setImageResource(R.drawable.eye_button);
+			state = States.EYE;
+		}
+	}
+	
+	public void setStateTic(){
+		if(state!=States.TIC){
+			setImageResource(R.drawable.tic_button);
+			state = States.TIC;
+		}
+	}
+	
+	public States getState(){
+		return state;
 	}
 }

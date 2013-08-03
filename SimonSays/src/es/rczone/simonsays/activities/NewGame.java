@@ -126,6 +126,7 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 					int id = json_data.getInt("game_id");
 					Friend opponent = new FriendDAO().get(params[1]);
 					newGame = new GameFactory().createNewGame(id, opponent);
+					new GameDAO().insert(newGame);
 					return true;
 				}
 				else return false;
@@ -168,7 +169,6 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 	@Override
 	public void afterGoodConnection() {
 		
-		new GameDAO().insert(newGame);
 		Toast.makeText(this, "Solicitud de nuevo juego enviada.", Toast.LENGTH_SHORT).show();
 	}
 

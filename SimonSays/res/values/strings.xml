@@ -72,6 +72,7 @@
     <string name="mainmenu_games">Games</string>
     <string name="mainmenu_resume_game">Resume game</string>
     <string name="mainmenu_friends">Friends</string>
+    <string name="mainmenu_form">Problems and suggestions</string>
     
     
     <!-- fragment_activity_games -->

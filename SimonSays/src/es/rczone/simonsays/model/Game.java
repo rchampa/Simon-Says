@@ -2,6 +2,8 @@ package es.rczone.simonsays.model;
 
 public class Game extends SimpleObservable<Friend> {
 	
+	public enum GameStates {PENDING,WAITING_FOR_RESPONSE,FIRST_MOVE,WAITING_FOR_MOVE, IN_PROGRESS, REFUSED, FINISHED};
+	
 	private int id;
 	private Friend opponent;
 	//private ScoreBoard scoreBoard;
@@ -11,18 +13,20 @@ public class Game extends SimpleObservable<Friend> {
 	private int numMoves;
 	private int userScore;
 	private int oppScore;
+	private boolean isOppMoveChecked;
 	
 	
-	public Game(int id, Friend opponent, int numMoves, boolean isMyTurn){
-		this.id = id;
-		this.opponent = opponent;
-		this.numMoves = numMoves;
-		//this.scoreBoard = new ScoreBoard();
-		this.isMyTurn = isMyTurn;
-		state = GameStates.WAITING_FOR_RESPONSE;
-		this.userScore = 0;
-		this.oppScore = 0;
-	}
+//	public Game(int id, Friend opponent, int numMoves, boolean isMyTurn){
+//		this.id = id;
+//		this.opponent = opponent;
+//		this.numMoves = numMoves;
+//		//this.scoreBoard = new ScoreBoard();
+//		this.isMyTurn = isMyTurn;
+//		state = GameStates.WAITING_FOR_RESPONSE;
+//		this.userScore = 0;
+//		this.oppScore = 0;
+//		isOppMoveChecked = false;
+//	}
 	
 	
 	public Game(int id, GameStates state, Friend opponent, int userScore, int oppScore, int numMoves, boolean isMyTurn) {
@@ -35,6 +39,17 @@ public class Game extends SimpleObservable<Friend> {
 		this.isMyTurn = isMyTurn;
 		this.userScore = userScore;
 		this.oppScore = oppScore;
+		isOppMoveChecked = false;
+	}
+
+
+	public boolean isOppMoveChecked() {
+		return isOppMoveChecked;
+	}
+
+
+	public void setOppMoveChecked(boolean isOppMoveChecked) {
+		this.isOppMoveChecked = isOppMoveChecked;
 	}
 
 

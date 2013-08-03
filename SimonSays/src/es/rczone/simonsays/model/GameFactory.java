@@ -1,5 +1,7 @@
 package es.rczone.simonsays.model;
 
+import es.rczone.simonsays.model.Game.GameStates;
+
 public class GameFactory {
 	
 	private final int NUM_MOVES = 4;

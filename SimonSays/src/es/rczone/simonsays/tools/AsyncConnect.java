@@ -28,6 +28,9 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 		conexion = (ConnectionListener)context;
 	}
 
+	
+	
+	@Override
 	protected void onPreExecute() {
 		
 		progressDialog = new ProgressDialog(context);
@@ -37,6 +40,7 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 		progressDialog.show();
 	}
 
+	@Override
 	protected String doInBackground(String... params) {
 		
 		if(!conexion.validateDataBeforeConnection(params))
@@ -55,6 +59,7 @@ public class AsyncConnect extends AsyncTask<String, String, String> {
 	 * Una vez terminado doInBackground segun lo que halla ocurrido pasamos
 	 * a un estado de datos de entrada inválidos, conexión establecida o error de conexión
 	 */
+	@Override
 	protected void onPostExecute(String result) {
 
 		progressDialog.dismiss();// ocultamos progess dialog.

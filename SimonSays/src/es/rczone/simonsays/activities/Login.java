@@ -30,6 +30,7 @@ import es.rczone.simonsays.tools.HttpPostConnector;
 public class Login extends Activity implements ConnectionListener{
 	
 	private HttpPostConnector post;
+	private AsyncConnect connection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,11 @@ public class Login extends Activity implements ConnectionListener{
         switch(v.getId()){
             case R.id.login_button_login:
             	// register in game server
-                new AsyncConnect(this).execute(name, pass);
+            	connection = new AsyncConnect(this);
+            	connection.execute(name, pass);
             	break;
             case R.id.login_button_forget:
-            	
+            	Toast.makeText(this, "This function is disable yet.", Toast.LENGTH_SHORT).show();
             	break;
  
         }                 
@@ -104,21 +106,24 @@ public class Login extends Activity implements ConnectionListener{
 			        SharedPreferences.Editor editor = prefs.edit();
 			        editor.putString(GCMIntentService.NAME, params[0]);
 			        editor.commit();
+			        connection.attachMessage(json_data.getString("message"));
 					GCMRegistrar.register(this, GCMIntentService.SENDER_ID);
 					return true;
 				}
 				else{
+					connection.attachMessage(json_data.getString("message"));
 					return false;
 				}
 				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				connection.attachMessage("There was a problem with internet connection");
 				e.printStackTrace();
 			}
 
 			return true;
 		} else { // json obtenido invalido verificar parte WEB.
 			Log.e("JSON  ", "ERROR");
+			connection.attachMessage("There was a problem with internet connection");
 			return false;
 		}
 
@@ -126,19 +131,18 @@ public class Login extends Activity implements ConnectionListener{
 	
 	}
 
-	//FIXME used copy-paste in this method
 	@Override
 	public boolean validateDataBeforeConnection(String... params) {
 		String name = params[0];
 		String password = params[1];
 		
 		if(name==null || name.trim().equals("") || name.length()>30){
-			Toast.makeText(this, "El id introducido no es válido", Toast.LENGTH_SHORT).show();
+			connection.attachMessage("The username is invalid.");
 			return false;
 		}
 		
 		if(password==null || password.trim().equals("") || password.length()>30){
-			Toast.makeText(this, "La contraseña introducida no es válida", Toast.LENGTH_SHORT).show();
+			connection.attachMessage("The password is invalid.");
 			return false;
 		}
 		
@@ -150,23 +154,20 @@ public class Login extends Activity implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		
-    	Toast.makeText(getApplicationContext(),"Sesión iniciada.",Toast.LENGTH_LONG).show();
+    	Toast.makeText(this,"Sesión iniciada.",Toast.LENGTH_LONG).show();
 
 		Intent intent = new Intent(this, MainMenu.class);
 		this.startActivity(intent);
 		
 	}
 
-
 	@Override
 	public void afterErrorConnection() {
-		Toast.makeText(getApplicationContext(),"Error en al iniciar sesión.",Toast.LENGTH_LONG).show();
+		Toast.makeText(this,connection.getMessage(),Toast.LENGTH_LONG).show();
 	}
-
 
 	@Override
 	public void invalidInputData() {
-		// TODO Auto-generated method stub
-		
-	} 
+		Toast.makeText(this,connection.getMessage(),Toast.LENGTH_LONG).show();
+	}
 }
