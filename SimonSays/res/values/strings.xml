@@ -88,7 +88,8 @@
     <string name="board_score">score: </string>
     <string name="board_show_oppmove">Show opponent\'s move</string>
     <string name="board_reset_move">Reset my move</string>
-    <string name="board_name">  </string>
+    <string name="board_username">username</string>
+    <string name="board_oppname">oppname</string>
     <string name="board_checkMove">Check move</string>
     <string name="board_threshold">Opponent threshold: </string>
     <string name="board_newThreshold">User threshold: </string>

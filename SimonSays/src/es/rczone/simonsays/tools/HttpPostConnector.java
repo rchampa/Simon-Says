@@ -26,18 +26,31 @@ import android.util.Log;
  */
 public class HttpPostConnector {
 	
-	public static String IP_Server = "192.168.1.126";
+	//public static String IP_Server = "192.168.1.126";
+	
+//	/* Conections */
+//	
+//	public static String URL_REGISTRATION = "http://" + IP_Server + "/simon_dice/scripts/adduser.php";
+//	public static String URL_LOGIN = "http://" + IP_Server + "/simon_dice/scripts/login.php";
+//	public static String UPDATE_ID = "http://" + IP_Server + "/simon_dice/scripts/update_id.php";
+//	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/simon_dice/scripts/add_friend.php";
+//	public static String URL_RESPONSE_FRIENDSHIP_REQUEST = "http://" + IP_Server + "/simon_dice/scripts/response_friendship_request.php";
+//	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/simon_dice/scripts/request_new_game.php";
+//	public static String URL_RESPONSE_REQUEST_GAME = "http://" + IP_Server + "/simon_dice/scripts/response_request_game.php";
+//	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/scripts/make_a_move.php";
+
+	public static String IP_Server = "memorize.hol.es";
 		
 	/* Conections */
 	
-	public static String URL_REGISTRATION = "http://" + IP_Server + "/simon_dice/scripts/adduser.php";
-	public static String URL_LOGIN = "http://" + IP_Server + "/simon_dice/scripts/login.php";
-	public static String UPDATE_ID = "http://" + IP_Server + "/simon_dice/scripts/update_id.php";
-	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/simon_dice/scripts/add_friend.php";
-	public static String URL_RESPONSE_FRIENDSHIP_REQUEST = "http://" + IP_Server + "/simon_dice/scripts/response_friendship_request.php";
-	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/simon_dice/scripts/request_new_game.php";
-	public static String URL_RESPONSE_REQUEST_GAME = "http://" + IP_Server + "/simon_dice/scripts/response_request_game.php";
-	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/scripts/make_a_move.php";
+	public static String URL_REGISTRATION = "http://" + IP_Server + "/scripts/adduser.php";
+	public static String URL_LOGIN = "http://" + IP_Server + "/scripts/login.php";
+	public static String UPDATE_ID = "http://" + IP_Server + "/scripts/update_id.php";
+	public static String URL_ADD_FRIEND = "http://" + IP_Server + "/scripts/add_friend.php";
+	public static String URL_RESPONSE_FRIENDSHIP_REQUEST = "http://" + IP_Server + "/scripts/response_friendship_request.php";
+	public static String URL_REQUEST_NEW_GAME = "http://" + IP_Server + "/scripts/request_new_game.php";
+	public static String URL_RESPONSE_REQUEST_GAME = "http://" + IP_Server + "/scripts/response_request_game.php";
+	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/scripts/make_a_move.php";
 	
 
 	private InputStream is = null;

@@ -196,6 +196,7 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 					f.setState(FriendStates.ACCEPTED);
 					dao.update(f);
 					connection.attachMessage("You have accepted the friendship.");
+					controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
 					return true;
 				}
 				else if(codeFromServer.equals("701")){
@@ -204,6 +205,7 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 					f.setState(FriendStates.REJECTED);
 					dao.update(f);
 					connection.attachMessage("You have rejected the friendship.");
+					controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
 					return true;
 				}
 				else{

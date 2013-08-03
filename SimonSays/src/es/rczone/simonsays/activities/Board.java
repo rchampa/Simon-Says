@@ -9,12 +9,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +75,14 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	private HttpPostConnector post;
 	private IDialogOperations sendDialog;
 	private AsyncConnect connection; 
-
+	private AsyncTask<Integer, Integer, Integer> loadSoundsTask; 
+	
+	
+	private SoundPool soundPool;
+	private int[] sounds = { R.raw.blue_sound, R.raw.yellow_sound,  R.raw.green_sound, R.raw.red_sound};
+	private boolean[] loaded = { false, false, false, false};
+	private int[] soundIDs = { 0,0,0,0};
+	private ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +124,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			gameID = extras.getInt(info.KEY_GAME_ID);
 			prepareGame(gameID);
 		}
+		
 		
 	}
 	
@@ -172,6 +184,65 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			
 		
 		
+		soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
+        
+        loadSoundsTask = new AsyncTask<Integer, Integer, Integer>() {
+        	
+	        	@Override
+	        	protected void onPreExecute() {
+	        		
+	        		progressDialog = new ProgressDialog(Board.this);
+	        		progressDialog.setMessage("Loading sounds....");
+	        		progressDialog.setIndeterminate(false);
+	        		progressDialog.setCancelable(false);
+	        		progressDialog.show();
+	        	}
+
+        	   @Override
+        	   protected Integer doInBackground(Integer... params) {
+        	       
+					soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+								    @Override
+								    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+								    	
+								    	if(soundIDs[0]==sampleId)
+								    		loaded[0]=true;
+								    	else if(soundIDs[1]==sampleId)
+								    		loaded[1]=true;
+								    	else if(soundIDs[2]==sampleId)
+								    		loaded[2]=true;
+								    	else if(soundIDs[3]==sampleId)
+								    		loaded[3]=true;
+								    	
+								    }
+								});
+					soundIDs[0]=soundPool.load(Board.this, sounds[0], 1);
+			        soundIDs[1]=soundPool.load(Board.this, sounds[1], 1);
+			        soundIDs[2]=soundPool.load(Board.this, sounds[2], 1);
+			        soundIDs[3]=soundPool.load(Board.this, sounds[3], 1);
+					
+					// New Code so we wait until the load is complete
+					while( !(loaded[0] && loaded[1] && loaded[2] && loaded[3]) ) {
+					    try {
+							Thread.sleep(200);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} // 0.2 second (change as you feel fit)
+					}
+					return 0;
+        	   }
+
+        	   @Override
+        	   protected void onPostExecute(Integer result) {
+        		   progressDialog.dismiss();// ocultamos progess dialog.
+        		   loadSoundsTask = null;
+        	   }
+        		
+        };
+        
+        
+       loadSoundsTask.execute(null, null, null);
+		
 	}
 	
 	@Override
@@ -186,25 +257,31 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	@Override
 	public void onClicked(CustomView view) {
 		
+		AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        float actualVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float volume = actualVolume / maxVolume;
+        
+        
 		switch(view.getID()){
 		
 			case R.id.roscoBlueView1:
-				Log.d(TAG, "blue");
+				soundPool.play(soundIDs[0], volume, volume, 1, 0, 1f);
 				proccessColor(Colors.BLUE);
 				break;
 			
 			case R.id.roscoYellowView1:
-				Log.d(TAG, "yellow");
+				soundPool.play(soundIDs[1], volume, volume, 1, 0, 1f);
 				proccessColor(Colors.YELLOW);
 				break;
 				
 			case R.id.roscoGreenView1:
-				Log.d(TAG, "green");
+				soundPool.play(soundIDs[2], volume, volume, 1, 0, 1f);
 				proccessColor(Colors.GREEN);
 				break;
 				
 			case R.id.roscoRedView1:
-				Log.d(TAG, "red");
+				soundPool.play(soundIDs[3], volume, volume, 1, 0, 1f);
 				proccessColor(Colors.RED);
 				break;
 				
@@ -314,6 +391,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		
 		int lenght = colors.length;
 		
+		
 		for(String color : colors){
 			mode = Mode.OPP_TURN;
 			setEnableFalseClick(true);
@@ -405,7 +483,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 						centerButton.setStateHand();
 						mode = Mode.REPLAY_MOVE;
 						resetMove();
-						//isCheckedOppMove = true;
 						Toast.makeText(Board.this, "Now you have to reproduce the same succession of colors in the board", Toast.LENGTH_SHORT).show();
 					}
 				}, (duration*it)+accuracy);
@@ -433,12 +510,10 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			userMove.append(color.ordinal()+"-");
 			if(userMove.length()==threshold*2){
 				Toast.makeText(this, "You reach the threshold", Toast.LENGTH_SHORT).show();
-				//isMyMoveComplete=true;
 				centerButton.setStateSend();
 			}
 			else if (userMove.length()>threshold*2){
 				Toast.makeText(this, "You should not exceed the threshold", Toast.LENGTH_SHORT).show();
-				//isMyMoveComplete=false;
 				centerButton.setStateReset();
 			}
 			else{
