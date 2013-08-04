@@ -12,7 +12,8 @@
           android:padding="40dip"
           android:id="@+id/layoutlogin"
           android:layout_gravity="center"
-          android:gravity="center"    >
+          android:gravity="center" 
+          android:focusableInTouchMode="true"   >
           
 		   <ImageView
 	        android:id="@+id/imageViewlogin"
@@ -71,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="@string/login_connect"
-                android:background="@drawable/button_rounded_corners"
+                android:background="@drawable/custom_button_selector"
                 style="@style/EstiloMenuButton"
                 android:onClick="onClick"
           />
@@ -80,7 +81,7 @@
                 android:id="@+id/login_button_forget"
                 android:layout_marginTop="6dp"
                 android:text="@string/login_forget_pass"
-                android:background="@drawable/button_rounded_corners"
+                android:background="@drawable/custom_button_selector"
                 style="@style/EstiloMenuButton"
                	android:onClick="onClick"
           />

@@ -11,39 +11,47 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash"
+        android:src="@drawable/splash_menu"
         android:contentDescription="@string/app_name"
-        android:layout_marginBottom="10dp" 
+        android:layout_marginBottom="6dp" 
         />
+    
+    <Button
+        android:id="@+id/mainmenu_bt_profile"
+        style="@style/EstiloMenuButton"
+        android:background="@drawable/custom_button_selector"
+        android:text="@string/mainmenu_profile"
+        android:layout_marginBottom="4dp"
+        android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_new_game"
         style="@style/EstiloMenuButton"
-        android:background="@drawable/button_rounded_corners"
+        android:background="@drawable/custom_button_selector"
         android:text="@string/mainmenu_new_game"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="4dp"
         android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_games"
         style="@style/EstiloMenuButton"
-        android:background="@drawable/button_rounded_corners"
+        android:background="@drawable/custom_button_selector"
         android:text="@string/mainmenu_games"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="4dp"
         android:onClick="onClick" />
     
     <Button
         android:id="@+id/mainmenu_bt_friends"
         style="@style/EstiloMenuButton"
-        android:background="@drawable/button_rounded_corners"
+        android:background="@drawable/custom_button_selector"
         android:text="@string/mainmenu_friends"
         android:onClick="onClick"
-        android:layout_marginBottom="7dp" />
+        android:layout_marginBottom="4dp" />
     
     <Button
         android:id="@+id/mainmenu_bt_form"
         style="@style/EstiloMenuButton"
-        android:background="@drawable/button_rounded_corners"
+        android:background="@drawable/custom_button_selector"
         android:text="@string/mainmenu_form"
         android:onClick="onClick" />
     

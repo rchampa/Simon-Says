@@ -15,49 +15,64 @@
     android:layout_gravity="center"
      >
 
-     <TextView
-		        android:id="@+id/board_tv_oldThreshold"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/board_threshold"
-		         />
-    <TextView
-		        android:id="@+id/board_tv_newThreshold"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/board_newThreshold"
-		         />
+     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+		     <TextView
+				        android:id="@+id/board_tv_oldThreshold"
+				        style="@style/EstiloTV"
+				        android:text="@string/board_threshold"
+				         />
+		    <TextView
+				        android:id="@+id/board_tv_newThreshold"
+				        style="@style/EstiloTV"
+				        android:text="@string/board_newThreshold"
+				         />
     
     
 		   <TextView
 		        android:id="@+id/board_tv_username"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
 		        android:text="@string/board_username"
+		        style="@style/EstiloTV"
 		         />
 		    
 		    <TextView
 		        android:id="@+id/board_tv_score_user"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
+		        style="@style/EstiloTV"
 		        android:text="@string/board_score"
 		         />
 		    <TextView
 		        android:id="@+id/board_tv_opname"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
+		        style="@style/EstiloTV"
 		        android:text="@string/board_oppname"
 		         />
 		    
 		    <TextView
 		        android:id="@+id/board_tv_score_op"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
+		        style="@style/EstiloTV"
 		        android:text="@string/board_score"
 		         />
 		    
-		
- 
+		</LinearLayout>
+
+    <ImageButton
+        android:id="@+id/board_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/question"
+        android:contentDescription="@string/app_name"
+        android:onClick="onClick" />
+    
+    </LinearLayout>
+    
+ 	
     
     <FrameLayout
         android:layout_width="wrap_content"
@@ -129,3 +144,8 @@
 
 </LinearLayout>
 </ScrollView>
+
+
+<!-- 
+ 
+ -->

@@ -10,15 +10,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.Window;
 import android.widget.Toast;
 import es.rczone.simonsays.GCMIntentService;
@@ -66,23 +68,54 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 		controller.addOutboxHandler(new Handler(this));
 		
 		controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
+		
+		registerReceiver(friendUpdater, new IntentFilter(GCMIntentService.FRIENDS_UPDATER_ACTION));
       
 	}
 	
-	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onResume(){
+		registerReceiver(friendUpdater, new IntentFilter(GCMIntentService.FRIENDS_UPDATER_ACTION));
+		super.onResume();
 	}
 
+	@Override
+	protected void onPause(){
+		try {
+            unregisterReceiver(friendUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onPause();
+	}
+	
+	@Override
+    protected void onDestroy() {
+		
+        try {
+        	controller.dispose();
+            unregisterReceiver(friendUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onDestroy();
+    }
+	
+	
+	 private final BroadcastReceiver friendUpdater =  new BroadcastReceiver() {
+
+	   @Override
+	   public void onReceive(Context context, Intent intent) {
+		   controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
+	   }
+
+	};
 
 
 	@Override
 	public void onItemClicked(Friend item) {
 		
-		if(item.getState()==FriendStates.ASKED_YOU){
+		if(item.getState()==FriendStates.ASKED_YOU_FOR_FRIENDSHIP){
 			askConfirmation(item);
 		}
 	}
@@ -92,8 +125,8 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 	public void onItemLongClicked(Friend item) {
 		
 		//XXX Testing
-		item.setState(FriendStates.ACCEPTED);
-		new FriendDAO().update(item);
+//		item.setState(FriendStates.ACCEPTED);
+//		new FriendDAO().update(item);
 		
 	}
 
@@ -114,12 +147,7 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 		return false;
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		controller.dispose();
-	}
-
+	
 
 	@Override
 	public void onFriendshipAdded(Friend newFriend) {

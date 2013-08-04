@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,9 +81,9 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	
 	
 	private SoundPool soundPool;
-	private int[] sounds = { R.raw.blue_sound, R.raw.yellow_sound,  R.raw.green_sound, R.raw.red_sound};
-	private boolean[] loaded = { false, false, false, false};
-	private int[] soundIDs = { 0,0,0,0};
+	private int[] sounds = {R.raw.blue_sound,R.raw.yellow_sound,R.raw.green_sound,R.raw.red_sound,R.raw.center_pressed,R.raw.center_released};
+	private boolean[] loaded = { false, false, false, false,false,false};
+	private int[] soundIDs = { 0,0,0,0,0,0};
 	private ProgressDialog progressDialog;
 	
 	@Override
@@ -213,6 +215,10 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 								    		loaded[2]=true;
 								    	else if(soundIDs[3]==sampleId)
 								    		loaded[3]=true;
+								    	else if(soundIDs[4]==sampleId)
+								    		loaded[4]=true;
+								    	else if(soundIDs[5]==sampleId)
+								    		loaded[5]=true;
 								    	
 								    }
 								});
@@ -220,9 +226,11 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			        soundIDs[1]=soundPool.load(Board.this, sounds[1], 1);
 			        soundIDs[2]=soundPool.load(Board.this, sounds[2], 1);
 			        soundIDs[3]=soundPool.load(Board.this, sounds[3], 1);
+			        soundIDs[4]=soundPool.load(Board.this, sounds[4], 1);
+			        soundIDs[5]=soundPool.load(Board.this, sounds[5], 1);
 					
 					// New Code so we wait until the load is complete
-					while( !(loaded[0] && loaded[1] && loaded[2] && loaded[3]) ) {
+					while( !(loaded[0] && loaded[1] && loaded[2] && loaded[3] && loaded[4]&& loaded[5]) ) {
 					    try {
 							Thread.sleep(200);
 						} catch (InterruptedException e) {
@@ -251,6 +259,18 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		setEnableFalseClick(false);
 	}
 
+	
+	public void onClick(View v) {
+		
+		switch(v.getId()){
+		case R.id.board_question:
+	    	Intent intent = new Intent(this, Tutorial.class);
+	    	startActivity(intent);
+    	break;
+		}
+		
+	}
+	
 	/**
 	 * Method to listen custom views
 	 */
@@ -286,8 +306,26 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 				break;
 				
 			case R.id.sendView1:
+				soundPool.play(soundIDs[4], volume, volume, 1, 0, 1f);
 				pressCenterButton();
 				Log.d(TAG, "send");
+				break;
+		}
+		
+	}
+	
+	@Override
+	public void onReleased(CustomView view){
+		
+		AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        float actualVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float volume = actualVolume / maxVolume;
+		
+		switch(view.getID()){
+		
+			case R.id.sendView1:
+				soundPool.play(soundIDs[5], volume, volume, 1, 0, 1f);
 				break;
 		}
 		

@@ -64,6 +64,7 @@ public class SendView extends ImageView implements CustomView{
 							}
 							
 							isShining = true;
+							listener.onClicked(this);
 						}
 						
 					}
@@ -92,7 +93,7 @@ public class SendView extends ImageView implements CustomView{
 				
 				}
 				isShining = false;
-				listener.onClicked(this);
+				listener.onReleased(this);
 				return true;
 		}
 		

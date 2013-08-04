@@ -40,6 +40,8 @@ public class GCMIntentService extends GCMBaseIntentService {
  
     private static final String TAG = "GCMIntentService";
     public static final String DISPLAY_MESSAGE_ACTION = "es.rczone.simonsays.DISPLAY_MESSAGE";
+    public static final String FRIENDS_UPDATER_ACTION = "es.rczone.simonsays.FRIENDS_UPDATER";
+    public static final String GAMES_UPDATER_ACTION = "es.rczone.simonsays.GAMES_UPDATER";
     public static final String EXTRA_MESSAGE = "message";
     public static final String ID = "gcm_id";    
     public static final String SENDER_ID = "391067387670";// Google project id 
@@ -282,8 +284,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     		}
     		else if("100".equals(codeFromServer)){
     			String friendName = json_data.getString("user_name");
-    			Friend f = new Friend(friendName, FriendStates.ASKED_YOU);
+    			Friend f = new Friend(friendName, FriendStates.ASKED_YOU_FOR_FRIENDSHIP);
     			new FriendDAO().insert(f);
+    			this.updateFriendsUI();
     			
     			return friendName+" sent you a friendship request.";
     			
@@ -293,10 +296,13 @@ public class GCMIntentService extends GCMBaseIntentService {
     			int game_id = json_data.getInt("game_id");
     			GameFactory factory = new GameFactory();
     			String nameOpponent = json_data.getString("opponent_name");
-    			Friend f = new FriendDAO().get(nameOpponent);
+    			FriendDAO dao = new FriendDAO();
+    			Friend f = dao.get(nameOpponent);
+    			f.setState(FriendStates.ASKED_YOU_GAME);
+    			dao.update(f);
     			Game game = factory.createNewGameFromRequest(game_id, f);
     			new GameDAO().insert(game);
-    			
+    			this.updateGamesUI();
     			return nameOpponent+" sent you a request for a game.";
     			
     		}
@@ -308,7 +314,11 @@ public class GCMIntentService extends GCMBaseIntentService {
     			game.setMyTurn(true);
     			game.setState(GameStates.FIRST_MOVE);
     			dao.update(game);
-    			
+    			FriendDAO daof = new FriendDAO();
+    			Friend f= daof.get(game.getOpponentName());
+    			f.setState(FriendStates.PLAYING_WITH_YOU);
+    			daof.update(f);
+    			this.updateGamesUI();
     			return "Your friend "+game.getOpponentName()+" is ready to play.";
     		}
 			else if("301".equals(codeFromServer)){
@@ -318,7 +328,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			Game game = dao.get(game_id);
     			game.setState(GameStates.REFUSED);
     			dao.update(game);
-    			
+    			this.updateGamesUI();
     			return "Your friend "+game.getOpponentName()+" refuse to play with you.";
 			    			
 			}
@@ -339,7 +349,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     			game.setNumMoves(num_moves);
     			if(guess==1) game.upOppScore();
     			dao.update(game);
-    			
+    			this.updateGamesUI();
 				
 				return "Your friend "+game.getOpponentName()+" made a move.";
 			}
@@ -349,7 +359,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				Friend f = dao.get(friendName);
 				f.setState(FriendStates.ACCEPTED);
 				dao.update(f);
-				
+				this.updateFriendsUI();
 				return "Your friend "+friendName+" accepted your friendship request.";
 				
 			}
@@ -359,7 +369,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				Friend f = dao.get(friendName);
 				f.setState(FriendStates.REJECTED);
 				dao.update(f);
-				
+				this.updateFriendsUI();
 				return "Your friend "+friendName+" rejected your friendship request.";
 				
 			}
@@ -375,6 +385,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 		}
     	
     	
+    }
+    
+    public void updateFriendsUI(){
+    	Intent intent = new Intent(FRIENDS_UPDATER_ACTION);
+        getApplicationContext().sendBroadcast(intent);//This will be received in Friends activity
+    }
+    public void updateGamesUI(){
+    	Intent intent = new Intent(GAMES_UPDATER_ACTION);
+        getApplicationContext().sendBroadcast(intent);//This will be received in Games activity
     }
  
 }

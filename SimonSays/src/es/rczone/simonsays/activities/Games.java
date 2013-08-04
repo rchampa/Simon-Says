@@ -9,7 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,12 +20,17 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
+import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.FragmentGamesList;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
+import es.rczone.simonsays.controllers.FriendsController;
 import es.rczone.simonsays.controllers.GamesController;
+import es.rczone.simonsays.daos.FriendDAO;
 import es.rczone.simonsays.daos.GameDAO;
+import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.Friend.FriendStates;
 import es.rczone.simonsays.model.Game.GameStates;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
@@ -75,6 +83,7 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 		post = new HttpPostConnector();
 		prepareDiologs();
 		
+		registerReceiver(gamesUpdater, new IntentFilter(GCMIntentService.GAMES_UPDATER_ACTION));
          
 	}
 	
@@ -95,23 +104,53 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 		};
 		
 	}
+	
+	 private final BroadcastReceiver gamesUpdater =  new BroadcastReceiver() {
+
+		   @Override
+		   public void onReceive(Context context, Intent intent) {
+			   controller.handleMessage(GamesController.MESSAGE_GET_READY_LIST);
+			   controller.handleMessage(GamesController.MESSAGE_GET_WAITING_LIST);
+		   }
+
+		};
+		
+	@Override
+    protected void onDestroy() {
+		
+        try {
+        	controller.dispose();
+            unregisterReceiver(gamesUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onDestroy();
+    }
+
 
 	@Override
 	protected void onResume(){
-		super.onResume();
+		
+		registerReceiver(gamesUpdater, new IntentFilter(GCMIntentService.GAMES_UPDATER_ACTION));
 		if(games_rdy_list!=null && games_waiting_list!=null && !listsUpdated){
 			controller.handleMessage(GamesController.MESSAGE_GET_READY_LIST);
 			controller.handleMessage(GamesController.MESSAGE_GET_WAITING_LIST);
 			listsUpdated = true;
 		}
-		
+		super.onResume();
 	}
 	
 	
 	@Override
 	protected void onPause(){
-		super.onPause();
+		
 		listsUpdated=false;
+		try {
+            unregisterReceiver(gamesUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+		super.onPause();
 	}
 	
 
@@ -207,6 +246,13 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 					Game game = dao.get(Integer.parseInt(params[0]));
 					game.setState(GameStates.WAITING_FOR_MOVE);
 					dao.update(game);
+					FriendDAO daof = new FriendDAO();
+					Friend f = daof.get(game.getOpponentName());
+					f.setState(FriendStates.PLAYING_WITH_YOU);
+					daof.update(f);
+					Tools.updateFriendsUI(this);
+					Tools.updateGamesUI(this);
+					
 					connection.attachMessage("You have accepted the request game.");
 					return true;
 				}
@@ -215,6 +261,12 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 					Game game = dao.get(Integer.parseInt(params[0]));
 					game.setState(GameStates.REFUSED);
 					dao.update(game);
+					FriendDAO daof = new FriendDAO();
+					Friend f = daof.get(game.getOpponentName());
+					f.setState(FriendStates.ACCEPTED);
+					daof.update(f);
+					Tools.updateFriendsUI(this);
+					Tools.updateGamesUI(this);
 					connection.attachMessage("You have rejected the request game.");
 					return true;
 				}

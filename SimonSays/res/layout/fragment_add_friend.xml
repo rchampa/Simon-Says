@@ -12,7 +12,8 @@
           android:padding="40dip"
           android:id="@+id/layout_add_friends"
           android:layout_gravity="center"
-          android:gravity="center"    >
+          android:gravity="center" 
+          android:focusableInTouchMode="true"   >
           
 		   
                 

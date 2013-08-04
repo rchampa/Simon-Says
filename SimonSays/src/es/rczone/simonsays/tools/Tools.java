@@ -6,6 +6,8 @@ import java.util.Date;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 
 public class Tools {
@@ -51,4 +53,13 @@ public class Tools {
 		
 		
 	}
+	
+	public static void updateFriendsUI(Context context){
+    	Intent intent = new Intent(GCMIntentService.FRIENDS_UPDATER_ACTION);
+    	context.sendBroadcast(intent);//This will be received in Friends activity
+    }
+    public static void updateGamesUI(Context context){
+    	Intent intent = new Intent(GCMIntentService.GAMES_UPDATER_ACTION);
+    	context.sendBroadcast(intent);//This will be received in Games activity
+    }
 }

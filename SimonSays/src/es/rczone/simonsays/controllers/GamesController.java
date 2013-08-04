@@ -5,9 +5,7 @@ import java.util.List;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import es.rczone.simonsays.daos.FriendDAO;
 import es.rczone.simonsays.daos.GameDAO;
-import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.model.Game;
 
 

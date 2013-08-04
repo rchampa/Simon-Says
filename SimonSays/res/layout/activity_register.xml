@@ -12,7 +12,8 @@
           android:padding="40dip"
           android:id="@+id/layout1"
           android:layout_gravity="center"
-          android:gravity="center"    >
+          android:gravity="center" 
+          android:focusableInTouchMode="true"   >
           
 		   <ImageView
 	        android:id="@+id/imageView1"
@@ -97,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="@string/register_register"
-                android:background="@drawable/button_rounded_corners"
+                android:background="@drawable/custom_button_selector"
                 style="@style/EstiloMenuButton"
                 android:onClick="onClick"
           />
@@ -106,7 +107,7 @@
                 android:id="@+id/button_login"
                 android:layout_marginTop="6dp"
                 android:text="@string/register_already_registered"
-                android:background="@drawable/button_rounded_corners"
+                android:background="@drawable/custom_button_selector"
                 style="@style/EstiloMenuButton"
                	android:onClick="onClick"
           />

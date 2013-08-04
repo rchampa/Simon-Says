@@ -44,6 +44,7 @@ public class Register extends Activity implements ConnectionListener{
 		post = new HttpPostConnector();
 		
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(GCMIntentService.DISPLAY_MESSAGE_ACTION));
+		
 	}
 
 	@Override

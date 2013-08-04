@@ -124,7 +124,7 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 	@Override
 	public void afterGoodConnection() {
 		Toast.makeText(this.getActivity(), "Nuevo amigo añadido", Toast.LENGTH_SHORT).show();
-		listener.onFriendshipAdded(new Friend(nameNewFriend, FriendStates.WAITING_FOR_RESPONSE));
+		listener.onFriendshipAdded(new Friend(nameNewFriend, FriendStates.WAITING_FOR_RESPONSE_FRIENDSHIP));
 	}
 
 	@Override

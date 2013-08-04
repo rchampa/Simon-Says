@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="40dp"
+    android:orientation="vertical"
+     >
+
+    	<TextView
+    	    android:id="@+id/textView11"
+    	    style="@style/EstiloTV"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:drawableRight="@drawable/touch_button"
+    	    android:text="@string/tutorial_touch" />
+    	
+    	<TextView
+    	    android:id="@+id/textView12"
+    	    style="@style/EstiloTV"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:drawableRight="@drawable/reset_button"
+    	    android:text="@string/tutorial_reset" />
+    	
+    	<TextView
+    	    android:id="@+id/textView13"
+    	    style="@style/EstiloTV"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:drawableRight="@drawable/send_button"
+    	    android:text="@string/tutorial_send" />
+    	
+    	<TextView
+    	    android:id="@+id/textView14"
+    	    style="@style/EstiloTV"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:drawableRight="@drawable/eye_button"
+    	    android:text="@string/tutorial_eye" />
+    	
+    	<TextView
+    	    android:id="@+id/textView15"
+    	    style="@style/EstiloTV"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:drawableRight="@drawable/tic_button"
+    	    android:text="@string/tutorial_tic" />
+	
+</LinearLayout>

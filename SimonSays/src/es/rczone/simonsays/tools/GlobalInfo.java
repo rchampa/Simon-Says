@@ -14,6 +14,9 @@ public class GlobalInfo {
 	//Keys
 	public final String KEY_GAME_ID = "game_id";
 	
+	//paths
+	public final String PATH_PIC_FILE = "avatar";
+	public final String PATH_PIC_FILE_MINI = "miniavatar";
 	
 	// Game activity
 	public final String ACCEPT_REQUEST = "1";

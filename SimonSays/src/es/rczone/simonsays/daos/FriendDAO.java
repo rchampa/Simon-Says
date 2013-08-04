@@ -27,9 +27,9 @@ public class FriendDAO {
 			
 			do{
 				String name = cursor.getString(cursor.getColumnIndex(NAME));
-				int state = cursor.getInt(cursor.getColumnIndex(STATE));
-				
-				Friend valueObject = new Friend(name, FriendStates.values()[state]);
+				int istate = cursor.getInt(cursor.getColumnIndex(STATE));
+				FriendStates state = FriendStates.values()[istate];
+				Friend valueObject = new Friend(name, state);
 				
 				list.add(valueObject);
 			}while(cursor.moveToNext());

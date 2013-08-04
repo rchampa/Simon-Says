@@ -2,7 +2,15 @@ package es.rczone.simonsays.model;
 
 public class Friend extends SimpleObservable<Friend> {
 	
-	public enum FriendStates{WAITING_FOR_RESPONSE,ACCEPTED, REJECTED, ASKED_YOU};
+	public enum FriendStates{
+		WAITING_FOR_RESPONSE_FRIENDSHIP,
+		ASKED_YOU_FOR_FRIENDSHIP, //friendship
+		ACCEPTED, //friendship
+		REJECTED, //friendship
+		WAITING_FOR_RESPONSE_GAME,
+		ASKED_YOU_GAME,
+		PLAYING_WITH_YOU, 
+	};
 	private String userName;
 	private FriendStates state;
 	

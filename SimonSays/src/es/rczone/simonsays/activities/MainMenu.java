@@ -2,6 +2,7 @@ package es.rczone.simonsays.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,11 @@ public class MainMenu extends Activity {
 		Intent intent;
 		
 		switch(v.getId()){
+			case R.id.mainmenu_bt_profile:
+        	intent = new Intent(this, Profile.class);
+        	startActivity(intent);
+        	break;
+		
             case R.id.mainmenu_bt_new_game:
             	intent = new Intent(this, NewGame.class);
             	startActivity(intent);
@@ -38,6 +44,8 @@ public class MainMenu extends Activity {
             	break;
             	
             case R.id.mainmenu_bt_form:
+            	intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/138q9PpmzHYg7TucPikMt_oax9BllYEfhxDR0o3kzk1g/viewform"));
+         	    startActivity(intent);
             	
             	break;
             	

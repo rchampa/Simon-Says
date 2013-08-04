@@ -39,7 +39,7 @@ public class Login extends Activity implements ConnectionListener{
 		setContentView(R.layout.activity_login);
 		
 		post = new HttpPostConnector();
-		
+			
 	}
 
 

@@ -73,6 +73,8 @@
     <string name="mainmenu_resume_game">Resume game</string>
     <string name="mainmenu_friends">Friends</string>
     <string name="mainmenu_form">Problems and suggestions</string>
+    <string name="mainmenu_profile">Profile</string>
+    
     
     
     <!-- fragment_activity_games -->
@@ -94,6 +96,12 @@
     <string name="board_threshold">Opponent threshold: </string>
     <string name="board_newThreshold">User threshold: </string>
     
+    <!-- activity_tutorial -->
+    <string name="tutorial_touch">You should press colors</string>
+    <string name="tutorial_reset">You can reset the actual sequence of colors</string>
+    <string name="tutorial_send">Your move is ready, you can send it</string>
+    <string name="tutorial_eye">You can check your opponent\'s move only once</string>
+    <string name="tutorial_tic">You can check if you guess your opponent\'s move</string>
     
 
 </resources>

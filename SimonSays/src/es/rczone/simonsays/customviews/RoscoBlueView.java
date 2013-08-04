@@ -41,6 +41,7 @@ public class RoscoBlueView extends ImageView implements CustomView{
 						if(!isShining){
 							setImageResource(R.drawable.rosco_blue_shining);
 							isShining = true;
+							listener.onClicked(this);
 						}
 						
 					}
@@ -50,7 +51,6 @@ public class RoscoBlueView extends ImageView implements CustomView{
 			case MotionEvent.ACTION_UP:
 				setImageResource(R.drawable.rosco_blue);
 				isShining = false;
-				listener.onClicked(this);
 				return true;
 		}
 		

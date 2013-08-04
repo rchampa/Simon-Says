@@ -10,7 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +36,7 @@ import es.rczone.simonsays.model.GameFactory;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.HttpPostConnector;
+import es.rczone.simonsays.tools.Tools;
 
 public class NewGame extends FragmentActivity implements Handler.Callback, ListListener<Friend>, ConnectionListener {
 
@@ -60,10 +64,48 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
         controller = new FriendsController(friends);
 		controller.addOutboxHandler(new Handler(this));
 		
+		registerReceiver(friendsUpdater, new IntentFilter(GCMIntentService.FRIENDS_UPDATER_ACTION));
+	}
+	
+	private final BroadcastReceiver friendsUpdater =  new BroadcastReceiver() {
+
+	   @Override
+	   public void onReceive(Context context, Intent intent) {
+		   controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
+	   }
+
+	};
+
 		
+	@Override
+	protected void onResume(){
+		registerReceiver(friendsUpdater, new IntentFilter(GCMIntentService.FRIENDS_UPDATER_ACTION));
 		controller.handleMessage(FriendsController.MESSAGE_GET_FRIENDS_LIST);
+		super.onResume();
 	}
 
+	@Override
+	protected void onPause(){
+		try {
+            unregisterReceiver(friendsUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onPause();
+	}
+	
+	@Override
+    protected void onDestroy() {
+		
+        try {
+        	controller.dispose();
+            unregisterReceiver(friendsUpdater);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
+        }
+        super.onDestroy();
+    }
+		
 	@Override
 	public boolean handleMessage(Message message) {
 		
@@ -124,9 +166,15 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 				
 				if("200".equals(codeFromServer)){
 					int id = json_data.getInt("game_id");
-					Friend opponent = new FriendDAO().get(params[1]);
+					FriendDAO dao = new FriendDAO();
+					Friend opponent = dao.get(params[1]);
+					opponent.setState(FriendStates.WAITING_FOR_RESPONSE_GAME);
+					dao.update(opponent);
 					newGame = new GameFactory().createNewGame(id, opponent);
 					new GameDAO().insert(newGame);
+					Tools.updateFriendsUI(this);
+					Tools.updateGamesUI(this);
+					
 					return true;
 				}
 				else return false;
@@ -183,8 +231,6 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 		Toast.makeText(this, "There was an error during connection.", Toast.LENGTH_SHORT).show();
 		
 	}
-
-	
 
 	
 

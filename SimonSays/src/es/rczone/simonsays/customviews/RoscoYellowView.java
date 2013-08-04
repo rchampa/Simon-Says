@@ -39,6 +39,7 @@ public class RoscoYellowView extends ImageView implements CustomView{
 				if (bitmap.getPixel((int) iX, (int) iY) != 0 || isFalseClick) {
 					if(!isShining){
 						setImageResource(R.drawable.rosco_yellow_shining);
+						listener.onClicked(this);
 						isShining = true;
 					}
 					
@@ -49,7 +50,6 @@ public class RoscoYellowView extends ImageView implements CustomView{
 		case MotionEvent.ACTION_UP:
 			setImageResource(R.drawable.rosco_yellow);
 			isShining = false;
-			listener.onClicked(this);
 			return true;
 		}
 		

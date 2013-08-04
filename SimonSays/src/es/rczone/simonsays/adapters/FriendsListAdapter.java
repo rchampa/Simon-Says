@@ -73,16 +73,25 @@ public class FriendsListAdapter extends BaseAdapter{
             viewHolder.tv_opponent_name.setText(friendItemList.getUserName());
             switch(friendItemList.getState()){
 			case ACCEPTED:
-				viewHolder.tv_opponent_state.setText("Accepted");
+				viewHolder.tv_opponent_state.setText("and you are friends");
 				break;
 			case REJECTED:
-				viewHolder.tv_opponent_state.setText("Rejected");
+				viewHolder.tv_opponent_state.setText("rejected your friendship");
 				break;
-			case WAITING_FOR_RESPONSE:
-				viewHolder.tv_opponent_state.setText("Waiting for response");
+			case WAITING_FOR_RESPONSE_FRIENDSHIP:
+				viewHolder.tv_opponent_state.setText("don't response your request yet");
 				break;
-			case ASKED_YOU:
-				viewHolder.tv_opponent_state.setText("He asked you for friend");
+			case ASKED_YOU_FOR_FRIENDSHIP:
+				viewHolder.tv_opponent_state.setText("asked you for a friendship");
+				break;
+			case PLAYING_WITH_YOU:
+				viewHolder.tv_opponent_state.setText("and you are playing");
+				break;
+			case WAITING_FOR_RESPONSE_GAME:
+				viewHolder.tv_opponent_state.setText("don't response your request game yet");
+				break;
+			case ASKED_YOU_GAME:
+				viewHolder.tv_opponent_state.setText("sent you a request game");
 				break;
 			default:
 				break;
