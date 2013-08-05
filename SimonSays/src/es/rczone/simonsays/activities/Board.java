@@ -152,7 +152,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		case IN_PROGRESS:
 			mode = Mode.OPP_TURN;
 			threshold = item.getNumMoves();
-			oldThreshold = threshold==4? 4: threshold-1 ;
+			oldThreshold = threshold;
 			Move m = new MoveDAO().getMoveOfGame(gameID);
 			oppmove = m.getMove();
 			Toast.makeText(this, "Check the opponent's move", Toast.LENGTH_SHORT).show();
@@ -386,8 +386,10 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 					centerButton.setStateHand();
 					break;
 				case TIC:
-					if(matchMoves())
+					if(matchMoves()){
+						guess = true;
 						Toast.makeText(this, "You score.", Toast.LENGTH_SHORT).show();
+					}
 					else
 						Toast.makeText(this, "Your fail", Toast.LENGTH_SHORT).show();
 					mode=Mode.MY_TURN;
@@ -620,6 +622,7 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 				if(codeFromServer.equals("400")){
 					Game g = new GameDAO().get(gameID);
 					g.setState(GameStates.WAITING_FOR_MOVE);
+					if(guess) g.upUserScore();
 					new GameDAO().update(g);
 					return true;
 				}

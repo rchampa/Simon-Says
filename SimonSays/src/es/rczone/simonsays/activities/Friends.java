@@ -125,8 +125,8 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 	public void onItemLongClicked(Friend item) {
 		
 		//XXX Testing
-//		item.setState(FriendStates.ACCEPTED);
-//		new FriendDAO().update(item);
+		item.setState(FriendStates.ASKED_YOU_FOR_FRIENDSHIP);
+		new FriendDAO().update(item);
 		
 	}
 

@@ -8,7 +8,7 @@ public class Game extends SimpleObservable<Friend> {
 	private Friend opponent;
 	//private ScoreBoard scoreBoard;
 	//private Board board;
-	private boolean isMyTurn;
+	private boolean isMyTurn;//This field is @deprecated
 	private GameStates state;
 	private int numMoves;
 	private int userScore;
@@ -90,6 +90,9 @@ public class Game extends SimpleObservable<Friend> {
 		this.userScore = userScore;
 	}
 
+	public void upUserScore() {
+		this.oppScore++;
+	}
 
 	public int getOppScore() {
 		return oppScore;
