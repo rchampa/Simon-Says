@@ -6,6 +6,7 @@ import es.rczone.simonsays.GCMIntentService;
 
 public class GlobalInfo {
 	
+	
 	public final String USERNAME;
 	
 	public final String RIGHT_MATCH_MOVE = "1";
