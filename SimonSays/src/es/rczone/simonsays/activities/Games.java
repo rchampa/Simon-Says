@@ -311,4 +311,10 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 		
 	}
 
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

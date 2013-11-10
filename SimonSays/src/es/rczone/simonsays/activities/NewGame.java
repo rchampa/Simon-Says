@@ -232,6 +232,12 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 		
 	}
 
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

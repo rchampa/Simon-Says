@@ -256,4 +256,10 @@ public class Register extends Activity implements ConnectionListener{
 		Toast.makeText(this,connection.getMessage(),Toast.LENGTH_LONG).show();
 	}
 
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

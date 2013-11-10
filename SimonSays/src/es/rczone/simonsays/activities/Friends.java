@@ -279,4 +279,10 @@ public class Friends extends FragmentActivity implements Handler.Callback,ListLi
 		Toast.makeText(this, "There was a problem.", Toast.LENGTH_SHORT).show();
 		
 	}
+
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

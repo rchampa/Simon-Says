@@ -139,4 +139,10 @@ public class FragmentAddFriend extends Fragment implements ConnectionListener{
 		
 	}
 
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

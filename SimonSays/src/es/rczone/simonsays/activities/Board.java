@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -665,5 +666,11 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	public void afterErrorConnection() {
 		Toast.makeText(this, "Problem connections. The move has not been sent.", Toast.LENGTH_SHORT).show();
 		
+	}
+
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

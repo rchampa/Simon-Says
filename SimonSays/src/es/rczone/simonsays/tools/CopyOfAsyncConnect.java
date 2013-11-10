@@ -3,7 +3,6 @@ package es.rczone.simonsays.tools;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 
@@ -17,14 +16,11 @@ public class CopyOfAsyncConnect extends AsyncTask<Void, String, String> {
 	private ConnectionListener conexion;
 	private String[] params;
 	
-	private String message;
 	
 	public CopyOfAsyncConnect(ConnectionListener connection, String... params){
-		if(connection instanceof Context)
-			this.context = (Context)connection;
-		else if(connection instanceof Fragment){
-			this.context = ((Fragment)connection).getActivity();
-		}
+		
+		this.context = connection.getContext();
+		
 		conexion = connection;
 		this.params = params;
 	}

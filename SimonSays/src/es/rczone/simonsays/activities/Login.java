@@ -20,13 +20,14 @@ public class Login extends Activity{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 			
+		setEnableEditTextFields(false);
+		setEnableEditTextFields(true);
 	}
 
 
 	public void onClick(View v) {
 		
-		setEnableEditTextFields(false);
-		setEnableEditTextFields(true);
+		
 		String name = ((EditText)findViewById(R.id.login_et_name)).getText().toString();
 		String pass = ((EditText)findViewById(R.id.login_et_password)).getText().toString();
       
