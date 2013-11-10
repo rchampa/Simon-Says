@@ -7,12 +7,13 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 import es.rczone.simonsays.R;
-import es.rczone.simonsays.activities.server_requests.LoginToServer;
-import es.rczone.simonsays.tools.CopyOfAsyncConnect;
+import es.rczone.simonsays.activities.server_requests.LoginRequest;
+import es.rczone.simonsays.tools.AsyncConnect2;
+import es.rczone.simonsays.tools.Tools;
 
 public class Login extends Activity{
 	
-	private CopyOfAsyncConnect connection;
+	private AsyncConnect2 connection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +21,16 @@ public class Login extends Activity{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 			
-		setEnableEditTextFields(false);
-		setEnableEditTextFields(true);
+		EditText name = (EditText)findViewById(R.id.login_et_name);
+		EditText pass = (EditText)findViewById(R.id.login_et_password);
+		
+		//Calling these methods to disable and then enable, produce a focus lost effect.
+		Tools.setEnableEditTextFields(false,name,pass);
+		Tools.setEnableEditTextFields(true,name,pass);
 	}
 
 
-	public void onClick(View v) {
-		
+	public void onClick(View v) {	
 		
 		String name = ((EditText)findViewById(R.id.login_et_name)).getText().toString();
 		String pass = ((EditText)findViewById(R.id.login_et_password)).getText().toString();
@@ -34,7 +38,7 @@ public class Login extends Activity{
         switch(v.getId()){
             case R.id.login_button_login:
             	// register in game server
-            	connection = new CopyOfAsyncConnect(new LoginToServer(this),name, pass);
+            	connection = new AsyncConnect2(new LoginRequest(this),name, pass);
             	connection.execute();
             	break;
             case R.id.login_button_forget:
@@ -44,16 +48,4 @@ public class Login extends Activity{
         }                 
     }
 	
-	private void setEnableEditTextFields(boolean b){
-		
-		((EditText)findViewById(R.id.login_et_name)).setFocusable(b);
-		((EditText)findViewById(R.id.login_et_name)).setFocusableInTouchMode(b);
-		
-		((EditText)findViewById(R.id.login_et_password)).setFocusable(b);
-		((EditText)findViewById(R.id.login_et_password)).setFocusableInTouchMode(b);
-
-		
-	}
-
-
 }

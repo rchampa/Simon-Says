@@ -4,10 +4,10 @@ import android.content.Context;
 
 public interface ConnectionListener {
 
-	boolean inBackground(String... params);
 	boolean validateDataBeforeConnection(String... params);
-	void afterGoodConnection();
 	void invalidInputData();
+	boolean inBackground(String... params);
+	void afterGoodConnection();
 	void afterErrorConnection();
 	Context getContext();
 }

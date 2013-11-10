@@ -7,8 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.widget.EditText;
 import es.rczone.simonsays.GCMIntentService;
-import es.rczone.simonsays.R;
 
 public class Tools {
 	
@@ -62,4 +62,14 @@ public class Tools {
     	Intent intent = new Intent(GCMIntentService.GAMES_UPDATER_ACTION);
     	context.sendBroadcast(intent);//This will be received in Games activity
     }
+    
+	public static void setEnableEditTextFields(boolean b, EditText... fields){
+		
+		for(EditText field : fields){
+			field.setFocusable(b);
+			field.setFocusableInTouchMode(b);
+		}
+			
+	}
+    
 }

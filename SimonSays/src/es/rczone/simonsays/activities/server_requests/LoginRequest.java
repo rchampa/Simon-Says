@@ -20,12 +20,12 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
-public class LoginToServer implements ConnectionListener{
+public class LoginRequest implements ConnectionListener{
 	
 	private HttpPostConnector post;
 	private Context context;
 
-	public LoginToServer(Context context) {
+	public LoginRequest(Context context) {
 		this.context = context;
 		post = new HttpPostConnector();
 	}

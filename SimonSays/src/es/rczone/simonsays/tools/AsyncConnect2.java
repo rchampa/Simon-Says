@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-public class CopyOfAsyncConnect extends AsyncTask<Void, String, String> {
+public class AsyncConnect2 extends AsyncTask<Void, String, String> {
 
 	public static final String CONNECTION_ESTABLISHED = "ok";
 	public static final String CONNECTION_ERROR = "error";
@@ -17,7 +17,7 @@ public class CopyOfAsyncConnect extends AsyncTask<Void, String, String> {
 	private String[] params;
 	
 	
-	public CopyOfAsyncConnect(ConnectionListener connection, String... params){
+	public AsyncConnect2(ConnectionListener connection, String... params){
 		
 		this.context = connection.getContext();
 		
