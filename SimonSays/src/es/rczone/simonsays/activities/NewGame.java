@@ -19,6 +19,7 @@ import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.fragments.FragmentFriendsList;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
+import es.rczone.simonsays.activities.server_requests.NewGameRequest;
 import es.rczone.simonsays.controllers.FriendsController;
 import es.rczone.simonsays.model.Friend;
 import es.rczone.simonsays.model.Friend.FriendStates;
@@ -113,7 +114,7 @@ public class NewGame extends FragmentActivity implements Handler.Callback, ListL
 			SharedPreferences prefs = getSharedPreferences(GCMIntentService.PREFERENCES_FILE, Context.MODE_PRIVATE);
 	    	String name = prefs.getString(GCMIntentService.NAME, "");
 	    	
-	    	new AsyncConnect(this).execute(name, friend.getUserName());
+	    	new AsyncConnect(new NewGameRequest(this),name,friend.getUserName()).execute();
 		}
 		
 		

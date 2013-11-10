@@ -1,16 +1,8 @@
 package es.rczone.simonsays.activities;
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -26,6 +18,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 import es.rczone.simonsays.R;
+import es.rczone.simonsays.activities.server_requests.MakeMoveRequest;
 import es.rczone.simonsays.customviews.CustomView;
 import es.rczone.simonsays.customviews.CustomViewListener;
 import es.rczone.simonsays.customviews.SendView;
@@ -33,17 +26,14 @@ import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Colors;
 import es.rczone.simonsays.model.Game;
-import es.rczone.simonsays.model.Game.GameStates;
 import es.rczone.simonsays.model.Move;
 import es.rczone.simonsays.tools.AsyncConnect;
-import es.rczone.simonsays.tools.ConnectionListener;
 import es.rczone.simonsays.tools.GlobalInfo;
-import es.rczone.simonsays.tools.HttpPostConnector;
 import es.rczone.simonsays.tools.IDialogOperations;
 import es.rczone.simonsays.tools.Tools;
 
 
-public class Board extends Activity implements CustomViewListener, ConnectionListener {
+public class Board extends Activity implements CustomViewListener {
 		
 	public enum Mode{FIRST_MOVE, OPP_TURN, REPLAY_MOVE, MY_TURN};
 	private String TAG = Board.class.getSimpleName();
@@ -69,13 +59,9 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 	private Mode mode;
 	private int gameID;
 	private boolean guess;
-//	private boolean isCheckedOppMove = false;//let me know whether the user see the opp move
-//	private boolean isMatchedOppMove = false;//let me know whether the user replay the opp move  
-//	private boolean isMyMoveComplete = false;
 	private int threshold;
 	private int oldThreshold;
 	
-	private HttpPostConnector post;
 	private IDialogOperations sendDialog;
 	private AsyncConnect connection; 
 	private AsyncTask<Integer, Integer, Integer> loadSoundsTask; 
@@ -95,7 +81,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		
 		info = new GlobalInfo(this);
 		
-		post = new HttpPostConnector();
 		
 		roscoBlue = (CustomView)findViewById(R.id.roscoBlueView1);
 		roscoYellow = (CustomView)findViewById(R.id.roscoYellowView1);
@@ -131,6 +116,14 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		
 	}
 	
+	public int getID(){
+		return this.gameID;
+	}
+	
+	public boolean getGuess(){
+		return this.guess;
+	}
+	
 	private void prepareGame(int gameID){
 		
 		etName.setText(" "+info.USERNAME);
@@ -144,8 +137,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			mode = Mode.FIRST_MOVE;
 			threshold = item.getNumMoves();
 			oldThreshold = threshold;
-//			isCheckedOppMove = true;
-//			isMatchedOppMove = true;
 			oppmove ="";
 			guess = false;//first time is like a fail
 			centerButton.setStateHand();
@@ -157,8 +148,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			Move m = new MoveDAO().getMoveOfGame(gameID);
 			oppmove = m.getMove();
 			Toast.makeText(this, "Check the opponent's move", Toast.LENGTH_SHORT).show();
-//			isCheckedOppMove = false;
-//			isMatchedOppMove = false;
 			centerButton.setStateEye();
 			break;
 		
@@ -178,8 +167,8 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		sendDialog = new IDialogOperations() {
 			@Override
 			public void positiveOperation() {
-				connection = new AsyncConnect(Board.this);
-				connection.execute(""+Board.this.gameID,info.USERNAME,userMove.toString(),guess?info.RIGHT_MATCH_MOVE:info.FAIL_MATCH_MOVE);
+				connection = new AsyncConnect(new MakeMoveRequest(Board.this),""+Board.this.gameID,info.USERNAME,userMove.toString(),guess?info.RIGHT_MATCH_MOVE:info.FAIL_MATCH_MOVE);
+				connection.execute();
 			}
 			@Override
 			public void negativeOperation() {/*Nothing to do*/}
@@ -417,7 +406,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		
 		String[] colorsOpp = oppmove.split("-");
 		String[] colorsCheck = moveToCheck.toString().split("-");
-		//isCheckedOppMove = true;
 	
 		return Arrays.equals(colorsOpp, colorsCheck);
 		
@@ -584,8 +572,6 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 			break;
 		
 		}
-
-		
 	}
 	
 	
@@ -596,81 +582,5 @@ public class Board extends Activity implements CustomViewListener, ConnectionLis
 		userMove.setLength(0);
 		moveToCheck.setLength(0);
 	}
-	
-	
 
-	@Override
-	public boolean inBackground(String... params) {
-		ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
-
-		postParametersToSend.add(new BasicNameValuePair("game_id", params[0]));
-		postParametersToSend.add(new BasicNameValuePair("player_name", params[1]));
-		postParametersToSend.add(new BasicNameValuePair("move", params[2]));
-		postParametersToSend.add(new BasicNameValuePair("guess", params[3]));
-
-		// realizamos una peticion y como respuesta obtenes un array JSON
-		JSONArray jdata = post.getserverdata(postParametersToSend, HttpPostConnector.URL_MAKE_A_MOVE);
-
-
-		// si lo que obtuvimos no es null, es decir, hay respuesta válida
-		if (jdata != null && jdata.length() > 0) {
-
-			try {
-				JSONObject json_data = jdata.getJSONObject(0);
-				String codeFromServer = json_data.getString("code");
-				//String messageFromServer = json_data.getString("message");
-				
-				if(codeFromServer.equals("400")){
-					Game g = new GameDAO().get(gameID);
-					g.setState(GameStates.WAITING_FOR_MOVE);
-					if(guess) g.upUserScore();
-					new GameDAO().update(g);
-					return true;
-				}
-				else{
-					return false;
-				}
-				
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return true;
-		} else { // json obtenido invalido verificar parte WEB.
-			Log.e("JSON  ", "ERROR");
-			return false;
-		}
-	}
-
-	@Override
-	public boolean validateDataBeforeConnection(String... params) {
-		//FIXME
-		return true;
-	}
-
-	@Override
-	public void afterGoodConnection() {
-		Toast.makeText(this, "The move has been sent", Toast.LENGTH_SHORT).show();
-		finish();
-		
-	}
-
-	@Override
-	public void invalidInputData() {
-		Toast.makeText(this, "The move has not been sent", Toast.LENGTH_SHORT).show();
-		
-	}
-
-	@Override
-	public void afterErrorConnection() {
-		Toast.makeText(this, "Problem connections. The move has not been sent.", Toast.LENGTH_SHORT).show();
-		
-	}
-
-	@Override
-	public Context getContext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

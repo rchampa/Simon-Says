@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.server_requests.LoginRequest;
-import es.rczone.simonsays.tools.AsyncConnect2;
+import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.Tools;
 
 public class Login extends Activity{
 	
-	private AsyncConnect2 connection;
+	private AsyncConnect connection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class Login extends Activity{
         switch(v.getId()){
             case R.id.login_button_login:
             	// register in game server
-            	connection = new AsyncConnect2(new LoginRequest(this),name, pass);
+            	connection = new AsyncConnect(new LoginRequest(this),name, pass);
             	connection.execute();
             	break;
             case R.id.login_button_forget:

@@ -16,13 +16,13 @@ import com.google.android.gcm.GCMRegistrar;
 import es.rczone.simonsays.GCMIntentService;
 import es.rczone.simonsays.R;
 import es.rczone.simonsays.activities.server_requests.RegisterRequest;
-import es.rczone.simonsays.tools.AsyncConnect2;
+import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.Tools;
 import es.rczone.simonsays.tools.WakeLocker;
 
 public class Register extends Activity {
 	
-	private AsyncConnect2 connection;
+	private AsyncConnect connection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class Register extends Activity {
              * */
              
             // register in game server
-            connection = new AsyncConnect2(new RegisterRequest(Register.this),nombre,password,id,email);
+            connection = new AsyncConnect(new RegisterRequest(Register.this),nombre,password,id,email);
             connection.execute();
                         
           
