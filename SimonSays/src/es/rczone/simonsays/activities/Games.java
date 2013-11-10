@@ -221,6 +221,7 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 
 	@Override
 	public boolean inBackground(String... params) {
+		
 		ArrayList<NameValuePair> postParametersToSend = new ArrayList<NameValuePair>();
 		postParametersToSend.add(new BasicNameValuePair("game_id", params[0]));
 		postParametersToSend.add(new BasicNameValuePair("response", params[1]));
