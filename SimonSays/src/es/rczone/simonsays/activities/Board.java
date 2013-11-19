@@ -1,5 +1,6 @@
 package es.rczone.simonsays.activities;
 import java.util.Arrays;
+import java.util.Currency;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -32,6 +33,7 @@ import es.rczone.simonsays.model.Metronome;
 import es.rczone.simonsays.model.MetronomeFactory;
 import es.rczone.simonsays.model.Move;
 import es.rczone.simonsays.model.Metronome;
+import es.rczone.simonsays.model.TraceTimeList;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.GlobalInfo;
 import es.rczone.simonsays.tools.IDialogOperations;
@@ -79,7 +81,8 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 	private ProgressDialog progressDialog;
 	
 	private Metronome metronome;
-	ProgressBar progressBar;
+	private ProgressBar progressBar;
+	private TraceTimeList traceTimeList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,21 +124,28 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 			prepareGame(gameID);
 		}
 		
-		metronome = new Metronome(8000,2000);
+		
+		long time = 8000;
+		long interval = 2000;
+		
+		metronome = new Metronome(time,interval);
 		metronome.setListener(this);
 		
 
 	    progressBar = (ProgressBar)findViewById(R.id.progressBar1);
 	    progressBar.setProgress(0);
 	    progressBar.setMax(8000);
+	    
+	    traceTimeList = new TraceTimeList((int)(time/interval));
+	    
 		
 	}
 	
 
 	@Override
 	public void onPulse(long milisecs_passed) {
-		
 		progressBar.setProgress((int)milisecs_passed);
+		traceTimeList.addTime(System.currentTimeMillis());
 	}
 
 	@Override
@@ -281,10 +291,10 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 	public void onClick(View v) {
 		
 		switch(v.getId()){
-		case R.id.board_question:
-	    	Intent intent = new Intent(this, Tutorial.class);
-	    	startActivity(intent);
-    	break;
+			case R.id.board_question:
+		    	Intent intent = new Intent(this, Tutorial.class);
+		    	startActivity(intent);
+	    	break;
 		}
 		
 	}
@@ -306,6 +316,9 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 			case R.id.roscoBlueView1:
 				soundPool.play(soundIDs[0], volume, volume, 1, 0, 1f);
 				proccessColor(Colors.BLUE);
+				if(traceTimeList.isInTraceList(System.currentTimeMillis(), 350)){
+					
+				}
 				break;
 			
 			case R.id.roscoYellowView1:
@@ -327,6 +340,8 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 				soundPool.play(soundIDs[4], volume, volume, 1, 0, 1f);
 				pressCenterButton();
 				metronome.start();
+				traceTimeList.reset();
+				progressBar.setProgress(0);
 				Log.d(TAG, "send");
 				break;
 		}
@@ -359,11 +374,13 @@ public class Board extends Activity implements CustomViewListener, IPulseListene
 			{
 				switch(centerButton.getState()){
 				case HAND:
-					Toast.makeText(this, "You should make your move!", Toast.LENGTH_SHORT).show();
+					//FIXME debug
+					//Toast.makeText(this, "You should make your move!", Toast.LENGTH_SHORT).show();
 					break;
 				case RESET:
 					resetMove();
-					Toast.makeText(this, "Your move has been reset", Toast.LENGTH_SHORT).show();
+					//FIXME debug
+					//Toast.makeText(this, "Your move has been reset", Toast.LENGTH_SHORT).show();
 					centerButton.setStateHand();
 					break;
 				case SEND:

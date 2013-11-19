@@ -9,6 +9,9 @@ public class Metronome {
     private long time;
     private boolean status;
     private IPulseListener listener;
+    private float epsilon;
+    private long currenTimeInMilis;
+    
     public Metronome(long pMillisInFuture, long pCountDownInterval) {
             this.millisInFuture = pMillisInFuture;
             this.countDownInterval = pCountDownInterval;
@@ -35,27 +38,26 @@ public class Metronome {
     private void initialize() 
     {
         final Handler handler = new Handler();
-        Log.v("status", "starting");
         final Runnable counter = new Runnable(){
 
             public void run(){
+            	time += countDownInterval;
                 long sec = time/1000;
                 if(status) {
                     if(time >= millisInFuture) {
                     	listener.onFinish();
                     } else {
                         listener.onPulse(time);
-                        time += countDownInterval;
                         handler.postDelayed(this, countDownInterval);
                     }
-                    Log.v("metronome", Long.toString(sec));
+                    Log.i("metronome", Long.toString(sec));
                 } else {
-                    Log.v("metronome", Long.toString(sec) + " seconds remain and timer has stopped!");
+                    Log.i("metronome", Long.toString(sec) + " seconds remain and timer has stopped!");
                     handler.postDelayed(this, countDownInterval);
                 }
             }
         };
 
-        handler.postDelayed(counter, 0);
+        handler.postDelayed(counter, countDownInterval);
     }
 }
