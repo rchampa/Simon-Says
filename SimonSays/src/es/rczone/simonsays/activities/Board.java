@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import es.rczone.simonsays.R;
@@ -26,14 +27,18 @@ import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.daos.MoveDAO;
 import es.rczone.simonsays.model.Colors;
 import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.IPulseListener;
+import es.rczone.simonsays.model.Metronome;
+import es.rczone.simonsays.model.MetronomeFactory;
 import es.rczone.simonsays.model.Move;
+import es.rczone.simonsays.model.Metronome;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.GlobalInfo;
 import es.rczone.simonsays.tools.IDialogOperations;
 import es.rczone.simonsays.tools.Tools;
 
 
-public class Board extends Activity implements CustomViewListener {
+public class Board extends Activity implements CustomViewListener, IPulseListener {
 		
 	public enum Mode{FIRST_MOVE, OPP_TURN, REPLAY_MOVE, MY_TURN};
 	private String TAG = Board.class.getSimpleName();
@@ -72,6 +77,9 @@ public class Board extends Activity implements CustomViewListener {
 	private boolean[] loaded = { false, false, false, false,false,false};
 	private int[] soundIDs = { 0,0,0,0,0,0};
 	private ProgressDialog progressDialog;
+	
+	private Metronome metronome;
+	ProgressBar progressBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +121,28 @@ public class Board extends Activity implements CustomViewListener {
 			prepareGame(gameID);
 		}
 		
+		metronome = new Metronome(8000,2000);
+		metronome.setListener(this);
+		
+
+	    progressBar = (ProgressBar)findViewById(R.id.progressBar1);
+	    progressBar.setProgress(0);
+	    progressBar.setMax(8000);
 		
 	}
+	
+
+	@Override
+	public void onPulse(long milisecs_passed) {
+		
+		progressBar.setProgress((int)milisecs_passed);
+	}
+
+	@Override
+	public void onFinish() {
+		progressBar.setProgress(progressBar.getMax());
+	}
+
 	
 	public int getID(){
 		return this.gameID;
@@ -298,6 +326,7 @@ public class Board extends Activity implements CustomViewListener {
 			case R.id.sendView1:
 				soundPool.play(soundIDs[4], volume, volume, 1, 0, 1f);
 				pressCenterButton();
+				metronome.start();
 				Log.d(TAG, "send");
 				break;
 		}

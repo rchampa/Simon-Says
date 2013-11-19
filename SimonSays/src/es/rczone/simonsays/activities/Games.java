@@ -19,7 +19,9 @@ import es.rczone.simonsays.activities.fragments.FragmentGamesList;
 import es.rczone.simonsays.activities.fragments.listeners.ListListener;
 import es.rczone.simonsays.activities.server_requests.ResponseGameRequest;
 import es.rczone.simonsays.controllers.GamesController;
+import es.rczone.simonsays.daos.GameDAO;
 import es.rczone.simonsays.model.Game;
+import es.rczone.simonsays.model.Game.GameStates;
 import es.rczone.simonsays.tools.AsyncConnect;
 import es.rczone.simonsays.tools.GlobalInfo;
 import es.rczone.simonsays.tools.IDialogOperations;
@@ -172,8 +174,8 @@ public class Games extends FragmentActivity implements Handler.Callback, ListLis
 	@Override
 	public void onItemLongClicked(Game item) {
 		// xxx
-//		item.setState(GameStates.WAITING_FOR_MOVE);
-//		new GameDAO().update(item);
+		item.setState(GameStates.FIRST_MOVE);
+		new GameDAO().update(item);
 		
 	}
 

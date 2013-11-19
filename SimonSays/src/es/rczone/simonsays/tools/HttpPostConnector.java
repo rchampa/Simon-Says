@@ -28,7 +28,7 @@ public class HttpPostConnector {
 	
 	//public static String IP_Server = "192.168.1.126";
 	
-//	/* Conections */
+//	/* Connections */
 //	
 //	public static String URL_REGISTRATION = "http://" + IP_Server + "/simon_dice/scripts/adduser.php";
 //	public static String URL_LOGIN = "http://" + IP_Server + "/simon_dice/scripts/login.php";
@@ -39,9 +39,9 @@ public class HttpPostConnector {
 //	public static String URL_RESPONSE_REQUEST_GAME = "http://" + IP_Server + "/simon_dice/scripts/response_request_game.php";
 //	public static String URL_MAKE_A_MOVE = "http://" + IP_Server + "/simon_dice/scripts/make_a_move.php";
 
-	public static String IP_Server = "memorize.hol.es";
-		
-	/* Conections */
+	//public static String IP_Server = "memorize.hol.es";
+	public static String IP_Server = "gameserver-rczone.rhcloud.com";	
+	/* Connections */
 	
 	public static String URL_REGISTRATION = "http://" + IP_Server + "/scripts/adduser.php";
 	public static String URL_LOGIN = "http://" + IP_Server + "/scripts/login.php";
